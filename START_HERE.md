@@ -10,8 +10,8 @@ cd VisionMachine
 python -m venv .venv
 & ./.venv/Scripts/python.exe -m pip install -r requirements.lock.txt
 & ./.venv/Scripts/python.exe -m pip install --no-deps -e .
-& ./.venv/Scripts/python.exe -m pytest -q
-& ./.venv/Scripts/python.exe scripts/export_contracts.py --check
+& ./.venv/Scripts/python.exe scripts/check.py
+& ./.venv/Scripts/python.exe -m vm_server init-db
 ```
 
 Python 3.12를 사용한다. Linux/macOS에서는 `.venv/bin/python`을 사용한다. 환경 폴더는 Git에 올리지 않는다.

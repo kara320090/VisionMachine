@@ -15,5 +15,8 @@ dev = ["pytest>=8,<10", "httpx>=0.27,<1", "jsonschema>=4.23,<5"]
 [tool.setuptools.packages.find]
 where = ["server/src", "packages/contracts/src", "data-pipeline/src", "ml/src"]
 
+[tool.setuptools.package-data]
+"vm_server.migrations" = ["*.sql"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

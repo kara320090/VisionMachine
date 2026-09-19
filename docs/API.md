@@ -9,6 +9,8 @@
 
 로컬 전용이며 인증 미구현. 기본 bind는 127.0.0.1. 실제 사진이나 비밀을 공개 서버에 올리기 전에 아래 기능을 구현한다.
 
+현재 구현의 OpenAPI는 `contracts/openapi.json`에 있으며 `python scripts/export_openapi.py`로 재생성한다. `python -m vm_server init-db`는 로컬 DB 초기화 도구이며 위 API가 사진/DB 저장을 지원한다는 뜻은 아니다.
+
 ## 다음 서버 작업에서 구현할 계약안
 | method/path | 입력/동작 |
 |---|---|

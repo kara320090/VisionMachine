@@ -1,4 +1,4 @@
--- Local schema draft; not connected to the starter HTTP app yet.
+-- Local schema v1; initialized explicitly, not connected to HTTP storage yet.
 PRAGMA foreign_keys = ON;
 CREATE TABLE IF NOT EXISTS inspections (
     inspection_id TEXT PRIMARY KEY,

@@ -1,9 +1,9 @@
 import sqlite3
-from pathlib import Path
+from importlib.resources import files
 
 import pytest
 
-SQL = (Path(__file__).resolve().parents[1] / "server/migrations/001_initial.sql").read_text(encoding="utf-8")
+SQL = files("vm_server.migrations").joinpath("001_initial.sql").read_text(encoding="utf-8")
 
 
 @pytest.fixture

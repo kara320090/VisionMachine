@@ -7,13 +7,18 @@ VisionMachine/
   prompts/               처음/파트별/통합/커밋 검토 프롬프트
   docs/                  합의·구조·역할·일정·검증 문서
   contracts/
+    openapi.json         실제 구현 API에서 생성, 예정 API는 API.md에 별도 기록
     schemas/             Python 계약에서 생성한 JSON Schema
     examples/            합성 JSON 예제(실측 아님)
   packages/contracts/src/vm_contracts/
     models.py            계약의 원본: 검사·센서·분석결과
   server/
     src/vm_server/        HTTP API, 서비스, 저장소 구현 위치
-    migrations/          DB 구조를 재현하는 SQL/마이그레이션
+      settings.py        로컬 저장 경로, 파일 생성 없는 설정 로딩
+      database.py        명시적·트랜잭션 방식 SQLite 초기화
+      migrations/        설치 패키지에도 포함하는 SQL 원본
+      __main__.py        python -m vm_server init-db
+    migrations/          SQL 원본 위치와 버전 변경 안내
   apps/android/          Android 앱 생성 위치와 기능별 설계
   firmware/              UNO R4 실측 펌웨어 생성 위치와 시험 절차
   data-pipeline/src/vm_data/
@@ -31,12 +36,16 @@ VisionMachine/
   ml/configs/            재현 가능한 학습 설정(대상 확정 후 값 입력)
   ml/model_cards/        검증 범위·한계·모델 사용법
   scripts/               계약 재생성·로컬 검사
+    check.py             실행 가능한 기반 전체 검사
+    smoke_server.py      임시 localhost 서버 HTTP 검증·종료
   tests/                 공통 계약·데이터 누수·API 시험
   storage/               실 DB·업로드 사진(로컬 생성, Git 제외)
   artifacts/             APK·모델·평가 상세 산출물(Git 제외)
 ```
 
 빈 폴더를 만드는 대신 각 파트 README에 앞으로 만들 구체적 파일을 정의했다. 존재하지 않는 APK·모델·업로드 API를 만들어졌다고 표시하지 않는다.
+
+SQLite 초기화는 CLI에서 실제 실행되며 기존 v1 DB는 보존한다. 현재 HTTP app은 아직 DB·사진 저장을 호출하지 않는다. 아래 그림은 합의한 최종 데이터 흐름이다.
 
 ```mermaid
 flowchart LR
