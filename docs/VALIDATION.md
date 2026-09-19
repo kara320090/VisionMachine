@@ -28,7 +28,9 @@
 ## 아직 검증하지 않은 것
 Android SDK/Gradle 빌드·실제 APK, 카메라/USB 실휴대폰 시험, 실센서 보정·펌웨어 업로드, 사진 저장 서버, 사용자 인증·HTTPS·외부 배포, 실제 데이터 수집·학습·AI 성능, Play Console 등록/심사.
 
-원격 검증: 첫 커밋 `6b327f8`의 [GitHub Actions](https://github.com/kara320090/VisionMachine/actions/runs/35430048327) 통과. 이후 Windows/Linux 두 환경에서 같은 `scripts/check.py`를 실행하도록 구성했다. 최신 커밋의 실행 결과는 Actions에서 구분해 확인한다.
+원격 검증: 첫 커밋 `6b327f8`의 [GitHub Actions](https://github.com/kara320090/VisionMachine/actions/runs/35430048327) 통과. 서버 기반 추가 커밋 `e6888ee`는 [Windows/Linux 두 환경](https://github.com/kara320090/VisionMachine/actions/runs/35430338096)에서 같은 `scripts/check.py` 실행에 성공했다. 최신 커밋의 실행 결과는 Actions에서 구분해 확인한다.
+
+CI의 Node 20 폐기 경고에 따라 공식 checkout v7.0.1/setup-python v7.0.0의 Node 24 런타임을 확인하고 커밋 SHA로 고정했다. Ubuntu는 24.04로 명시했다. 참조: [checkout release](https://github.com/actions/checkout/releases/tag/v7.0.1), [setup-python release](https://github.com/actions/setup-python/releases/tag/v7.0.0).
 
 JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 시험용이다. 통과한 테스트 수는 작물 표본 수나 진단 성능이 아니다. CSV 검사기는 사진 실재·실제 해시·라벨 정답·이용허락의 진위를 확인하지 않는다. 실제 자료 검사는 다음 구현 과제다.
 
