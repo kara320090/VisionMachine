@@ -66,8 +66,8 @@
 
   <!-- USB connection -->
   <path d="M215 664 C305 664 330 520 410 520" class="usb" marker-end="url(#arrow-blue)"/>
-  <text x="315" y="615" text-anchor="middle" class="label" fill="#2563eb">FC200 USB-C</text>
-  <text x="315" y="640" text-anchor="middle" class="tiny">데이터 + 휴대폰 측 전원</text>
+  <text x="365" y="600" text-anchor="middle" class="label" fill="#2563eb">FC200 USB-C</text>
+  <text x="365" y="625" text-anchor="middle" class="tiny">데이터 + 휴대폰 측 전원</text>
 
   <!-- Soil probe and pot -->
   <path d="M659 406 C650 640 440 666 315 765" class="analog" marker-end="url(#arrow-orange)"/>

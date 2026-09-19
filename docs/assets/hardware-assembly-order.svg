@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">VisionMachine 조립과 시험 순서</title>
+  <desc id="desc">전원 분리부터 휴대폰 연결과 I2C 주소 검사까지의 안전한 조립 순서</desc>
+  <defs><style>
+    text{font-family:"Noto Sans KR","Malgun Gothic",sans-serif;fill:#152238}.title{font-size:38px;font-weight:800}.sub{font-size:19px;fill:#526076}.num{font-size:34px;font-weight:900;fill:#fff}.head{font-size:22px;font-weight:800}.body{font-size:16px}.small{font-size:14px;fill:#526076}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}.arrow{stroke:#94a3b8;stroke-width:5;fill:none}
+  </style><marker id="a" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12z" fill="#94a3b8"/></marker></defs>
+  <rect width="1600" height="1000" fill="#f6f8fc"/><text x="65" y="65" class="title">4. 조립·검사 순서</text><text x="65" y="101" class="sub">한 번에 전부 꽂지 말고, 각 단계에서 확인한 뒤 다음 단계로 진행</text>
+
+  <g transform="translate(80 165)"><rect width="420" height="245" rx="24" class="card"/><circle cx="62" cy="62" r="38" fill="#ef4444"/><text x="62" y="74" text-anchor="middle" class="num">1</text><text x="120" y="60" class="head">모든 전원 분리</text><text x="35" y="125" class="body">휴대폰·USB·외부전원을 모두 분리한다.</text><text x="35" y="162" class="body">UNO 핀과 DFR0265 소켓 방향을 맞춘다.</text><text x="35" y="202" class="small">핀 한 칸 밀림·굽힘을 옆에서 확인</text></g>
+  <path d="M500 288 L575 288" class="arrow" marker-end="url(#a)"/>
+  <g transform="translate(590 165)"><rect width="420" height="245" rx="24" class="card"/><circle cx="62" cy="62" r="38" fill="#f59e0b"/><text x="62" y="74" text-anchor="middle" class="num">2</text><text x="120" y="60" class="head">보드 적층·5V 설정</text><text x="35" y="125" class="body">DFR0265를 UNO R4 위에 수직 적층한다.</text><text x="35" y="162" class="body">디지털·아날로그 전압 선택을 5V로 맞춘다.</text><text x="35" y="202" class="small">외부 PWR_IN/SERVO_PWR는 연결하지 않음</text></g>
+  <path d="M1010 288 L1085 288" class="arrow" marker-end="url(#a)"/>
+  <g transform="translate(1100 165)"><rect width="420" height="245" rx="24" class="card"/><circle cx="62" cy="62" r="38" fill="#f59e0b"/><text x="62" y="74" text-anchor="middle" class="num">3</text><text x="120" y="60" class="head">토양센서 A0 연결</text><text x="35" y="125" class="body">빨강→5V, 노랑→A0, 검정 2개→GND.</text><text x="35" y="162" class="body">센서 하나만 읽어 원시 ADC 값을 확인한다.</text><text x="35" y="202" class="small">보정 전 절대 수분함량 %로 표시하지 않음</text></g>
+
+  <path d="M1310 410 L1310 485" class="arrow" marker-end="url(#a)"/>
+  <g transform="translate(1100 505)"><rect width="420" height="245" rx="24" class="card"/><circle cx="62" cy="62" r="38" fill="#7c3aed"/><text x="62" y="74" text-anchor="middle" class="num">4</text><text x="120" y="60" class="head">I²C 허브·센서 연결</text><text x="35" y="125" class="body">DFR0265 I²C→DFR0759 입력을 연결한다.</text><text x="35" y="162" class="body">OUT 포트에 SEN0334·0364·0206을 연결한다.</text><text x="35" y="202" class="small">양쪽 VCC/GND/SCL/SDA 인쇄를 대조</text></g>
+  <path d="M1100 628 L1025 628" class="arrow" marker-end="url(#a)"/>
+  <g transform="translate(590 505)"><rect width="420" height="245" rx="24" class="card"/><circle cx="62" cy="62" r="38" fill="#16a34a"/><text x="62" y="74" text-anchor="middle" class="num">5</text><text x="120" y="60" class="head">주소·개별 읽기 검사</text><text x="35" y="125" class="body">I²C scan: 0x39, 0x44/45, 0x5A 확인.</text><text x="35" y="162" class="body">센서 하나씩 읽은 뒤 전체 동시 읽기를 시험한다.</text><text x="35" y="202" class="small">주소가 안 보이면 전원과 커넥터부터 재확인</text></g>
+  <path d="M590 628 L515 628" class="arrow" marker-end="url(#a)"/>
+  <g transform="translate(80 505)"><rect width="420" height="245" rx="24" class="card"/><circle cx="62" cy="62" r="38" fill="#2563eb"/><text x="62" y="74" text-anchor="middle" class="num">6</text><text x="120" y="60" class="head">휴대폰을 마지막에 연결</text><text x="35" y="125" class="body">USB host 권한·실제 JSONL 수신을 확인한다.</text><text x="35" y="162" class="body">분리·재연결·총 소비전류를 시험한다.</text><text x="35" y="202" class="small">사진과 센서값을 같은 검사 ID로 저장</text></g>
+
+  <rect x="80" y="810" width="1440" height="120" rx="22" fill="#fff7ed" stroke="#fb923c" stroke-width="3"/>
+  <text x="115" y="855" class="head">중단 조건</text><text x="115" y="895" class="body">보드 발열, 냄새, 휴대폰 반복 재부팅, USB 끊김, 센서값 고정/급변이 나타나면 즉시 전원을 분리하고 배선·전류·주소를 다시 확인한다.</text>
+</svg>

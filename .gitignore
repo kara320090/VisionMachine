@@ -54,6 +54,11 @@ ml/weights/
 !tests/fixtures/synthetic/**/*.png
 # Reviewed documentation diagram, generated from the neighboring SVG source.
 !docs/assets/hardware-wiring.png
+!docs/assets/hardware-01-overall.png
+!docs/assets/hardware-02-pin-map.png
+!docs/assets/hardware-03-physical-placement.png
+!docs/assets/hardware-04-assembly-order.png
+!docs/assets/hardware-05-concept.png
 # Python
 .venv/
 venv/

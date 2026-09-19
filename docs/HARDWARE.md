@@ -4,6 +4,14 @@
 
 ![VisionMachine 센서 조립 및 배선도](assets/hardware-wiring.svg)
 
+연결을 한 장에 몰아보지 않도록 아래 그림도 함께 사용한다.
+
+- [전체 구성도 PNG](assets/hardware-01-overall.png)
+- [핀·포트 연결도](assets/hardware-pin-map.svg) / [PNG](assets/hardware-02-pin-map.png)
+- [실제 화분 주변 배치도](assets/hardware-physical-placement.svg) / [PNG](assets/hardware-03-physical-placement.png)
+- [조립·검사 순서](assets/hardware-assembly-order.svg) / [PNG](assets/hardware-04-assembly-order.png)
+- [실물 배치 개념 일러스트](assets/hardware-05-concept.png): 위치 이해용이며 핀·포트는 위의 연결도를 기준으로 한다.
+
 | 구성 | 연결 | 전원/주소 |
 |---|---|---|
 | UNO R4 Minima + DFR0265 | UNO에 확장판 장착 | 5V 보드, 외부 전원을 임의로 중복 연결하지 않음 |

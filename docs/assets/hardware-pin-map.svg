@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">VisionMachine 핀과 포트 연결도</title>
+  <desc id="desc">UNO R4 Minima, DFR0265, SEN0308, DFR0759, SEN0334, SEN0364, SEN0206의 정확한 연결 관계</desc>
+  <defs>
+    <style>
+      text { font-family: "Noto Sans KR", "Malgun Gothic", sans-serif; fill:#152238 }
+      .title { font-size:38px; font-weight:800 }
+      .sub { font-size:19px; fill:#526076 }
+      .head { font-size:25px; font-weight:800 }
+      .body { font-size:17px }
+      .small { font-size:14px; fill:#526076 }
+      .card { fill:#fff; stroke:#cbd5e1; stroke-width:2 }
+      .a0 { stroke:#f59e0b; stroke-width:8; fill:none }
+      .i2c { stroke:#7c3aed; stroke-width:8; fill:none }
+      .usb { stroke:#2563eb; stroke-width:8; fill:none }
+      .pin { font-size:16px; font-weight:800; fill:#fff }
+    </style>
+    <marker id="orange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12z" fill="#f59e0b"/></marker>
+    <marker id="purple" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12z" fill="#7c3aed"/></marker>
+    <marker id="blue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12z" fill="#2563eb"/></marker>
+  </defs>
+  <rect width="1600" height="1000" fill="#f6f8fc"/>
+  <text x="65" y="65" class="title">2. 핀·포트 연결도</text>
+  <text x="65" y="101" class="sub">전원을 끈 상태에서 완성 Gravity 케이블로 연결 · 케이블 색보다 양쪽 실크 인쇄를 우선 확인</text>
+
+  <rect x="610" y="180" width="380" height="560" rx="28" fill="#dff7f1" stroke="#0f766e" stroke-width="4"/>
+  <rect x="650" y="145" width="300" height="210" rx="22" fill="#fff7d6" stroke="#ca8a04" stroke-width="4"/>
+  <text x="800" y="205" text-anchor="middle" class="head">DFR0265 V7.1</text>
+  <text x="800" y="242" text-anchor="middle" class="body">UNO R4 위에 수직 적층</text>
+  <rect x="690" y="270" width="95" height="44" rx="9" fill="#dc2626"/><text x="738" y="299" text-anchor="middle" class="pin">5V 설정</text>
+  <rect x="815" y="270" width="95" height="44" rx="9" fill="#f59e0b"/><text x="863" y="299" text-anchor="middle" class="pin">A0</text>
+  <text x="800" y="445" text-anchor="middle" class="head">UNO R4 Minima</text>
+  <text x="800" y="485" text-anchor="middle" class="body">센서 읽기 · USB CDC/JSONL 전송</text>
+  <rect x="680" y="540" width="240" height="64" rx="12" fill="#7c3aed"/><text x="800" y="580" text-anchor="middle" class="pin">I²C: VCC · GND · SCL · SDA</text>
+  <rect x="680" y="635" width="240" height="64" rx="12" fill="#2563eb"/><text x="800" y="675" text-anchor="middle" class="pin">UNO USB-C</text>
+
+  <rect x="60" y="210" width="400" height="230" rx="22" class="card"/>
+  <text x="90" y="260" class="head">SEN0308 토양수분</text>
+  <text x="90" y="305" class="body">빨강 VCC → 5V</text>
+  <text x="90" y="340" class="body">노랑 Signal → A0</text>
+  <text x="90" y="375" class="body">검정 2가닥 → 모두 GND</text>
+  <text x="90" y="412" class="small">출력 0–2.9V · 프로브만 흙 속에 삽입</text>
+  <path d="M460 325 C540 325 550 290 650 290" class="a0" marker-end="url(#orange)"/>
+  <text x="520" y="295" class="body" fill="#b45309">A0</text>
+
+  <rect x="1130" y="165" width="405" height="175" rx="22" fill="#ede9fe" stroke="#7c3aed" stroke-width="4"/>
+  <text x="1160" y="215" class="head">DFR0759 I²C HUB</text>
+  <text x="1160" y="255" class="body">한 입력을 최대 8포트로 병렬 분배</text>
+  <text x="1160" y="290" class="small">USB 허브·주소 변환기·멀티플렉서가 아님</text>
+  <path d="M920 570 C1050 570 1040 255 1130 255" class="i2c" marker-end="url(#purple)"/>
+
+  <rect x="1110" y="400" width="425" height="135" rx="20" fill="#ecfdf5" stroke="#16a34a" stroke-width="3"/>
+  <text x="1140" y="446" class="head">SEN0334 온습도</text>
+  <text x="1140" y="483" class="body">I²C · VCC/GND/SCL/SDA</text>
+  <text x="1140" y="514" class="small">주소 0x44 또는 0x45 · 실물/스캔 확인</text>
+  <path d="M1330 340 L1330 400" class="i2c" marker-end="url(#purple)"/>
+
+  <rect x="1110" y="575" width="425" height="135" rx="20" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/>
+  <text x="1140" y="621" class="head">SEN0364 AS7341</text>
+  <text x="1140" y="658" class="body">I²C · VCC/GND/SCL/SDA</text>
+  <text x="1140" y="689" class="small">주소 0x39 · 공급 3.3–5V</text>
+  <path d="M1380 340 L1380 575" class="i2c" marker-end="url(#purple)"/>
+
+  <rect x="1110" y="750" width="425" height="135" rx="20" fill="#fff1f2" stroke="#e11d48" stroke-width="3"/>
+  <text x="1140" y="796" class="head">SEN0206 MLX90614</text>
+  <text x="1140" y="833" class="body">I²C · VCC/GND/SCL/SDA</text>
+  <text x="1140" y="864" class="small">기본 주소 0x5A · 공급 3.3–5V</text>
+  <path d="M1430 340 L1430 750" class="i2c" marker-end="url(#purple)"/>
+
+  <rect x="60" y="590" width="400" height="210" rx="22" class="card"/>
+  <text x="90" y="640" class="head">Android 휴대폰</text>
+  <text x="90" y="685" class="body">USB host/OTG 지원 확인</text>
+  <text x="90" y="720" class="body">USB 데이터 권한 승인</text>
+  <text x="90" y="755" class="small">사진·센서값은 휴대폰이 Wi-Fi/모바일데이터로 전송</text>
+  <path d="M460 685 C540 685 550 667 680 667" class="usb" marker-end="url(#blue)"/>
+
+  <rect x="60" y="850" width="930" height="95" rx="18" fill="#fff7ed" stroke="#fb923c" stroke-width="2"/>
+  <text x="90" y="889" class="body" font-weight="800">전원 주의</text>
+  <text x="90" y="921" class="small">휴대폰 USB와 별도 외부전원을 임의로 동시에 연결하지 않는다. 처음에는 휴대폰 USB 한 경로로 시험하고 전류·재연결 로그를 남긴다.</text>
+</svg>
