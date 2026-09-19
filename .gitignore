@@ -52,6 +52,8 @@ ml/weights/
 !tests/fixtures/synthetic/**/*.jpg
 !tests/fixtures/synthetic/**/*.jpeg
 !tests/fixtures/synthetic/**/*.png
+# Reviewed documentation diagram, generated from the neighboring SVG source.
+!docs/assets/hardware-wiring.png
 # Python
 .venv/
 venv/
