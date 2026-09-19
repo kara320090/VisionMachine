@@ -22,4 +22,4 @@
 
 2026-09-19 로컬 검증: 저장소 .venv/Python 3.12.14, `scripts/check.py` 통과(52 pytest, 외부 의존성 경고 2개). `6b327f8` 최초 CI와 `e6888ee` Windows/Linux CI 통과. 후속 push의 최신 CI는 Actions에서 확인한다.
 
-개발 인계: [NEXT_STEPS](NEXT_STEPS.md), 최신 배선/구매 범위: [HARDWARE](HARDWARE.md). 검증한 단위마다 현재 branch를 commit/push한다.
+개발 인계: [NEXT_STEPS](NEXT_STEPS.md), 최신 배선/구매 범위: [HARDWARE](HARDWARE.md). 검증한 단위마다 main에서 commit하고 origin/main에 push한다. 다른 사람이 먼저 push했으면 양쪽 커밋을 보존하여 병합·재검증한 뒤 다시 push한다. 모든 작업 프롬프트와 Git 절차를 이 원칙으로 통일했다.

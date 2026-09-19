@@ -10,7 +10,7 @@
 - 구현 대기: 사진 업로드·영속 저장·인증·이력·삭제·실제 AI 추론, Android 프로젝트/APK, 실측 펌웨어, 실제 데이터 수집·학습·성능평가.
 - 학습 모델이 없으면 `pending_model`을 반환한다. 임의 정상 판정·정확도·가상 성능을 만들지 않는다.
 
-먼저 [START_HERE.md](START_HERE.md), 이후 [구조](docs/ARCHITECTURE.md), [커밋 기준](docs/GIT_COMMITS.md)을 읽는다.
+먼저 [START_HERE.md](START_HERE.md), 이후 [구조](docs/ARCHITECTURE.md), [커밋 기준](docs/GIT_COMMITS.md)을 읽는다. 개발은 각자의 로컬 clone에서 `main`으로 진행한다. 검증한 단위마다 commit·push하며, 선행 push가 있으면 내 커밋과 원격 변경을 병합·재검증하여 `origin/main`에 올린다.
 
 | 개발 분야 | 작업 폴더 | 담당 |
 |---|---|---|

@@ -23,6 +23,6 @@
 1. 동작하는 코드와 필요한 시험.
 2. 실제/모의 여부, 새 계약/환경변수/마이그레이션 설명.
 3. `docs/STATUS.md`의 구현 상태·실행 결과·다음 인계 항목.
-4. 관련 파일만 stage한 commit과 origin push. 원격 CI 결과를 확인하고 실패하면 수정 commit을 추가한다.
+4. main에서 관련 파일만 stage한 commit과 `git push origin main`. 선행 push가 있으면 내 커밋을 보존한 채 최신 origin/main을 병합·재검증하여 다시 push한다. [GIT_COMMITS](GIT_COMMITS.md)를 따르며, 원격 CI가 실패하면 수정 commit을 추가한다.
 
 기기·SDK·학습자료가 없는 경우 그 시험은 미확인으로 남기되 관련 없는 파트 작업을 막지 않는다. 테스트용 mock은 항상 표시하고 실제 평가 입력에서 제외한다.
