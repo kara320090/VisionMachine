@@ -59,6 +59,8 @@ ml/weights/
 !docs/assets/hardware-03-physical-placement.png
 !docs/assets/hardware-04-assembly-order.png
 !docs/assets/hardware-05-concept.png
+!docs/assets/hardware-06-handheld-concept.png
+!docs/assets/hardware-07-handheld-workflow.png
 # Python
 .venv/
 venv/

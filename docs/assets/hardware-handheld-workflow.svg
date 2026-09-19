@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">휴대형 VisionMachine 측정 순서</title>
+  <desc id="desc">사진 촬영, 잎 센서 측정, 토양 측정, 서버 전송의 네 단계</desc>
+  <defs><style>
+    text{font-family:"Noto Sans KR","Malgun Gothic",sans-serif;fill:#152238}.title{font-size:38px;font-weight:800}.sub{font-size:19px;fill:#526076}.num{font-size:31px;font-weight:900;fill:#fff}.head{font-size:23px;font-weight:800}.body{font-size:16px}.small{font-size:14px;fill:#526076}.card{fill:#fff;stroke:#cbd5e1;stroke-width:2}.flow{stroke:#94a3b8;stroke-width:6;fill:none}
+  </style><marker id="a" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12z" fill="#94a3b8"/></marker></defs>
+  <rect width="1600" height="900" fill="#f6f8fc"/><text x="65" y="65" class="title">휴대형 장치 사용 흐름</text><text x="65" y="101" class="sub">센서를 따로 들고 다니지 않고 한 장치에서 촬영과 측정을 이어서 수행</text>
+
+  <g transform="translate(70 180)"><rect width="330" height="470" rx="25" class="card"/><circle cx="55" cy="55" r="34" fill="#2563eb"/><text x="55" y="66" text-anchor="middle" class="num">1</text><text x="105" y="62" class="head">사진 촬영</text>
+    <rect x="92" y="115" width="150" height="255" rx="25" fill="#172033"/><rect x="108" y="145" width="118" height="170" rx="10" fill="#dbeafe"/><circle cx="167" cy="343" r="10" fill="#64748b"/>
+    <path d="M240 210 C280 190 292 170 300 145" stroke="#16a34a" stroke-width="10" fill="none"/><path d="M280 160 C315 120 330 165 295 182Z" fill="#4ade80"/>
+    <text x="35" y="410" class="body">앱에서 대상 ID를 선택하고</text><text x="35" y="442" class="body">후면 카메라로 정지사진 저장</text>
+  </g>
+  <path d="M400 415 L455 415" class="flow" marker-end="url(#a)"/>
+
+  <g transform="translate(470 180)"><rect width="330" height="470" rx="25" class="card"/><circle cx="55" cy="55" r="34" fill="#7c3aed"/><text x="55" y="66" text-anchor="middle" class="num">2</text><text x="105" y="62" class="head">잎 측정</text>
+    <path d="M55 255 L205 255 L235 175 L85 175 Z" fill="#334155"/><rect x="92" y="192" width="55" height="45" rx="8" fill="#3b82f6"/><rect x="157" y="192" width="55" height="45" rx="8" fill="#ef4444"/>
+    <path d="M235 215 C270 180 300 178 316 193" stroke="#7c3aed" stroke-width="4" stroke-dasharray="8 7" fill="none"/><path d="M265 190 C305 145 332 190 295 213Z" fill="#4ade80" stroke="#15803d" stroke-width="3"/>
+    <text x="35" y="410" class="body">같은 잎/과실에 측정 헤드를 대고</text><text x="35" y="442" class="body">광학·표면온도를 함께 측정</text>
+  </g>
+  <path d="M800 415 L855 415" class="flow" marker-end="url(#a)"/>
+
+  <g transform="translate(870 180)"><rect width="330" height="470" rx="25" class="card"/><circle cx="55" cy="55" r="34" fill="#f59e0b"/><text x="55" y="66" text-anchor="middle" class="num">3</text><text x="105" y="62" class="head">토양 측정</text>
+    <path d="M70 250 L270 250 L250 355 L90 355 Z" fill="#b77944"/><path d="M95 265 Q170 220 245 265 L235 335 L105 335Z" fill="#5d4037"/><rect x="155" y="160" width="28" height="155" rx="10" fill="#f59e0b"/><rect x="148" y="145" width="42" height="42" rx="8" fill="#334155"/>
+    <text x="35" y="410" class="body">홀더에서 프로브 한 개를 꺼내 삽입</text><text x="35" y="442" class="body">전자부는 흙·물 밖에 유지</text>
+  </g>
+  <path d="M1200 415 L1255 415" class="flow" marker-end="url(#a)"/>
+
+  <g transform="translate(1270 180)"><rect width="260" height="470" rx="25" class="card"/><circle cx="55" cy="55" r="34" fill="#16a34a"/><text x="55" y="66" text-anchor="middle" class="num">4</text><text x="105" y="62" class="head">저장·전송</text>
+    <ellipse cx="130" cy="205" rx="74" ry="26" fill="#bfdbfe" stroke="#2563eb" stroke-width="3"/><rect x="56" y="205" width="148" height="115" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><ellipse cx="130" cy="320" rx="74" ry="26" fill="#bfdbfe" stroke="#2563eb" stroke-width="3"/>
+    <path d="M130 132 L130 175" stroke="#16a34a" stroke-width="7"/><path d="M112 158 L130 180 L148 158" fill="none" stroke="#16a34a" stroke-width="7"/>
+    <text x="30" y="410" class="body">같은 검사 ID로 사진·센서 저장</text><text x="30" y="442" class="body">휴대폰이 서버로 전송</text>
+  </g>
+
+  <rect x="70" y="710" width="1460" height="120" rx="22" fill="#ecfdf5" stroke="#16a34a" stroke-width="3"/>
+  <text x="105" y="755" class="head">사용성 핵심</text><text x="105" y="795" class="body">전면 헤드는 광학·표면온도 거리와 각도를 반복시킨다. 토양 측정이 불필요하면 값을 0으로 만들지 않고 null로 기록한다. 측정 중에는 손목끈을 사용한다.</text>
+</svg>
