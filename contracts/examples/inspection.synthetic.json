@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.1.0",
+  "inspection_id": "11111111-1111-4111-8111-111111111111",
+  "subject_id": "synthetic-plant-001",
+  "subject_type": "plant",
+  "parent_plant_id": null,
+  "batch_id": "synthetic-batch-001",
+  "crop_code": "cherry_tomato",
+  "captured_at": "2026-09-19T00:00:00Z",
+  "capture_source": "synthetic",
+  "image_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "image_media_type": "image/jpeg",
+  "sensor_packet": {
+    "schema_version": "0.1.0",
+    "message_type": "measurement",
+    "request_id": "11111111-1111-4111-8111-111111111111",
+    "device_id": "fixture-uno",
+    "boot_id": "fixture-boot",
+    "firmware_version": "mock-0.1.0",
+    "sequence": 1,
+    "uptime_ms": 1000,
+    "mode": "mock",
+    "calibration_id": null,
+    "readings": {
+      "soil_adc_bits": 12,
+      "soil_raw": 1500,
+      "soil_index": null,
+      "air_temp_c": 24.0,
+      "air_rh_pct": 55.0
+    },
+    "errors": []
+  },
+  "sensor_received_at": "2026-09-19T00:00:01Z",
+  "sensor_absence_reason": null
+}

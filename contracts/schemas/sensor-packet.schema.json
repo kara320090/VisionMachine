@@ -1,0 +1,176 @@
+{
+  "$defs": {
+    "SensorReadings": {
+      "additionalProperties": false,
+      "properties": {
+        "air_rh_pct": {
+          "anyOf": [
+            {
+              "maximum": 100,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Air Rh Pct"
+        },
+        "air_temp_c": {
+          "anyOf": [
+            {
+              "minimum": -273.15,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Air Temp C"
+        },
+        "soil_adc_bits": {
+          "enum": [
+            10,
+            12,
+            14
+          ],
+          "title": "Soil Adc Bits",
+          "type": "integer"
+        },
+        "soil_index": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Soil Index"
+        },
+        "soil_raw": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Soil Raw"
+        }
+      },
+      "required": [
+        "soil_adc_bits",
+        "soil_raw",
+        "soil_index",
+        "air_temp_c",
+        "air_rh_pct"
+      ],
+      "title": "SensorReadings",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "boot_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Boot Id",
+      "type": "string"
+    },
+    "calibration_id": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "minLength": 1,
+          "pattern": "^[A-Za-z0-9_-]+$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Calibration Id"
+    },
+    "device_id": {
+      "maxLength": 80,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_-]+$",
+      "title": "Device Id",
+      "type": "string"
+    },
+    "errors": {
+      "items": {
+        "maxLength": 80,
+        "minLength": 1,
+        "type": "string"
+      },
+      "title": "Errors",
+      "type": "array"
+    },
+    "firmware_version": {
+      "maxLength": 40,
+      "minLength": 1,
+      "title": "Firmware Version",
+      "type": "string"
+    },
+    "message_type": {
+      "const": "measurement",
+      "title": "Message Type",
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "real",
+        "mock"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "readings": {
+      "$ref": "#/$defs/SensorReadings"
+    },
+    "request_id": {
+      "format": "uuid",
+      "title": "Request Id",
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sequence": {
+      "minimum": 0,
+      "title": "Sequence",
+      "type": "integer"
+    },
+    "uptime_ms": {
+      "minimum": 0,
+      "title": "Uptime Ms",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema_version",
+    "message_type",
+    "request_id",
+    "device_id",
+    "boot_id",
+    "firmware_version",
+    "sequence",
+    "uptime_ms",
+    "mode",
+    "calibration_id",
+    "readings",
+    "errors"
+  ],
+  "title": "SensorPacket",
+  "type": "object"
+}

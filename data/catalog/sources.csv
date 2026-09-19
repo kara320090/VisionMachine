@@ -1,0 +1,6 @@
+source_id,name,candidate_scope,status,official_url,license_review,paired_sensor_review
+aihub_plant_disease,AI-Hub 식물 병 유발 통합 데이터,토마토/고추 등,not_reviewed,,pending,pending
+aihub_watering,AI-Hub 원예식물 물주기 생육 데이터,영상/관수/환경,not_reviewed,,pending,pending
+aihub_tomato,AI-Hub 토마토 통합 데이터,토마토 영상/환경,not_reviewed,,pending,pending
+hydrogrownet,HydroGrowNet,상추 수경재배 참고,not_reviewed,,pending,pending
+plantvillage,PlantVillage,조건 맞는 작물/라벨 부분집합,not_reviewed,,pending,pending

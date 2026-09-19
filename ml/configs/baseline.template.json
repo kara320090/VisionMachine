@@ -1,0 +1,11 @@
+{
+  "status": "template_not_training_configuration",
+  "dataset_manifest": null,
+  "split_manifest": null,
+  "label_version": null,
+  "model_family": null,
+  "seed": null,
+  "batch_size": null,
+  "epochs": null,
+  "notes": "실제 데이터·환경 검토 후 별도 실행 설정 파일을 만든다."
+}

@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cause_candidates": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Cause Candidates",
+      "type": "array"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Confidence"
+    },
+    "evidence": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "inspection_id": {
+      "format": "uuid",
+      "title": "Inspection Id",
+      "type": "string"
+    },
+    "is_mock_input": {
+      "title": "Is Mock Input",
+      "type": "boolean"
+    },
+    "model_mode": {
+      "anyOf": [
+        {
+          "enum": [
+            "rgb",
+            "sensor",
+            "fusion"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Model Mode"
+    },
+    "model_version": {
+      "anyOf": [
+        {
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Model Version"
+    },
+    "origin": {
+      "enum": [
+        "none",
+        "mock",
+        "real_model"
+      ],
+      "title": "Origin",
+      "type": "string"
+    },
+    "outcome": {
+      "anyOf": [
+        {
+          "enum": [
+            "no_visible_abnormality",
+            "suspected_abnormality",
+            "inconclusive"
+          ],
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Outcome"
+    },
+    "schema_version": {
+      "const": "0.1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pending_model",
+        "completed",
+        "failed"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "inspection_id",
+    "status",
+    "origin",
+    "is_mock_input",
+    "outcome",
+    "model_version",
+    "model_mode",
+    "confidence",
+    "evidence",
+    "cause_candidates",
+    "warnings"
+  ],
+  "title": "AnalysisResult",
+  "type": "object"
+}

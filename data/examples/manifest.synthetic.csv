@@ -1,0 +1,4 @@
+sample_id,inspection_id,subject_id,parent_plant_id,batch_id,duplicate_group_id,crop_code,image_relpath,image_sha256,split,source_kind,label,label_basis,license_status
+synthetic-1,00000001-1111-4111-8111-111111111111,synthetic-plant-1,,synthetic-batch-1,,cherry_tomato,raw/synthetic/photo-1.jpg,1111111111111111111111111111111111111111111111111111111111111111,train,synthetic,uncertain,fixture_only_not_an_observation,pending
+synthetic-2,00000002-1111-4111-8111-111111111111,synthetic-plant-2,,synthetic-batch-2,,cherry_tomato,raw/synthetic/photo-2.jpg,2222222222222222222222222222222222222222222222222222222222222222,val,synthetic,uncertain,fixture_only_not_an_observation,pending
+synthetic-3,00000003-1111-4111-8111-111111111111,synthetic-plant-3,,synthetic-batch-3,,cherry_tomato,raw/synthetic/photo-3.jpg,3333333333333333333333333333333333333333333333333333333333333333,test,synthetic,uncertain,fixture_only_not_an_observation,pending

@@ -1,0 +1,1 @@
+sample_id,inspection_id,subject_id,parent_plant_id,batch_id,duplicate_group_id,crop_code,image_relpath,image_sha256,split,source_kind,label,label_basis,license_status

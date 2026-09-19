@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1.0",
+  "message_type": "measurement",
+  "request_id": "11111111-1111-4111-8111-111111111111",
+  "device_id": "fixture-uno",
+  "boot_id": "fixture-boot",
+  "firmware_version": "mock-0.1.0",
+  "sequence": 1,
+  "uptime_ms": 1000,
+  "mode": "mock",
+  "calibration_id": null,
+  "readings": {
+    "soil_adc_bits": 12,
+    "soil_raw": 1500,
+    "soil_index": null,
+    "air_temp_c": 24.0,
+    "air_rh_pct": 55.0
+  },
+  "errors": []
+}

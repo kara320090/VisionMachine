@@ -1,0 +1,74 @@
+# Local secrets / credentials
+/_ANTIGRAVITY_START_HERE.md
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+service-account*.json
+credentials*.json
+secrets/
+# Private inputs, real records and artifacts
+data/raw/
+data/interim/
+data/processed/
+data/private/
+data/splits/private/
+storage/
+private/
+artifacts/
+runs/
+ml/weights/
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.ckpt
+*.safetensors
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+*.apk
+*.aab
+*.hwp
+*.hwpx
+*.pdf
+*.zip
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.heic
+# Reviewed Android UI resources are source assets, not collected crop photos.
+!apps/android/**/src/main/res/**/*.png
+!apps/android/**/src/main/res/**/*.webp
+# Explicitly synthetic image fixtures may be committed after review.
+!tests/fixtures/synthetic/**/*.jpg
+!tests/fixtures/synthetic/**/*.jpeg
+!tests/fixtures/synthetic/**/*.png
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+# Android / IDE / platform
+.gradle/
+.kotlin/
+.idea/
+local.properties
+.DS_Store
+Thumbs.db
+*.log
