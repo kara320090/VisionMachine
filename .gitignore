@@ -61,6 +61,7 @@ ml/weights/
 !docs/assets/hardware-05-concept.png
 !docs/assets/hardware-06-handheld-concept.png
 !docs/assets/hardware-07-handheld-workflow.png
+!docs/assets/hardware-fit-check.png
 # Python
 .venv/
 venv/

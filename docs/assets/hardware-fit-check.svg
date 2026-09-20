@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">VisionMachine 휴대형 부품 치수 대조</title>
+  <desc id="desc">U-Grip과 파우치의 폭 불일치, U-Rig Pro와 파우치 폭 비교, 제어보드 필요 내부 공간, 센서판과 토양센서 길이를 실제 비율로 비교한 도식</desc>
+  <style>
+    .bg{fill:#f7f9fc}.card{fill:white;stroke:#cbd5e1;stroke-width:2}.title{font:700 34px sans-serif;fill:#0f172a}.head{font:700 24px sans-serif;fill:#0f172a}.body{font:18px sans-serif;fill:#334155}.small{font:16px sans-serif;fill:#475569}.bad{fill:#fee2e2;stroke:#dc2626;stroke-width:3}.good{fill:#dcfce7;stroke:#16a34a;stroke-width:3}.part{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.warn{fill:#fef3c7;stroke:#d97706;stroke-width:2}.dim{stroke:#475569;stroke-width:2;marker-start:url(#a);marker-end:url(#a)}
+  </style>
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M8 0L0 4L8 8Z" fill="#475569"/></marker></defs>
+  <rect class="bg" width="1600" height="980"/>
+  <text x="60" y="60" class="title">휴대형 시제품 치수 검토 — 공개 치수 기준</text>
+
+  <g transform="translate(50 100)">
+    <rect class="card" width="720" height="360" rx="22"/>
+    <text x="30" y="45" class="head">1. 기존 U-Grip 안은 폭부터 맞지 않음</text>
+    <rect x="80" y="105" width="380" height="120" rx="18" class="part"/>
+    <text x="270" y="170" text-anchor="middle" class="body">U-Grip 외형 폭 190 mm</text>
+    <rect x="59" y="245" width="422" height="80" rx="14" class="bad"/>
+    <text x="270" y="292" text-anchor="middle" class="body">중형 파우치 외형 폭 211 mm</text>
+    <line x1="59" y1="338" x2="481" y2="338" class="dim"/>
+    <text x="270" y="356" text-anchor="middle" class="small">파우치가 21 mm 더 넓음</text>
+    <text x="510" y="135" class="body">또한 기본 구성에</text>
+    <text x="510" y="168" class="body">스마트폰 홀더 없음</text>
+    <text x="510" y="218" class="small">→ 기존 그림 제외</text>
+  </g>
+
+  <g transform="translate(830 100)">
+    <rect class="card" width="720" height="360" rx="22"/>
+    <text x="30" y="45" class="head">2. 교체안 U-Rig Pro와 파우치</text>
+    <rect x="70" y="105" width="502" height="150" rx="18" class="good"/>
+    <text x="321" y="150" text-anchor="middle" class="body">U-Rig Pro 외형 폭 250.8 mm</text>
+    <rect x="105" y="170" width="432" height="65" rx="12" fill="#bbf7d0" stroke="#15803d" stroke-width="2"/>
+    <text x="321" y="210" text-anchor="middle" class="body">내부 틀 폭 215.9 mm</text>
+    <rect x="110" y="270" width="422" height="58" rx="12" class="warn"/>
+    <text x="321" y="307" text-anchor="middle" class="body">파우치 외형 폭 211 mm</text>
+    <text x="585" y="135" class="small">외형 기준 여유</text>
+    <text x="585" y="165" class="body">39.8 mm</text>
+    <text x="585" y="220" class="small">내부 틀 폭 기준</text>
+    <text x="585" y="250" class="body">4.9 mm</text>
+    <text x="585" y="295" class="small">파우치 높이 127</text>
+    <text x="585" y="322" class="small">틀 123.8보다 큼</text>
+    <text x="585" y="349" class="small">아래/뒤만 후보</text>
+  </g>
+
+  <g transform="translate(50 500)">
+    <rect class="card" width="720" height="400" rx="22"/>
+    <text x="30" y="45" class="head">3. 파우치 안 제어부</text>
+    <rect x="55" y="90" width="331" height="167" rx="12" class="warn"/>
+    <text x="220" y="122" text-anchor="middle" class="small">구매 기준 내부 공간</text>
+    <text x="220" y="155" text-anchor="middle" class="body">166 × 84 × 45 mm 이상</text>
+    <rect x="105" y="175" width="137" height="107" rx="5" class="part"/>
+    <text x="173" y="230" text-anchor="middle" class="small">UNO+shield</text>
+    <text x="173" y="253" text-anchor="middle" class="small">68.58×53.34</text>
+    <rect x="262" y="203" width="74" height="54" rx="5" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="299" y="226" text-anchor="middle" class="small">HUB</text>
+    <text x="299" y="248" text-anchor="middle" class="small">37×27</text>
+    <text x="420" y="115" class="body">파우치 외형 211×127×66 mm</text>
+    <text x="420" y="155" class="body">내부 치수는 판매 페이지에 없음</text>
+    <text x="420" y="195" class="body">외형만으로 수납 확정 불가</text>
+    <text x="420" y="245" class="small">내부를 자로 재어 세 축 모두</text>
+    <text x="420" y="275" class="small">기준 이상일 때만 사용</text>
+    <rect x="55" y="315" width="610" height="55" rx="12" class="bad"/>
+    <text x="360" y="350" text-anchor="middle" class="body">판매자 확인 또는 실측 전 파우치 주문 보류</text>
+  </g>
+
+  <g transform="translate(830 500)">
+    <rect class="card" width="720" height="400" rx="22"/>
+    <text x="30" y="45" class="head">4. 센서판과 토양 프로브</text>
+    <rect x="55" y="105" width="525" height="70" rx="12" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
+    <rect x="80" y="117" width="110" height="46" rx="6" class="part"/>
+    <text x="135" y="147" text-anchor="middle" class="small">SEN0364 22</text>
+    <rect x="240" y="117" width="158" height="46" rx="6" fill="#e0e7ff" stroke="#4f46e5" stroke-width="2"/>
+    <text x="319" y="147" text-anchor="middle" class="small">SEN0206 31.5</text>
+    <text x="595" y="137" class="body">PT-3 105 mm</text>
+    <text x="595" y="168" class="small">필요 73.5</text>
+    <text x="55" y="215" class="body">끝 여유 5 + 센서 22 + 간격 10 + 센서 31.5 + 끝 여유 5 = 73.5 mm</text>
+
+    <rect x="55" y="280" width="525" height="62" rx="12" class="warn"/>
+    <rect x="100" y="291" width="438" height="40" rx="5" fill="#94a3b8"/>
+    <text x="319" y="317" text-anchor="middle" fill="white" font-family="sans-serif" font-size="17">SEN0308 길이 175 mm</text>
+    <text x="595" y="300" class="body">파우치 211</text>
+    <text x="595" y="332" class="small">좌우 18 mm</text>
+    <text x="55" y="378" class="small">토양 프로브는 손잡이 세로 보관 대신 파우치 바깥에 가로 고정</text>
+  </g>
+  <text x="60" y="950" class="small">※ 파우치 내부·볼헤드 높이·휴대폰 실제 폭은 실물 확인 항목이다. 그림은 mm 비율 비교용이며 완제품 성능을 뜻하지 않는다.</text>
+</svg>

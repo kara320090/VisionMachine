@@ -1,5 +1,7 @@
 # hardware-08-tool-free-prototype 생성 기록
 
+> 2026-09-20 치수 검토 전 만든 이전안이다. U-Grip은 스마트폰 홀더가 별도이고 파우치보다 좁아 구매안에서 제외했다. 현재안은 `docs/HARDWARE_FIT_CHECK.md`를 따른다.
+
 - 생성 방식: OpenAI 내장 ImageGen
 - 용도: 공구 없이 직접 조립할 수 있는 VisionMachine 휴대형 시제품의 예상 외형
 - 기준일: 2026-09-19
