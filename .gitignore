@@ -39,6 +39,7 @@ ml/weights/
 *.hwp
 *.hwpx
 *.pdf
+!output/pdf/VisionMachine_구매예산_식물구매_팀의사결정_보고서.pdf
 *.zip
 *.jpg
 *.jpeg
