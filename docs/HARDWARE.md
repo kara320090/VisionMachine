@@ -14,6 +14,7 @@
 - [권장 휴대형 통합안](assets/hardware-06-handheld-concept.png): 휴대폰 거치대·손잡이형 본체·통합 측정 헤드·분리형 토양 프로브.
 - [휴대형 측정 순서](assets/hardware-handheld-workflow.svg) / [PNG](assets/hardware-07-handheld-workflow.png)
 - [공구 없이 조립한 시제품 예상 모습](assets/hardware-08-tool-free-prototype.png): U-Grip·지퍼형 파우치·벨크로·듀얼락·손노브를 사용한 현실적인 조립안.
+- [공구 없는 조립·장착 상세 안내](HARDWARE_ASSEMBLY_GUIDE.md): 부품 확인부터 센서 배선·파우치 수납·그립 장착·측정까지 5단계 그림과 점검표.
 
 ## 사용성 개선 권장 구조
 

@@ -21,7 +21,7 @@
 | AI | `ml/` | 한윤섭·최승빈 |
 | 공통 입출력 | `packages/contracts/`, `contracts/` | 연결되는 파트 공동 검토 |
 
-각 파트의 첫 구현 단위와 인계 조건은 [NEXT_STEPS](docs/NEXT_STEPS.md)에 있다. 폴더별 README는 앞으로 만들 파일과 실제 구현을 구분한다. 센서 조립도와 순서는 [HARDWARE](docs/HARDWARE.md), 현재 구매 가격과 총액은 [PURCHASE_PLAN](docs/PURCHASE_PLAN.md)에서 확인한다.
+각 파트의 첫 구현 단위와 인계 조건은 [NEXT_STEPS](docs/NEXT_STEPS.md)에 있다. 폴더별 README는 앞으로 만들 파일과 실제 구현을 구분한다. 센서 전기 구성은 [HARDWARE](docs/HARDWARE.md), 공구 없는 실제 조립 순서는 [HARDWARE_ASSEMBLY_GUIDE](docs/HARDWARE_ASSEMBLY_GUIDE.md), 현재 구매 가격과 총액은 [PURCHASE_PLAN](docs/PURCHASE_PLAN.md)에서 확인한다.
 
 ## Python 빠른 실행 (Windows PowerShell, Python 3.12)
 
