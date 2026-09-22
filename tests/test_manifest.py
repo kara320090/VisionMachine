@@ -1,6 +1,8 @@
+import hashlib
+
 import pytest
 
-from vm_data.validate_manifest import validate_rows
+from vm_data.validate_manifest import validate_image_files, validate_rows
 
 
 def test_synthetic_data_requires_explicit_permission(manifest_rows):
@@ -77,3 +79,44 @@ def test_complete_real_format_passes_structure_check_only(manifest_rows):
 
 def test_empty_manifest_rejected():
     assert validate_rows([]) == ["EMPTY_MANIFEST"]
+
+
+def test_local_image_integrity_detects_missing_and_changed_files(manifest_rows, tmp_path):
+    image = tmp_path / "photo.jpg"
+    image.write_bytes(b"synthetic image bytes for integrity only")
+    row = manifest_rows[0]
+    row["image_relpath"] = image.name
+    row["image_sha256"] = hashlib.sha256(image.read_bytes()).hexdigest()
+    assert validate_image_files([row], tmp_path) == []
+
+    image.write_bytes(b"changed bytes")
+    assert validate_image_files([row], tmp_path) == ["row 2: IMAGE_HASH_MISMATCH"]
+
+    image.unlink()
+    assert validate_image_files([row], tmp_path) == ["row 2: IMAGE_MISSING"]
+
+
+def test_image_root_cannot_escape_through_symlink(manifest_rows, tmp_path):
+    root = tmp_path / "images"
+    root.mkdir()
+    outside = tmp_path / "outside.jpg"
+    outside.write_bytes(b"synthetic fixture")
+    link = root / "linked.jpg"
+    try:
+        link.symlink_to(outside)
+    except (OSError, NotImplementedError):
+        pytest.skip("symlink creation unavailable on this host")
+    row = manifest_rows[0]
+    row["image_relpath"] = link.name
+    row["image_sha256"] = hashlib.sha256(outside.read_bytes()).hexdigest()
+    assert validate_image_files([row], root) == ["row 2: IMAGE_OUTSIDE_ROOT"]
+
+
+def test_image_integrity_rejects_unsafe_path_without_reading_outside_root(manifest_rows, tmp_path):
+    row = manifest_rows[0]
+    row["image_relpath"] = "../private.jpg"
+    assert validate_image_files([row], tmp_path) == ["row 2: UNSAFE_IMAGE_PATH"]
+
+
+def test_missing_image_root_reported_without_paths(manifest_rows, tmp_path):
+    assert validate_image_files(manifest_rows, tmp_path / "missing") == ["IMAGE_ROOT_UNAVAILABLE"]

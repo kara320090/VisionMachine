@@ -1,5 +1,5 @@
-"""Metadata and split-leakage validator; does not inspect photos or verify licenses."""
-import argparse, csv, json, re
+"""Manifest, split-leakage, and optional local image-integrity validator."""
+import argparse, csv, hashlib, hmac, json, re
 from pathlib import Path, PurePosixPath
 from uuid import UUID
 from vm_contracts.models import CROP_CODES
@@ -7,6 +7,61 @@ from vm_contracts.models import CROP_CODES
 COLUMNS = ["sample_id", "inspection_id", "subject_id", "parent_plant_id", "batch_id",
            "duplicate_group_id", "crop_code", "image_relpath", "image_sha256", "split",
            "source_kind", "label", "label_basis", "license_status"]
+
+
+def safe_image_path(value):
+    path = PurePosixPath(value)
+    return bool(path.name) and not path.is_absolute() and '..' not in path.parts and '\\' not in value and ':' not in value
+
+
+def validate_image_files(rows, image_root):
+    """Check local paths and file hashes without exposing image bytes or paths in output.
+
+    This is an integrity check, not image decoding, label review, or a license check.
+    Resolved paths must remain below image_root, including through symlinks.
+    """
+    errors = []
+    try:
+        root = Path(image_root).resolve(strict=True)
+    except OSError:
+        return ["IMAGE_ROOT_UNAVAILABLE"]
+    if not root.is_dir():
+        return ["IMAGE_ROOT_UNAVAILABLE"]
+
+    for i, row in enumerate(rows):
+        tag = f"row {i+2}"
+        if not isinstance(row, dict):
+            errors.append(f"{tag}: INVALID_CSV_ROW")
+            continue
+        relpath = row.get("image_relpath")
+        expected_hash = row.get("image_sha256")
+        if not isinstance(relpath, str) or not safe_image_path(relpath):
+            errors.append(f"{tag}: UNSAFE_IMAGE_PATH")
+            continue
+        if not isinstance(expected_hash, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_hash):
+            errors.append(f"{tag}: INVALID_IMAGE_HASH")
+            continue
+        try:
+            target = (root / relpath).resolve(strict=True)
+            target.relative_to(root)
+        except ValueError:
+            errors.append(f"{tag}: IMAGE_OUTSIDE_ROOT")
+            continue
+        except OSError:
+            errors.append(f"{tag}: IMAGE_MISSING")
+            continue
+        if not target.is_file():
+            errors.append(f"{tag}: IMAGE_NOT_FILE")
+            continue
+        try:
+            with target.open("rb") as image:
+                digest = hashlib.file_digest(image, "sha256").hexdigest()
+        except OSError:
+            errors.append(f"{tag}: IMAGE_UNREADABLE")
+            continue
+        if not hmac.compare_digest(digest, expected_hash):
+            errors.append(f"{tag}: IMAGE_HASH_MISMATCH")
+    return errors
 
 def validate_rows(rows, *, allow_synthetic=False, final=False):
     errors = []
@@ -58,7 +113,7 @@ def validate_rows(rows, *, allow_synthetic=False, final=False):
         if row["crop_code"] not in CROP_CODES:
             errors.append(f"{tag}: UNKNOWN_CROP")
         path = row["image_relpath"]
-        if not PurePosixPath(path).name or PurePosixPath(path).is_absolute() or '..' in PurePosixPath(path).parts or '\\' in path or ':' in path:
+        if not safe_image_path(path):
             errors.append(f"{tag}: UNSAFE_IMAGE_PATH")
         if not re.fullmatch(r"[0-9a-f]{64}",row["image_sha256"]):
             errors.append(f"{tag}: INVALID_IMAGE_HASH")
@@ -101,11 +156,14 @@ def main():
     parser.add_argument("manifest", type=Path)
     parser.add_argument("--allow-synthetic", action="store_true", help="Fixtures only; cannot override --final")
     parser.add_argument("--final", action="store_true", help="Reject unassigned/unlabeled/unapproved/synthetic rows")
+    parser.add_argument("--image-root", type=Path, help="Also verify each local image exists under this root and matches image_sha256")
     args=parser.parse_args()
     try:
         with args.manifest.open(encoding="utf-8-sig", newline="") as f:
             rows=list(csv.DictReader(f))
         errors=validate_rows(rows,allow_synthetic=args.allow_synthetic,final=args.final)
+        if args.image_root is not None:
+            errors.extend(validate_image_files(rows, args.image_root))
     except (OSError, UnicodeError, csv.Error) as exc:
         parser.exit(2, f"Cannot read manifest: {exc}\n")
     print(json.dumps({"rows":len(rows),"valid":not errors,"errors":errors},ensure_ascii=False,indent=2))

@@ -5,6 +5,7 @@
 - 서버 GET /healthz, GET /v1/capabilities, POST /v1/dev/validate-inspection.
 - 모델 미탑재를 반환하는 ML 인터페이스(실제 추론 없음).
 - CSV manifest의 필수값·경로·형식·중복 ID·그룹별 split 누수 검사.
+- 선택적 `--image-root` 검사로 로컬 이미지의 존재, 루트 밖 심볼릭 링크, 실제 SHA-256 불일치 확인. 이미지 디코딩·라벨 검증은 아직 없음.
 - 로컬 SQLite 초기화 CLI, 저장 경로 설정, 설치 패키지에 포함하는 SQL. 재실행 시 데이터 보존, 외래키, 알 수 없는 DB 거부, 실패 롤백 시험. HTTP API는 아직 DB에 연결하지 않음.
 - 실제 구현 API에서 생성한 OpenAPI, JSON Schema 동기화 검사, 실제 localhost HTTP smoke.
 - `scripts/check.py` 단일 검사 명령, Linux/Windows GitHub Actions 구성.

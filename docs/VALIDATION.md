@@ -32,7 +32,9 @@ Android SDK/Gradle 빌드·실제 APK, 카메라/USB 실휴대폰 시험, 실센
 
 CI의 Node 20 폐기 경고에 따라 공식 checkout v7.0.1/setup-python v7.0.0의 Node 24 런타임을 확인하고 커밋 SHA로 고정했다. Ubuntu는 24.04로 명시했다. 참조: [checkout release](https://github.com/actions/checkout/releases/tag/v7.0.1), [setup-python release](https://github.com/actions/setup-python/releases/tag/v7.0.0).
 
-JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 시험용이다. 통과한 테스트 수는 작물 표본 수나 진단 성능이 아니다. CSV 검사기는 사진 실재·실제 해시·라벨 정답·이용허락의 진위를 확인하지 않는다. 실제 자료 검사는 다음 구현 과제다.
+JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 시험용이다. 통과한 테스트 수는 작물 표본 수나 진단 성능이 아니다. 기본 CSV 검사기는 사진을 읽지 않는다. `--image-root`를 명시하면 로컬 파일 존재·SHA-256·루트 밖 링크를 확인하지만, 사진 디코딩·라벨 정답·이용허락의 진위는 확인하지 않는다.
+
+2026-09-22 추가 검증: `python scripts/check.py` 통과(56 pytest, 기존 외부 의존성 경고 2개). 파일 무결성 시험은 일치·변경·누락·루트 밖 링크·안전하지 않은 상대경로를 포함한다. 테스트 파일 바이트는 합성이며 실제 작물 사진이 아니다.
 
 사용자는 검증한 단위마다 GitHub commit/push를 요청했다. 게시 이력은 git log와 원격 Actions에서 확인한다. 계정 변경·유료 서비스 결제·제품 외부 배포는 수행하지 않는다.
 
