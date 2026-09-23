@@ -3,4 +3,7 @@ aihub_plant_disease,AI-Hub 식물 병 유발 통합 데이터,토마토/고추 �
 aihub_watering,AI-Hub 원예식물 물주기 생육 데이터,영상/관수/환경,not_reviewed,,pending,pending
 aihub_tomato,AI-Hub 토마토 통합 데이터,토마토 영상/환경,not_reviewed,,pending,pending
 hydrogrownet,HydroGrowNet,상추 수경재배 참고,not_reviewed,,pending,pending
-plantvillage,PlantVillage,조건 맞는 작물/라벨 부분집합,not_reviewed,,pending,pending
+plantvillage,PlantVillage,토마토/피망/감자/딸기 등 정상·병해 RGB,reviewed_candidate,https://github.com/spMohanty/PlantVillage-Dataset,HF 카드 CC BY-SA 3.0 확인; 원 저장소·인용문 유지,pending
+plantdoc_classification,PlantDoc Cropped Classification,토마토/피망/감자/딸기 등 실제 배경 RGB,reviewed_candidate,https://github.com/pratikkayal/PlantDoc-Dataset,CC BY 4.0,pending
+mendeley_leaf_freshness,Plant Leaf Freshness and Disease Detection Dataset From Bangladesh,가지/오이/토마토/콜리플라워 등 정상·병해 RGB,reviewed_candidate,https://data.mendeley.com/datasets/n67gctmjyj/2,CC BY 4.0,pending
+mendeley_leaf_database,A Database of Leaf Images,바질 등 정상·병해 RGB,reviewed_candidate_needs_class_count,https://data.mendeley.com/datasets/hb74ynkjcn/5,CC BY 4.0,pending

@@ -21,7 +21,7 @@
 | AI | `ml/` | 한윤섭·최승빈 |
 | 공통 입출력 | `packages/contracts/`, `contracts/` | 연결되는 파트 공동 검토 |
 
-각 파트의 첫 구현 단위와 인계 조건은 [NEXT_STEPS](docs/NEXT_STEPS.md)에 있다. 폴더별 README는 앞으로 만들 파일과 실제 구현을 구분한다. 센서 전기 구성은 [HARDWARE](docs/HARDWARE.md), 실제 제품 치수와 장착 통과 조건은 [HARDWARE_FIT_CHECK](docs/HARDWARE_FIT_CHECK.md), 공구 없는 조립 순서는 [HARDWARE_ASSEMBLY_GUIDE](docs/HARDWARE_ASSEMBLY_GUIDE.md), 현재 구매 가격과 총액은 [PURCHASE_PLAN](docs/PURCHASE_PLAN.md)에서 확인한다. 팀의 완성 작물 구매 결정을 위한 비교표·회신 양식·전체 구매 URL·19개 품목 이미지는 [구매예산 및 식물구매 팀 의사결정 보고서](output/pdf/VisionMachine_구매예산_식물구매_팀의사결정_보고서.pdf)에 정리했다. 스킨답서스는 후보 8종 밖의 장치 시연용 관엽식물로 표시했다.
+각 파트의 첫 구현 단위와 인계 조건은 [NEXT_STEPS](docs/NEXT_STEPS.md)에 있다. 폴더별 README는 앞으로 만들 파일과 실제 구현을 구분한다. 공개 정상·병해 이미지 후보와 내려받기 방법은 [DATASET_REVIEW](docs/DATASET_REVIEW.md), 센서 전기 구성은 [HARDWARE](docs/HARDWARE.md), 실제 제품 치수와 장착 통과 조건은 [HARDWARE_FIT_CHECK](docs/HARDWARE_FIT_CHECK.md), 공구 없는 조립 순서는 [HARDWARE_ASSEMBLY_GUIDE](docs/HARDWARE_ASSEMBLY_GUIDE.md), 현재 구매 가격과 총액은 [PURCHASE_PLAN](docs/PURCHASE_PLAN.md)에서 확인한다. 팀의 완성 작물 구매 결정을 위한 비교표·회신 양식·전체 구매 URL·19개 품목 이미지는 [구매예산 및 식물구매 팀 의사결정 보고서](output/pdf/VisionMachine_구매예산_식물구매_팀의사결정_보고서.pdf)에 정리했다. 스킨답서스는 후보 8종 밖의 장치 시연용 관엽식물로 표시했다.
 
 ## Python 빠른 실행 (Windows PowerShell, Python 3.12)
 

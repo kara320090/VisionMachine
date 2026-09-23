@@ -36,6 +36,8 @@ JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 �
 
 2026-09-22 추가 검증: `python scripts/check.py` 통과(56 pytest, 기존 외부 의존성 경고 2개). 파일 무결성 시험은 일치·변경·누락·루트 밖 링크·안전하지 않은 상대경로를 포함한다. 테스트 파일 바이트는 합성이며 실제 작물 사진이 아니다.
 
+2026-09-23 공개 이미지 자료 문서 갱신 검증: `data/catalog/sources.csv`의 모든 행이 7열인지 확인했고 `python scripts/check.py`가 통과했다(56 pytest, 기존 외부 의존성 경고 2개). 공개 이미지 원본 자체는 내려받지 않았으므로 파일 수·손상·중복 검사는 결과에 포함되지 않는다.
+
 사용자는 검증한 단위마다 GitHub commit/push를 요청했다. 게시 이력은 git log와 원격 Actions에서 확인한다. 계정 변경·유료 서비스 결제·제품 외부 배포는 수행하지 않는다.
 
 일회용 `_ANTIGRAVITY_START_HERE.md`의 준비 작업을 완료하고 결과를 STATUS/VALIDATION/NEXT_STEPS에 남긴 뒤 해당 파일만 삭제했다. 상시 AGENTS/rules/prompts는 보존한다.
