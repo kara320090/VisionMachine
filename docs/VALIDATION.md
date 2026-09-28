@@ -47,3 +47,5 @@ JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 �
 일회용 `_ANTIGRAVITY_START_HERE.md`의 준비 작업을 완료하고 결과를 STATUS/VALIDATION/NEXT_STEPS에 남긴 뒤 해당 파일만 삭제했다. 상시 AGENTS/rules/prompts는 보존한다.
 
 2026-09-29 Android 디버그 전송 검증: JDK 17/SDK 35에서 `:app:assembleDebug :app:lintDebug :app:connectedDebugAndroidTest` 성공. 에뮬레이터 계측 시험 6건 중 새 시험은 합성 JPEG의 multipart 전송(기기 내 loopback 가짜 서버가 검사 ID·SHA-256·센서 미취득을 확인), 실패 상태·동일 ID 재시도, 전송 중 앱 종료 후 복구를 확인한다. 이 시험은 실제 PC FastAPI 서버와 USB 장치 왕복을 뜻하지 않는다.
+
+2026-09-29 USB 패킷 파서 검증: `:app:assembleDebug :app:lintDebug :app:connectedDebugAndroidTest` 성공. 전체 에뮬레이터 계측 시험 12건 중 새 6건은 요청 생성, 여러 read에 나뉜 줄·한 read의 복수 줄, 이전 요청 ID 거부, 4096바이트 초과 줄 뒤 복구, 잘못된 UTF-8·결측 오류코드 거부, 종료 시 미완료 줄 폐기를 확인한다. 첫 시도는 에뮬레이터 종료로 `No connected devices`였고 재기동 후 12건 모두 통과했다. USB 장치·실측값 검증은 아니다.

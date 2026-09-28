@@ -10,7 +10,8 @@ Kotlin/Compose Android 프로젝트와 Gradle wrapper를 생성했다. `app/src/
 app/src/main/java/<확정패키지>/
   MainActivity.kt                     구현됨: 촬영 UI·TakePicture·취소/복귀
   CaptureStore.kt                    구현됨: 앱 전용 사진·URI·로컬 기록
-  usb/UsbSensorClient.kt              후속: 권한·기기·serial·부분 줄 조립
+  SensorPacketFramer.kt               구현됨: JSONL 줄 조립·계약/요청 ID 검사·모의 표시
+  usb/UsbSensorClient.kt              후속: USB 권한·기기·serial·실측 수신
   data/local/                        후속: 검사·사진 URI·전송대기 Room
   InspectionUploadClient.kt           구현됨: 디버그 loopback 사진 업로드·응답 검증
   data/remote/                       후속: 운영 HTTPS·인증·계약 DTO·오류 변환
@@ -31,3 +32,5 @@ app/src/androidTest/                  실제 UI·복귀/DB 시험
 wrapper JAR/properties와 빌드 설정을 커밋한다. local.properties·APK/AAB·서명키는 제외한다. 첫 APK 빌드는 코드 컴파일 검증이며 카메라 앱·실제 휴대폰 호환성 검증을 뜻하지 않는다.
 
 계측 시험 실행: Android 에뮬레이터 또는 연결된 기기가 켜진 상태에서 `./gradlew.bat :app:connectedDebugAndroidTest`(Windows) 또는 `bash ./gradlew :app:connectedDebugAndroidTest`(Linux). 합성 JPEG만 사용하며 원본 작물 사진은 시험에 넣지 않는다.
+
+`SensorPacketFramer`는 USB CDC 입력 바이트에서 4096바이트 이내 JSONL 한 줄을 조립하고 계약 필드·범위·현재 검사 ID를 확인한다. `mode=mock`을 그대로 표시하고 잘못된 UTF-8, 불완전/초과 줄, 이전 검사 응답을 거부한다. 아직 Android USB 권한·serial 장치 연결이나 실측 패킷 수신은 구현하지 않았다.
