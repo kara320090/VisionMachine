@@ -199,12 +199,12 @@
     },
     "crop_code": {
       "enum": [
-        "cherry_tomato",
+        "tomato",
         "pepper",
-        "perilla",
+        "cucumber",
         "lettuce",
         "bok_choy",
-        "kale",
+        "eggplant",
         "basil",
         "rosemary"
       ],

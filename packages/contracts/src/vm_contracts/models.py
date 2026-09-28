@@ -4,8 +4,8 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field, AwareDatetime, model_validator
 
 VERSION = "0.1.0"
-CROP_CODES = ["cherry_tomato", "pepper", "perilla", "lettuce", "bok_choy", "kale", "basil", "rosemary"]
-CropCode = Literal["cherry_tomato", "pepper", "perilla", "lettuce", "bok_choy", "kale", "basil", "rosemary"]
+CROP_CODES = ["tomato", "pepper", "cucumber", "lettuce", "bok_choy", "eggplant", "basil", "rosemary"]
+CropCode = Literal["tomato", "pepper", "cucumber", "lettuce", "bok_choy", "eggplant", "basil", "rosemary"]
 Identifier = Annotated[str, Field(min_length=1, max_length=80, pattern=r"^[A-Za-z0-9_-]+$")]
 Hash256 = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
 

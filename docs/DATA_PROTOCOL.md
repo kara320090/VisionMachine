@@ -3,7 +3,7 @@
 ## 검사와 대상
 `inspection_id`: 앱이 새 검사마다 UUID 생성, 업로드 재시도에도 유지. 같은 개체를 다시 검사하면 새 ID. `subject_id`는 개체/과실 ID, `subject_type`은 plant/fruit, 과실의 원식물을 아는 경우 `parent_plant_id`. 모르는 연결을 창작하지 않는다. `batch_id`는 구매/수확/수집 묶음 ID다.
 
-crop_code: cherry_tomato, pepper, perilla, lettuce, bok_choy, kale, basil, rosemary. 앱의 기록 가능 작물 목록이며 검증된 진단 범위는 별도 capabilities로 반환한다.
+crop_code: tomato, pepper, cucumber, lettuce, bok_choy, eggplant, basil, rosemary. 앱의 기록 가능 작물 목록이며 검증된 진단 범위는 별도 capabilities로 반환한다.
 
 `captured_at`와 `sensor_received_at`은 시간대 있는 ISO 8601, 서버 저장은 UTC로 정규화. UNO uptime을 날짜로 해석하지 않는다. 사진·센서 시간 간격의 허용 기준은 측정 절차에서 실험 후 정한다. 앱은 현재 요청과 다른 응답, 이전 boot/연결 세션, 오래된 값을 재사용하지 않는다.
 
