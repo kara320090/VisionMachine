@@ -51,7 +51,7 @@ def main() -> None:
             assert result["status"] == "pending_model"
             assert result["is_mock_input"] is True
             assert result["outcome"] is None
-            print("HTTP smoke passed: health, capabilities, synthetic validation; no model or photo storage")
+            print("HTTP smoke passed: health, capabilities, synthetic validation; upload tested separately, no model")
         except BaseException:
             log.seek(0)
             sys.stderr.write(log.read().decode("utf-8", errors="replace"))

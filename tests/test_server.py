@@ -12,7 +12,8 @@ def test_health_and_capabilities_do_not_claim_a_trained_model():
     capabilities = client.get("/v1/capabilities").json()
     assert capabilities["validated_diagnostic_crops"] == []
     assert len(capabilities["crop_catalog"]) == 8
-    assert "image_upload" in capabilities["pending"]
+    assert "local_image_upload" in capabilities["implemented"]
+    assert "authentication" in capabilities["pending"]
     assert "metadata_validation" in capabilities["implemented"]
 
 
@@ -35,5 +36,5 @@ def test_mismatched_measurement_returns_validation_error(inspection):
     assert response.status_code == 422
 
 
-def test_upload_not_implemented_is_not_reported_as_success(inspection):
-    assert client.post("/v1/inspections", json=inspection).status_code == 404
+def test_upload_requires_multipart_photo_and_metadata(inspection):
+    assert client.post("/v1/inspections", json=inspection).status_code == 422

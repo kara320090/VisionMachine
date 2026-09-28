@@ -79,7 +79,7 @@ def test_cli_creates_only_local_empty_storage(tmp_path):
         env={**os.environ, "VM_STORAGE_DIR": str(store)},
         capture_output=True, text=True, check=True,
     )
-    assert json.loads(result.stdout)["http_storage_implemented"] is False
+    assert json.loads(result.stdout)["http_storage_implemented"] is True
     assert (store / "visionmachine.db").is_file()
     assert list((store / "uploads").iterdir()) == []
 

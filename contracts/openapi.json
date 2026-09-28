@@ -132,6 +132,25 @@
         "title": "AnalysisResult",
         "type": "object"
       },
+      "Body_upload_inspection_v1_inspections_post": {
+        "properties": {
+          "metadata": {
+            "title": "Metadata",
+            "type": "string"
+          },
+          "photo": {
+            "contentMediaType": "application/octet-stream",
+            "title": "Photo",
+            "type": "string"
+          }
+        },
+        "required": [
+          "photo",
+          "metadata"
+        ],
+        "title": "Body_upload_inspection_v1_inspections_post",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -466,6 +485,34 @@
         "title": "SensorReadings",
         "type": "object"
       },
+      "StoredInspection": {
+        "properties": {
+          "analysis": {
+            "$ref": "#/components/schemas/AnalysisResult"
+          },
+          "inspection_id": {
+            "format": "uuid",
+            "title": "Inspection Id",
+            "type": "string"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/InspectionMetadata"
+          },
+          "received_at_utc": {
+            "format": "date-time",
+            "title": "Received At Utc",
+            "type": "string"
+          }
+        },
+        "required": [
+          "inspection_id",
+          "metadata",
+          "analysis",
+          "received_at_utc"
+        ],
+        "title": "StoredInspection",
+        "type": "object"
+      },
       "ValidationError": {
         "properties": {
           "ctx": {
@@ -509,7 +556,7 @@
     }
   },
   "info": {
-    "description": "Development-only contract validator; no diagnostic model or photo storage.",
+    "description": "Local development storage; no authentication or diagnostic model.",
     "title": "VisionMachine Foundation",
     "version": "0.1.0"
   },
@@ -583,6 +630,90 @@
           }
         },
         "summary": "Validate Inspection"
+      }
+    },
+    "/v1/inspections": {
+      "post": {
+        "operationId": "upload_inspection_v1_inspections_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_inspection_v1_inspections_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoredInspection"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Upload Inspection",
+        "tags": [
+          "local inspections"
+        ]
+      }
+    },
+    "/v1/inspections/{inspection_id}": {
+      "get": {
+        "operationId": "get_inspection_v1_inspections__inspection_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "inspection_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Inspection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StoredInspection"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Inspection",
+        "tags": [
+          "local inspections"
+        ]
       }
     }
   }

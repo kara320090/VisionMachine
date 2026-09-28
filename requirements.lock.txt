@@ -16,11 +16,13 @@ iniconfig==2.3.0
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
 packaging==26.3
+Pillow==12.3.0
 pluggy==1.6.0
 pydantic==2.13.5
 pydantic_core==2.46.5
 Pygments==2.21.0
 pytest==9.1.1
+python-multipart==0.0.32
 referencing==0.37.0
 rpds-py==2026.6.3
 starlette==1.6.0

@@ -26,7 +26,7 @@
 두 경고는 Starlette TestClient의 httpx 사용과 anyio BlockingPortal alias에 관한 향후 변경 안내다. 테스트는 통과했으며 경고를 숨기지 않았다. 의존성을 변경할 때 호환성을 다시 확인한다.
 
 ## 아직 검증하지 않은 것
-Android SDK/Gradle 빌드·실제 APK, 카메라/USB 실휴대폰 시험, 실센서 보정·펌웨어 업로드, 사진 저장 서버, 사용자 인증·HTTPS·외부 배포, 실제 데이터 수집·학습·AI 성능, Play Console 등록/심사.
+Android SDK/Gradle 빌드·실제 APK, 카메라/USB 실휴대폰 시험, 실센서 보정·펌웨어 업로드, 사용자 인증·HTTPS·외부 배포, 실제 데이터 수집·학습·AI 성능, Play Console 등록/심사. 사진 저장 서버는 아래 2026-09-28 추가 검증을 따른다.
 
 원격 검증: 첫 커밋 `6b327f8`의 [GitHub Actions](https://github.com/kara320090/VisionMachine/actions/runs/35430048327) 통과. 서버 기반 추가 커밋 `e6888ee`는 [Windows/Linux 두 환경](https://github.com/kara320090/VisionMachine/actions/runs/35430338096)에서 같은 `scripts/check.py` 실행에 성공했다. 최신 커밋의 실행 결과는 Actions에서 구분해 확인한다.
 
@@ -39,5 +39,7 @@ JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 �
 2026-09-23 공개 이미지 자료 문서 갱신 검증: `data/catalog/sources.csv`의 모든 행이 7열인지 확인했고 `python scripts/check.py`가 통과했다(56 pytest, 기존 외부 의존성 경고 2개). 공개 이미지 원본 자체는 내려받지 않았으므로 파일 수·손상·중복 검사는 결과에 포함되지 않는다.
 
 사용자는 검증한 단위마다 GitHub commit/push를 요청했다. 게시 이력은 git log와 원격 Actions에서 확인한다. 계정 변경·유료 서비스 결제·제품 외부 배포는 수행하지 않는다.
+
+2026-09-28 로컬 사진 저장 구현 검증: `scripts/check.py` 통과(61 pytest, 기존 외부 경고 2개). 합성 PNG/JPEG의 실제 디코딩·SHA-256·저장·SQLite 재시작 조회, 동일 요청 재시도, 다른 내용 409, 잘못된 이미지/미디어/메타데이터/바이트 상한, 파일 이동 실패 정리 및 비로컬 클라이언트 거부를 확인했다. OpenAPI는 실제 새 경로와 일치한다. 실제 휴대폰 사진·외부 네트워크·사용자 인증·강제 종료 후 파일 복구는 시험하지 않았다.
 
 일회용 `_ANTIGRAVITY_START_HERE.md`의 준비 작업을 완료하고 결과를 STATUS/VALIDATION/NEXT_STEPS에 남긴 뒤 해당 파일만 삭제했다. 상시 AGENTS/rules/prompts는 보존한다.

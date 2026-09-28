@@ -22,7 +22,7 @@ def main() -> None:
         "schema_version": version,
         "database": str(settings.database_path),
         "uploads": str(settings.uploads_dir),
-        "http_storage_implemented": False,
+        "http_storage_implemented": True,
     }, ensure_ascii=False, indent=2))
 
 

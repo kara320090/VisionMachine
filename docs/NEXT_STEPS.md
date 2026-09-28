@@ -1,11 +1,11 @@
 # 다음 개발 단위와 파트 간 인계
 
-아래는 할 일이며 구현 완료 목록이 아니다. 현재 실제 기능은 [STATUS](STATUS.md), 장치 규격은 [HARDWARE](HARDWARE.md)를 따른다. 주차를 달력 날짜로 임의 변환하지 않는다.
+아래 표에는 완료한 첫 단위와 다음 할 일을 구분했다. 현재 실제 기능은 [STATUS](STATUS.md), 장치 규격은 [HARDWARE](HARDWARE.md)를 따른다. 주차를 달력 날짜로 임의 변환하지 않는다.
 
 | 순서/분야 | 공동 담당 | 첫 구현 단위와 파일 위치 | 완료·인계 기준 |
 |---|---|---|---|
 | 동시에 시작: Android | 이봉헌·유재윤 | `apps/android/`에 Kotlin 프로젝트/Gradle wrapper, 원본 URI 촬영·사진 저장 | 촬영·취소·복귀를 시험한 APK, 검사 UUID와 공통 JSON DTO. 서버 대기 금지 |
-| 동시에 시작: 서버 | 정회서·이봉헌 | `server/src/vm_server/` 설정·저장 기반 후 multipart 업로드 | 실제 JPEG/PNG·해시 검증, 사진/메타데이터 저장, 동일 ID 재시도·409 충돌·재시작 조회 시험 |
+| 완료: 로컬 서버 첫 단위 | 정회서·이봉헌 | `server/src/vm_server/inspections.py` multipart 업로드·단건 조회 | 합성 JPEG/PNG·해시 검증, 사진/메타데이터 저장, 동일 ID 재시도·409 충돌·재시작 조회 시험 통과. 인증·실기기 연동은 후속 |
 | 동시에 시작: 데이터 | 한윤섭·유재윤 | `data/catalog/`, `data/templates/`, `data-pipeline/` | 후보 8종의 자료 이용조건/표본/센서 대응 검토, 개체 목록과 정답 기준. 100쌍은 검사 목표이며 수집 완료 아님 |
 | 동시에 시작: 계측 | 최승빈·정회서 | `firmware/uno_r4/visionmachine/` 실제 스케치 | 기본 센서 실측→JSONL. 요청 ID, ADC 비트수, 오류/null, USB 재연결 시험. 보정·분석도 담당 |
 | AI 초기 작업 | 한윤섭·최승빈 | `ml/` RGB loader·전처리·첫 학습 코드 | 실제 채택 자료·분할·이용조건을 기록, 모델+전처리+버전을 서버로 인계. 가짜 점수 금지 |
