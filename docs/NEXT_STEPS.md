@@ -4,7 +4,7 @@
 
 | 순서/분야 | 공동 담당 | 첫 구현 단위와 파일 위치 | 완료·인계 기준 |
 |---|---|---|---|
-| 동시에 시작: Android | 이봉헌·유재윤 | `apps/android/`에 Kotlin 프로젝트/Gradle wrapper, 원본 URI 촬영·사진 저장 | 촬영·취소·복귀를 시험한 APK, 검사 UUID와 공통 JSON DTO. 서버 대기 금지 |
+| 빌드됨: Android 첫 단위 | 이봉헌·유재윤 | `apps/android/` Kotlin/Compose 프로젝트/Gradle wrapper, 원본 URI 촬영·사진 저장 | APK 컴파일 완료. 촬영·취소·복귀 실기기 시험과 공통 API DTO·서버 전송은 다음 인계 |
 | 완료: 로컬 서버 첫 단위 | 정회서·이봉헌 | `server/src/vm_server/inspections.py` multipart 업로드·단건 조회 | 합성 JPEG/PNG·해시 검증, 사진/메타데이터 저장, 동일 ID 재시도·409 충돌·재시작 조회 시험 통과. 인증·실기기 연동은 후속 |
 | 동시에 시작: 데이터 | 한윤섭·유재윤 | `data/catalog/`, `data/templates/`, `data-pipeline/` | 후보 8종의 자료 이용조건/표본/센서 대응 검토, 개체 목록과 정답 기준. 100쌍은 검사 목표이며 수집 완료 아님 |
 | 동시에 시작: 계측 | 최승빈·정회서 | `firmware/uno_r4/visionmachine/` 실제 스케치 | 기본 센서 실측→JSONL. 요청 ID, ADC 비트수, 오류/null, USB 재연결 시험. 보정·분석도 담당 |

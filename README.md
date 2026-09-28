@@ -6,8 +6,8 @@
 
 **현재 상태: 개발 시작 패키지. 실제 진단 제품·완성 APK가 아니다.**
 
-- 실행 가능: 최소 FastAPI 서버의 상태·지원범위 조회와 검사 메타데이터 검증, 로컬 전용 실제 JPEG/PNG 업로드·SQLite 저장·단건 조회, JSON Schema/OpenAPI 생성, CSV manifest 및 개체/과실/구매묶음/중복 누수 검사, 계약·누수 회귀시험.
-- 구현 대기: 인증·이력·삭제·실제 AI 추론, Android 촬영 APK와 실측 USB·업로드 연결, 실측 펌웨어, 실제 데이터 수집·학습·성능평가.
+- 실행 가능: 최소 FastAPI 서버의 상태·지원범위 조회와 검사 메타데이터 검증, 로컬 전용 실제 JPEG/PNG 업로드·SQLite 저장·단건 조회, Android 원본 사진 촬영·로컬 저장 앱의 디버그 빌드, JSON Schema/OpenAPI 생성, CSV manifest 및 개체/과실/구매묶음/중복 누수 검사, 계약·누수 회귀시험.
+- 구현 대기: 인증·이력·삭제·실제 AI 추론, Android 촬영 앱의 실기기 검증과 실측 USB·서버 업로드 연결, 실측 펌웨어, 실제 데이터 수집·학습·성능평가.
 - 학습 모델이 없으면 `pending_model`을 반환한다. 임의 정상 판정·정확도·가상 성능을 만들지 않는다.
 
 먼저 [START_HERE.md](START_HERE.md), 이후 [구조](docs/ARCHITECTURE.md), [커밋 기준](docs/GIT_COMMITS.md)을 읽는다. 개발은 각자의 로컬 clone에서 `main`으로 진행한다. 검증한 단위마다 commit·push하며, 선행 push가 있으면 내 커밋과 원격 변경을 병합·재검증하여 `origin/main`에 올린다.
@@ -38,7 +38,7 @@ python -m venv .venv
 
 `init-db`는 `storage/visionmachine.db`와 빈 `storage/uploads/`를 준비한다. 로컬 HTTP 업로드·조회는 구현했으나 인증과 외부 접속은 아직 없다. 유료 DB/클라우드 계약은 필요하지 않으며 실제 서비스를 운영할 PC와 외부 연결은 별도 결정한다. `VM_STORAGE_DIR` 환경변수로 위치를 바꿀 수 있고 `.env`는 자동으로 읽지 않는다.
 
-`scripts/check.py`는 의존성·pytest·계약/OpenAPI 동기화·합성 manifest·실제 localhost HTTP 기동을 점검한다. HTTP 점검 프로세스는 스크립트가 종료한다. Android/센서/AI 성능 시험은 포함하지 않는다.
+`scripts/check.py`는 의존성·pytest·계약/OpenAPI 동기화·합성 manifest·실제 localhost HTTP 기동을 점검한다. HTTP 점검 프로세스는 스크립트가 종료한다. Android 빌드·lint는 `apps/android/gradlew`로 별도 확인하며 실기기/센서/AI 성능 시험은 포함하지 않는다.
 
 ```powershell
 & ./.venv/Scripts/python.exe scripts/export_contracts.py --check
