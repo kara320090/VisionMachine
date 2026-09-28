@@ -9,12 +9,12 @@
 - 로컬 SQLite 초기화 CLI, 저장 경로 설정, 설치 패키지에 포함하는 SQL. 재실행 시 데이터 보존, 외래키, 알 수 없는 DB 거부, 실패 롤백 시험.
 - 로컬 전용 실제 JPEG/PNG multipart 업로드·파일/SQLite 저장·검사 단건 조회. 사진 해시·디코딩·바이트/픽셀 상한, 재시도 200·충돌 409, 재시작 조회를 검증함.
 - 실제 구현 API에서 생성한 OpenAPI, JSON Schema 동기화 검사, 실제 localhost HTTP smoke.
-- Android Kotlin/Compose 프로젝트와 Gradle wrapper, 기존 카메라 앱으로 원본 JPEG를 앱 전용 파일에 저장하고 로컬 목록으로 표시하는 첫 APK. 빌드 완료, 실기기 촬영 왕복은 미검증.
+- Android Kotlin/Compose 프로젝트와 Gradle wrapper, 기존 카메라 앱으로 원본 JPEG를 앱 전용 파일에 저장하고 로컬 목록으로 표시하는 첫 APK. 디버그 앱의 loopback multipart 전송·수동 재시도·분석 대기 표시까지 구현. 실기기 촬영 왕복은 미검증.
 - `scripts/check.py` 단일 검사 명령, Linux/Windows GitHub Actions 구성.
 
 ## 다음에 구현할 것
 1. 서버: 사진 업로드 이후 인증·소유자별 접근, 이력·삭제·백업/복구, 실모델 추론 연결. 현재 업로드는 loopback 개발용이다.
-2. 앱: 첫 촬영·저장 APK의 실기기 왕복·취소·복귀를 시험하고, 실제 서버 업로드·USB 수신·결과/이력 화면을 연결한다.
+2. 앱: 촬영·저장 APK의 실기기 왕복·취소·복귀와 ADB reverse를 이용한 실제 서버 왕복을 시험하고, USB 실측 수신·인증된 운영 전송·결과/이력 화면을 연결한다.
 3. 계측: UNO R4 실제 센서 읽기, USB 패킷, 보정/오류/재연결 시험.
 4. 데이터: 실제 자료 확보·이용조건 확인·현장 라벨 기준·개체 목록·정제·분할. 지금 예제는 모두 합성.
 5. AI: 첫 실제 RGB 모델, 센서 단독·융합 학습 및 평가. 모델·성능 수치는 아직 없음.
@@ -42,5 +42,7 @@
 2026-09-28 서버 개발: 로컬 전용 사진 업로드·저장·조회 API를 구현했다. JPEG/PNG 디코딩과 SHA-256, 12 MiB·24 Mpixel 한도, 동일 검사 ID 재시도와 충돌, 저장 실패 정리, SQLite 재시작 조회를 합성 이미지로 검증했다. `scripts/check.py`에서 pytest 61건·계약/OpenAPI·HTTP smoke가 통과했다. 인증·외부 접속·실모델 추론·이력/삭제·강제 종료 후 orphan 파일 자동 정리는 아직 없다.
 
 2026-09-28 Android 개발: Kotlin/Compose와 Gradle wrapper를 추가하고 기존 카메라 호출·앱 전용 원본 사진 저장·로컬 기록 목록을 구현했다. JDK 17/SDK 35에서 디버그 APK 빌드·lint가 통과했다. Android 17 에뮬레이터에서 앱 화면·외부 카메라 호출·취소 시 빈 파일 정리를 확인했고, 합성 JPEG 계측 시험 3건이 연결된 에뮬레이터에서 통과했다. 가상 카메라는 실제 파일을 기록하지 않아 성공 촬영 왕복과 사진 보기, 실휴대폰 호환성은 아직 미검증이다. USB·서버 업로드·AI 결과는 다음 단위다.
+
+2026-09-29 Android 전송 개발: 앱 전용 JPEG의 SHA-256을 계산하고 실제 검사 계약 메타데이터와 multipart로 loopback 서버에 보내는 디버그 경로를 구현했다. 저장된 전송 상태·실패 코드·중단 복구를 통해 동일 검사 ID로 수동 재시도할 수 있다. 서버의 `pending_model`을 분석 대기로 표시한다. JDK 17/SDK 35에서 디버그 APK·lint와 에뮬레이터 계측 시험 6건이 통과했다(합성 사진과 기기 내 가짜 HTTP 서버 사용). 실제 PC 서버와 ADB reverse 왕복, 실휴대폰 촬영/전송, 인증된 HTTPS 운영 경로는 아직 시험·구현하지 않았다.
 
 개발 인계: [NEXT_STEPS](NEXT_STEPS.md), 최신 배선·조립도: [HARDWARE](HARDWARE.md), 구매 가격·총액: [PURCHASE_PLAN](PURCHASE_PLAN.md). 검증한 단위마다 main에서 commit하고 origin/main에 push한다. 다른 사람이 먼저 push했으면 양쪽 커밋을 보존하여 병합·재검증한 뒤 다시 push한다. 모든 작업 프롬프트와 Git 절차를 이 원칙으로 통일했다.

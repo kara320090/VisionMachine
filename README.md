@@ -6,8 +6,8 @@
 
 **현재 상태: 개발 시작 패키지. 실제 진단 제품·완성 APK가 아니다.**
 
-- 실행 가능: 최소 FastAPI 서버의 상태·지원범위 조회와 검사 메타데이터 검증, 로컬 전용 실제 JPEG/PNG 업로드·SQLite 저장·단건 조회, Android 원본 사진 촬영·로컬 저장 앱의 디버그 빌드, JSON Schema/OpenAPI 생성, CSV manifest 및 개체/과실/구매묶음/중복 누수 검사, 계약·누수 회귀시험.
-- 구현 대기: 인증·이력·삭제·실제 AI 추론, Android 촬영 앱의 실기기 검증과 실측 USB·서버 업로드 연결, 실측 펌웨어, 실제 데이터 수집·학습·성능평가.
+- 실행 가능: 최소 FastAPI 서버의 상태·지원범위 조회와 검사 메타데이터 검증, 로컬 전용 실제 JPEG/PNG 업로드·SQLite 저장·단건 조회, Android 원본 사진 촬영·로컬 저장·디버그 loopback 전송과 수동 재시도, JSON Schema/OpenAPI 생성, CSV manifest 및 개체/과실/구매묶음/중복 누수 검사, 계약·누수 회귀시험.
+- 구현 대기: 인증·이력·삭제·실제 AI 추론, Android 촬영 앱의 실기기 검증과 실측 USB 연결, 실측 펌웨어, 실제 데이터 수집·학습·성능평가.
 - 학습 모델이 없으면 `pending_model`을 반환한다. 임의 정상 판정·정확도·가상 성능을 만들지 않는다.
 
 먼저 [START_HERE.md](START_HERE.md), 이후 [구조](docs/ARCHITECTURE.md), [커밋 기준](docs/GIT_COMMITS.md)을 읽는다. 개발은 각자의 로컬 clone에서 `main`으로 진행한다. 검증한 단위마다 commit·push하며, 선행 push가 있으면 내 커밋과 원격 변경을 병합·재검증하여 `origin/main`에 올린다.
@@ -34,7 +34,7 @@ python -m venv .venv
 & ./.venv/Scripts/python.exe -m uvicorn vm_server.main:app --host 127.0.0.1 --port 8000
 ```
 
-`http://127.0.0.1:8000/docs`에서 실제 구현된 API만 확인한다. 앱에서 접속하는 LAN 서버·HTTPS·사용자 인증은 아직 구성하지 않았다.
+`http://127.0.0.1:8000/docs`에서 실제 구현된 API만 확인한다. Android 디버그 앱은 USB 디버깅 연결 뒤 `adb reverse tcp:8000 tcp:8000`으로 PC loopback 서버에 접속한다. LAN 서버·HTTPS·사용자 인증은 아직 구성하지 않았다.
 
 `init-db`는 `storage/visionmachine.db`와 빈 `storage/uploads/`를 준비한다. 로컬 HTTP 업로드·조회는 구현했으나 인증과 외부 접속은 아직 없다. 유료 DB/클라우드 계약은 필요하지 않으며 실제 서비스를 운영할 PC와 외부 연결은 별도 결정한다. `VM_STORAGE_DIR` 환경변수로 위치를 바꿀 수 있고 `.env`는 자동으로 읽지 않는다.
 

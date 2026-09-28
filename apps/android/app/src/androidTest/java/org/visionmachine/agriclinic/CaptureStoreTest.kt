@@ -65,4 +65,52 @@ class CaptureStoreTest {
         assertFalse(file.exists())
         assertTrue(CaptureStore(context).all().isEmpty())
     }
+
+    @Test
+    fun failedUploadKeepsTheSameInspectionIdForRetry() {
+        val store = CaptureStore(context)
+        val capture = store.prepare("synthetic-plant", "synthetic-batch", "lettuce")
+        val file = File(context.filesDir, "photos/${capture.inspectionId}.jpg")
+        file.outputStream().use { output ->
+            Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888)
+                .compress(Bitmap.CompressFormat.JPEG, 90, output)
+        }
+        try {
+            assertTrue(store.finish(true))
+            store.updateUpload(capture.inspectionId, UploadState.UPLOADING)
+            store.updateUpload(capture.inspectionId, UploadState.FAILED, "NETWORK_ERROR")
+            val retry = CaptureStore(context).all().single()
+            assertEquals(capture.inspectionId, retry.inspectionId)
+            assertEquals(UploadState.FAILED, retry.uploadState)
+            assertEquals("NETWORK_ERROR", retry.uploadError)
+            store.updateUpload(retry.inspectionId, UploadState.UPLOADED, analysisStatus = "pending_model")
+            val uploaded = CaptureStore(context).all().single()
+            assertEquals(UploadState.UPLOADED, uploaded.uploadState)
+            assertEquals("pending_model", uploaded.analysisStatus)
+            assertEquals(null, uploaded.uploadError)
+        } finally {
+            file.delete()
+        }
+    }
+
+    @Test
+    fun interruptedUploadCanBeRetriedAfterRestart() {
+        val store = CaptureStore(context)
+        val capture = store.prepare("synthetic-plant", "synthetic-batch", "basil")
+        val file = File(context.filesDir, "photos/${capture.inspectionId}.jpg")
+        file.outputStream().use { output ->
+            Bitmap.createBitmap(2, 2, Bitmap.Config.ARGB_8888)
+                .compress(Bitmap.CompressFormat.JPEG, 90, output)
+        }
+        try {
+            assertTrue(store.finish(true))
+            store.updateUpload(capture.inspectionId, UploadState.UPLOADING)
+            val restarted = CaptureStore(context)
+            restarted.recoverInterruptedUploads()
+            assertEquals(UploadState.FAILED, restarted.all().single().uploadState)
+            assertEquals("INTERRUPTED", restarted.all().single().uploadError)
+        } finally {
+            file.delete()
+        }
+    }
 }

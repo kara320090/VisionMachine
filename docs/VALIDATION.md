@@ -45,3 +45,5 @@ JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 �
 2026-09-28 Android 검증: JDK 17/SDK 35에서 `apps/android/gradlew.bat :app:assembleDebug :app:lintDebug :app:connectedDebugAndroidTest`를 실행했다. APK 빌드와 lint(오류 0, 호환되는 고정 의존성에 대한 업데이트 알림 5건), 합성 JPEG 저장/재로드·취소·잘못된 이미지 거부 계측 시험 3건이 통과했다. Android 17 에뮬레이터에서 화면 기동·카메라 호출·취소 시 빈 파일 삭제를 확인했다. 에뮬레이터 카메라가 출력 사진을 기록하지 않아 성공 촬영·사진 보기·실휴대폰 시험은 미완료다. APK와 시험 사진은 Git에서 제외했다.
 
 일회용 `_ANTIGRAVITY_START_HERE.md`의 준비 작업을 완료하고 결과를 STATUS/VALIDATION/NEXT_STEPS에 남긴 뒤 해당 파일만 삭제했다. 상시 AGENTS/rules/prompts는 보존한다.
+
+2026-09-29 Android 디버그 전송 검증: JDK 17/SDK 35에서 `:app:assembleDebug :app:lintDebug :app:connectedDebugAndroidTest` 성공. 에뮬레이터 계측 시험 6건 중 새 시험은 합성 JPEG의 multipart 전송(기기 내 loopback 가짜 서버가 검사 ID·SHA-256·센서 미취득을 확인), 실패 상태·동일 ID 재시도, 전송 중 앱 종료 후 복구를 확인한다. 이 시험은 실제 PC FastAPI 서버와 USB 장치 왕복을 뜻하지 않는다.

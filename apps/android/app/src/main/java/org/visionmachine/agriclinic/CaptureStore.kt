@@ -18,7 +18,13 @@ data class CaptureRecord(
     val cropCode: String,
     val photoUri: String,
     val capturedAt: String,
+    val uploadState: UploadState = UploadState.SAVED,
+    val uploadError: String? = null,
+    val analysisStatus: String? = null,
+    val analysisOutcome: String? = null,
 )
+
+enum class UploadState { SAVED, UPLOADING, FAILED, UPLOADED }
 
 data class PendingCapture(
     val inspectionId: String,
@@ -42,6 +48,11 @@ class CaptureStore(private val context: Context) {
                 item.getString("inspectionId"), item.getString("subjectId"),
                 item.getString("batchId"), item.getString("cropCode"),
                 item.getString("photoUri"), item.getString("capturedAt"),
+                runCatching { UploadState.valueOf(item.optString("uploadState", "SAVED")) }
+                    .getOrDefault(UploadState.SAVED),
+                item.optString("uploadError").ifEmpty { null },
+                item.optString("analysisStatus").ifEmpty { null },
+                item.optString("analysisOutcome").ifEmpty { null },
             )
         }.reversed()
     }
@@ -109,4 +120,34 @@ class CaptureStore(private val context: Context) {
     }
 
     fun fileFor(record: CaptureRecord): Uri = Uri.parse(record.photoUri)
+
+    @Synchronized
+    fun updateUpload(
+        inspectionId: String,
+        state: UploadState,
+        errorCode: String? = null,
+        analysisStatus: String? = null,
+        analysisOutcome: String? = null,
+    ) {
+        val records = JSONArray(prefs.getString("records", "[]"))
+        var found = false
+        for (index in 0 until records.length()) {
+            val item = records.getJSONObject(index)
+            if (item.getString("inspectionId") != inspectionId) continue
+            item.put("uploadState", state.name)
+            item.put("uploadError", errorCode ?: "")
+            item.put("analysisStatus", analysisStatus ?: "")
+            item.put("analysisOutcome", analysisOutcome ?: "")
+            found = true
+            break
+        }
+        check(found) { "Unknown inspection ID" }
+        check(prefs.edit().putString("records", records.toString()).commit()) { "Could not save upload state" }
+    }
+
+    @Synchronized
+    fun recoverInterruptedUploads() {
+        val records = all().filter { it.uploadState == UploadState.UPLOADING }
+        records.forEach { updateUpload(it.inspectionId, UploadState.FAILED, "INTERRUPTED") }
+    }
 }
