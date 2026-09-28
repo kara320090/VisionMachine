@@ -170,7 +170,7 @@
           },
           "crop_code": {
             "enum": [
-              "tomato",
+              "cherry_tomato",
               "pepper",
               "cucumber",
               "lettuce",

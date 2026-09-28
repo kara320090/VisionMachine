@@ -35,4 +35,6 @@
 
 2026-09-28 사용자 결정: 후보 8종을 토마토·고추·오이·상추·청경채·가지·바질·로즈마리로 변경하고 계약 crop code·합성 예제에 반영했다. 시연용 토마토·상추 모종 키트는 17,500원, 참여기업 검토회의는 72,090원으로 편성해 총 500,000원을 유지한다. 판매 페이지의 표시가·옵션과 배송 정책을 확인했으며 실구매·실기기 시험을 뜻하지 않는다. 생성 계약과 OpenAPI를 갱신하고 `scripts/check.py`에서 pytest 56건·계약/HTTP 검증을 통과했다. 상세 가격과 링크는 [PURCHASE_PLAN](PURCHASE_PLAN.md)에 있다.
 
+2026-09-28 후속 결정 반영: 후보 및 구매 작물을 방울토마토·상추로 수정했다. 계약 crop code는 `cherry_tomato`로 바꾸고 합성 예제·생성 계약·OpenAPI를 동기화했다. 구매 계획은 작물 키트 16,000원과 참여기업 검토회의 73,590원(36,795원 × 2회)으로 총 500,000원이다. `scripts/check.py`에서 pytest 56건, 계약·OpenAPI·합성 manifest·HTTP 검증이 통과했다. 앞선 같은 날의 토마토 품종 및 가격 기록은 이 항목으로 대체한다.
+
 개발 인계: [NEXT_STEPS](NEXT_STEPS.md), 최신 배선·조립도: [HARDWARE](HARDWARE.md), 구매 가격·총액: [PURCHASE_PLAN](PURCHASE_PLAN.md). 검증한 단위마다 main에서 commit하고 origin/main에 push한다. 다른 사람이 먼저 push했으면 양쪽 커밋을 보존하여 병합·재검증한 뒤 다시 push한다. 모든 작업 프롬프트와 Git 절차를 이 원칙으로 통일했다.

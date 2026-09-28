@@ -21,7 +21,7 @@
 | AI | `ml/` | 한윤섭·최승빈 |
 | 공통 입출력 | `packages/contracts/`, `contracts/` | 연결되는 파트 공동 검토 |
 
-각 파트의 첫 구현 단위와 인계 조건은 [NEXT_STEPS](docs/NEXT_STEPS.md)에 있다. 폴더별 README는 앞으로 만들 파일과 실제 구현을 구분한다. 공개 정상·병해 이미지 후보와 내려받기 방법은 [DATASET_REVIEW](docs/DATASET_REVIEW.md), 센서 전기 구성은 [HARDWARE](docs/HARDWARE.md), 실제 제품 치수와 장착 통과 조건은 [HARDWARE_FIT_CHECK](docs/HARDWARE_FIT_CHECK.md), 공구 없는 조립 순서는 [HARDWARE_ASSEMBLY_GUIDE](docs/HARDWARE_ASSEMBLY_GUIDE.md), 2026-09-28 토마토·상추 구매 계획과 500,000원 산식은 [PURCHASE_PLAN](docs/PURCHASE_PLAN.md)에서 확인한다. 이전 구매 의사결정 PDF는 2026-09-20 당시 비교 기록이며 최신 예산으로 사용하지 않는다.
+각 파트의 첫 구현 단위와 인계 조건은 [NEXT_STEPS](docs/NEXT_STEPS.md)에 있다. 폴더별 README는 앞으로 만들 파일과 실제 구현을 구분한다. 공개 정상·병해 이미지 후보와 내려받기 방법은 [DATASET_REVIEW](docs/DATASET_REVIEW.md), 센서 전기 구성은 [HARDWARE](docs/HARDWARE.md), 실제 제품 치수와 장착 통과 조건은 [HARDWARE_FIT_CHECK](docs/HARDWARE_FIT_CHECK.md), 공구 없는 조립 순서는 [HARDWARE_ASSEMBLY_GUIDE](docs/HARDWARE_ASSEMBLY_GUIDE.md), 2026-09-28 방울토마토·상추 구매 계획과 500,000원 산식은 [PURCHASE_PLAN](docs/PURCHASE_PLAN.md)에서 확인한다. 이전 구매 의사결정 PDF는 2026-09-20 당시 비교 기록이며 최신 예산으로 사용하지 않는다.
 
 ## Python 빠른 실행 (Windows PowerShell, Python 3.12)
 

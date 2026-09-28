@@ -5,7 +5,7 @@
   "subject_type": "plant",
   "parent_plant_id": null,
   "batch_id": "synthetic-batch-001",
-  "crop_code": "tomato",
+  "crop_code": "cherry_tomato",
   "captured_at": "2026-09-19T00:00:00Z",
   "capture_source": "synthetic",
   "image_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
