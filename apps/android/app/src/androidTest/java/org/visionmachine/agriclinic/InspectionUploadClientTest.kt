@@ -20,6 +20,23 @@ import java.util.concurrent.atomic.AtomicReference
 @RunWith(AndroidJUnit4::class)
 class InspectionUploadClientTest {
     @Test
+    fun mockCompletionRetainsVisibleMockFlag() {
+        val id = "11111111-1111-4111-8111-111111111111"
+        val response = """{"inspection_id":"$id","analysis":{"status":"completed","origin":"mock","is_mock_input":false,"outcome":"suspected_abnormality"}}"""
+        val result = parseUploadResponse(id, response)
+        assertEquals("suspected_abnormality", result.outcome)
+        assertTrue(result.isMock)
+    }
+
+    @Test
+    fun pendingModelCannotBePresentedAsNormalDiagnosis() {
+        val id = "11111111-1111-4111-8111-111111111111"
+        val response = """{"inspection_id":"$id","analysis":{"status":"pending_model","origin":"none","is_mock_input":false,"outcome":"no_visible_abnormality"}}"""
+        val error = runCatching { parseUploadResponse(id, response) }.exceptionOrNull()
+        assertEquals("INVALID_RESPONSE", (error as UploadFailure).code)
+    }
+
+    @Test
     fun sendsTheSavedPhotoAndContractMetadataToLoopback() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         context.getSharedPreferences("captures_v1", Context.MODE_PRIVATE).edit().clear().commit()
@@ -68,7 +85,7 @@ class InspectionUploadClientTest {
                                 assertEquals("", input.readLineAscii())
                             }
                             requestBody.set(bytes.toByteArray())
-                            val response = """{"inspection_id":"${record.inspectionId}","analysis":{"status":"pending_model","outcome":null}}"""
+                            val response = """{"inspection_id":"${record.inspectionId}","analysis":{"status":"pending_model","origin":"none","is_mock_input":false,"outcome":null}}"""
                             val payload = response.toByteArray(Charsets.UTF_8)
                             socket.getOutputStream().write(
                                 "HTTP/1.1 201 Created\r\nContent-Type: application/json\r\nContent-Length: ${payload.size}\r\nConnection: close\r\n\r\n"
@@ -89,6 +106,7 @@ class InspectionUploadClientTest {
                 serverError.get()?.let { throw AssertionError("Loopback server failed", it) }
                 assertEquals("pending_model", result.analysisStatus)
                 assertEquals(null, result.outcome)
+                assertEquals(false, result.isMock)
             }
             val body = requestBody.get().toString(Charsets.ISO_8859_1)
             val sha = MessageDigest.getInstance("SHA-256").digest(file.readBytes())

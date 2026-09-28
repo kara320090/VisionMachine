@@ -47,4 +47,6 @@
 
 2026-09-29 USB 패킷 입력 준비: JSONL 바이트 분할/복수 줄 조립, 4096바이트 상한, UTF-8·필수 필드·센서 수치 범위·현재 검사 ID 검사와 모의 자료 표시 파서를 추가했다. USB 장치 권한·포트 연결·실측 수신은 아직 없으며 이 파서의 성공을 센서 통합 완료로 보지 않는다.
 
+2026-09-29 결과 표시 보완: 서버 응답의 `origin`·`is_mock_input`을 검사하고 모의 완료 결과는 앱 기록에 모의로 저장·표시한다. `pending_model` 응답에 판정값이 섞이면 잘못된 응답으로 거부한다. 에뮬레이터 계측 시험 14건과 디버그 APK·lint가 통과했다.
+
 개발 인계: [NEXT_STEPS](NEXT_STEPS.md), 최신 배선·조립도: [HARDWARE](HARDWARE.md), 구매 가격·총액: [PURCHASE_PLAN](PURCHASE_PLAN.md). 검증한 단위마다 main에서 commit하고 origin/main에 push한다. 다른 사람이 먼저 push했으면 양쪽 커밋을 보존하여 병합·재검증한 뒤 다시 push한다. 모든 작업 프롬프트와 Git 절차를 이 원칙으로 통일했다.

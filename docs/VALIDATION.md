@@ -51,3 +51,5 @@ JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 �
 2026-09-29 USB 패킷 파서 검증: `:app:assembleDebug :app:lintDebug :app:connectedDebugAndroidTest` 성공. 전체 에뮬레이터 계측 시험 12건 중 새 6건은 요청 생성, 여러 read에 나뉜 줄·한 read의 복수 줄, 이전 요청 ID 거부, 4096바이트 초과 줄 뒤 복구, 잘못된 UTF-8·결측 오류코드 거부, 종료 시 미완료 줄 폐기를 확인한다. 첫 시도는 에뮬레이터 종료로 `No connected devices`였고 재기동 후 12건 모두 통과했다. USB 장치·실측값 검증은 아니다.
 
 2026-09-29 실제 로컬 서버 왕복: 개발 PC의 FastAPI를 `127.0.0.1:8000`에서 실행하고 Android 에뮬레이터에 `adb reverse tcp:8000 tcp:8000`을 설정했다. 일회성 계측 시험에서 합성 JPEG로 `InspectionUploadClient`의 기본 주소에 POST하여 201, 같은 검사 ID GET에서 200과 `sensor_absence_reason=not_acquired`, `pending_model` 응답을 확인했다. 전체 계측 시험 13건 통과 후 일회성 시험 코드는 제거했다. 실제 휴대폰 카메라·USB 실측·외부 네트워크·AI 진단 시험은 아니다.
+
+2026-09-29 모의 결과 표시 보완: 디버그 APK 빌드·lint와 에뮬레이터 계측 시험 14건 통과. 새 시험은 모의 완료 결과의 모의 표시 유지와 분석 대기 응답에 판정값이 섞인 경우 거부를 확인한다. 앞선 실제 서버 왕복은 이 보완 전 코드에서 수행했으며, 보완 후 전송 형식은 기존 가짜 서버 시험으로 재확인했다.

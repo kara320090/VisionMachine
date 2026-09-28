@@ -83,10 +83,11 @@ class CaptureStoreTest {
             assertEquals(capture.inspectionId, retry.inspectionId)
             assertEquals(UploadState.FAILED, retry.uploadState)
             assertEquals("NETWORK_ERROR", retry.uploadError)
-            store.updateUpload(retry.inspectionId, UploadState.UPLOADED, analysisStatus = "pending_model")
+            store.updateUpload(retry.inspectionId, UploadState.UPLOADED, analysisStatus = "pending_model", analysisIsMock = true)
             val uploaded = CaptureStore(context).all().single()
             assertEquals(UploadState.UPLOADED, uploaded.uploadState)
             assertEquals("pending_model", uploaded.analysisStatus)
+            assertTrue(uploaded.analysisIsMock)
             assertEquals(null, uploaded.uploadError)
         } finally {
             file.delete()

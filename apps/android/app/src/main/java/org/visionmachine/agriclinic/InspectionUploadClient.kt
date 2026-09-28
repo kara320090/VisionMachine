@@ -9,7 +9,7 @@ import java.net.URL
 import java.security.MessageDigest
 import java.util.UUID
 
-data class UploadResult(val analysisStatus: String, val outcome: String?)
+data class UploadResult(val analysisStatus: String, val outcome: String?, val isMock: Boolean)
 
 class UploadFailure(val code: String) : IOException(code)
 
@@ -79,17 +79,29 @@ class InspectionUploadClient(
                     .getOrDefault("HTTP_$status")
                 throw UploadFailure(code)
             }
-            val body = try { JSONObject(response) } catch (_: Exception) { throw UploadFailure("INVALID_RESPONSE") }
-            if (body.optString("inspection_id") != record.inspectionId) throw UploadFailure("ID_MISMATCH")
-            val analysis = body.optJSONObject("analysis") ?: throw UploadFailure("INVALID_RESPONSE")
-            val analysisStatus = analysis.optString("status")
-            if (analysisStatus !in setOf("pending_model", "completed", "failed")) {
-                throw UploadFailure("INVALID_RESPONSE")
-            }
-            val outcome = if (analysis.isNull("outcome")) null else analysis.optString("outcome")
-            return UploadResult(analysisStatus, outcome)
+            return parseUploadResponse(record.inspectionId, response)
         } finally {
             connection.disconnect()
         }
     }
+}
+
+internal fun parseUploadResponse(expectedId: String, response: String): UploadResult {
+    val body = try { JSONObject(response) } catch (_: Exception) { throw UploadFailure("INVALID_RESPONSE") }
+    if (body.optString("inspection_id") != expectedId) throw UploadFailure("ID_MISMATCH")
+    val analysis = body.optJSONObject("analysis") ?: throw UploadFailure("INVALID_RESPONSE")
+    val status = analysis.optString("status")
+    if (status !in setOf("pending_model", "completed", "failed")) throw UploadFailure("INVALID_RESPONSE")
+    val origin = analysis.optString("origin")
+    val mockInput = analysis.opt("is_mock_input")
+    if (origin !in setOf("none", "mock", "real_model") || mockInput !is Boolean) {
+        throw UploadFailure("INVALID_RESPONSE")
+    }
+    val outcome = if (analysis.isNull("outcome")) null else analysis.optString("outcome")
+    if ((status == "completed" && (origin == "none" || outcome !in setOf(
+            "no_visible_abnormality", "suspected_abnormality", "inconclusive",
+        ))) || (status != "completed" && (origin != "none" || outcome != null))) {
+        throw UploadFailure("INVALID_RESPONSE")
+    }
+    return UploadResult(status, outcome, origin == "mock" || mockInput)
 }

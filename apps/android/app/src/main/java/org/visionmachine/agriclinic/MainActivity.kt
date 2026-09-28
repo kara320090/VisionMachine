@@ -108,6 +108,7 @@ class MainActivity : ComponentActivity() {
                 store.updateUpload(
                     record.inspectionId, UploadState.UPLOADED,
                     analysisStatus = result.analysisStatus, analysisOutcome = result.outcome,
+                    analysisIsMock = result.isMock,
                 )
                 runOnUiThread {
                     records = store.all()
@@ -229,7 +230,15 @@ private fun CaptureScreen(
                             UploadState.FAILED -> "전송 실패: ${record.uploadError ?: "UNKNOWN"}"
                             UploadState.UPLOADED -> when (record.analysisStatus) {
                                 "pending_model" -> "서버 저장 완료 · AI 분석 대기"
-                                "completed" -> "분석 완료: ${record.analysisOutcome ?: "결과 없음"}"
+                                "completed" -> {
+                                    val label = when (record.analysisOutcome) {
+                                        "no_visible_abnormality" -> "뚜렷한 이상 미관찰"
+                                        "suspected_abnormality" -> "이상 의심"
+                                        "inconclusive" -> "판단 불충분"
+                                        else -> "결과 확인 필요"
+                                    }
+                                    "${if (record.analysisIsMock) "모의 결과" else "AI 분석 완료"}: $label"
+                                }
                                 else -> "서버 저장 완료 · 분석 ${record.analysisStatus ?: "상태 미확인"}"
                             }
                         }

@@ -22,6 +22,7 @@ data class CaptureRecord(
     val uploadError: String? = null,
     val analysisStatus: String? = null,
     val analysisOutcome: String? = null,
+    val analysisIsMock: Boolean = false,
 )
 
 enum class UploadState { SAVED, UPLOADING, FAILED, UPLOADED }
@@ -53,6 +54,7 @@ class CaptureStore(private val context: Context) {
                 item.optString("uploadError").ifEmpty { null },
                 item.optString("analysisStatus").ifEmpty { null },
                 item.optString("analysisOutcome").ifEmpty { null },
+                item.optBoolean("analysisIsMock", false),
             )
         }.reversed()
     }
@@ -128,6 +130,7 @@ class CaptureStore(private val context: Context) {
         errorCode: String? = null,
         analysisStatus: String? = null,
         analysisOutcome: String? = null,
+        analysisIsMock: Boolean = false,
     ) {
         val records = JSONArray(prefs.getString("records", "[]"))
         var found = false
@@ -138,6 +141,7 @@ class CaptureStore(private val context: Context) {
             item.put("uploadError", errorCode ?: "")
             item.put("analysisStatus", analysisStatus ?: "")
             item.put("analysisOutcome", analysisOutcome ?: "")
+            item.put("analysisIsMock", analysisIsMock)
             found = true
             break
         }
