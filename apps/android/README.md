@@ -34,3 +34,5 @@ wrapper JAR/properties와 빌드 설정을 커밋한다. local.properties·APK/A
 계측 시험 실행: Android 에뮬레이터 또는 연결된 기기가 켜진 상태에서 `./gradlew.bat :app:connectedDebugAndroidTest`(Windows) 또는 `bash ./gradlew :app:connectedDebugAndroidTest`(Linux). 합성 JPEG만 사용하며 원본 작물 사진은 시험에 넣지 않는다.
 
 `SensorPacketFramer`는 USB CDC 입력 바이트에서 4096바이트 이내 JSONL 한 줄을 조립하고 계약 필드·범위·현재 검사 ID를 확인한다. `mode=mock`을 그대로 표시하고 잘못된 UTF-8, 불완전/초과 줄, 이전 검사 응답을 거부한다. 아직 Android USB 권한·serial 장치 연결이나 실측 패킷 수신은 구현하지 않았다.
+
+에뮬레이터에서 합성 JPEG와 ADB reverse를 사용해 실제 로컬 FastAPI 서버의 업로드 201·조회 200을 확인했다. 실휴대폰 카메라·USB 장치·운영 HTTPS 연결은 별도 시험이 필요하다.
