@@ -4,22 +4,44 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+val uploadKeystore = providers.environmentVariable("VM_UPLOAD_KEYSTORE").orNull
+val uploadStorePassword = providers.environmentVariable("VM_UPLOAD_STORE_PASSWORD").orNull
+val uploadKeyAlias = providers.environmentVariable("VM_UPLOAD_KEY_ALIAS").orNull
+val uploadKeyPassword = providers.environmentVariable("VM_UPLOAD_KEY_PASSWORD").orNull
+val uploadSigningConfigured = listOf(
+    uploadKeystore, uploadStorePassword, uploadKeyAlias, uploadKeyPassword
+).all { !it.isNullOrBlank() }
+
 android {
     namespace = "org.visionmachine.agriclinic"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "org.visionmachine.agriclinic"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "0.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (uploadSigningConfigured) {
+            create("upload") {
+                storeFile = file(uploadKeystore!!)
+                storePassword = uploadStorePassword
+                keyAlias = uploadKeyAlias
+                keyPassword = uploadKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            if (uploadSigningConfigured) {
+                signingConfig = signingConfigs.getByName("upload")
+            }
         }
     }
 

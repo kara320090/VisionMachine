@@ -53,3 +53,5 @@ JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 �
 2026-09-29 실제 로컬 서버 왕복: 개발 PC의 FastAPI를 `127.0.0.1:8000`에서 실행하고 Android 에뮬레이터에 `adb reverse tcp:8000 tcp:8000`을 설정했다. 일회성 계측 시험에서 합성 JPEG로 `InspectionUploadClient`의 기본 주소에 POST하여 201, 같은 검사 ID GET에서 200과 `sensor_absence_reason=not_acquired`, `pending_model` 응답을 확인했다. 전체 계측 시험 13건 통과 후 일회성 시험 코드는 제거했다. 실제 휴대폰 카메라·USB 실측·외부 네트워크·AI 진단 시험은 아니다.
 
 2026-09-29 모의 결과 표시 보완: 디버그 APK 빌드·lint와 에뮬레이터 계측 시험 14건 통과. 새 시험은 모의 완료 결과의 모의 표시 유지와 분석 대기 응답에 판정값이 섞인 경우 거부를 확인한다. 앞선 실제 서버 왕복은 이 보완 전 코드에서 수행했으며, 보완 후 전송 형식은 기존 가짜 서버 시험으로 재확인했다.
+
+2026-10-16 Play 빌드 설정 검증: Temurin JDK 17, Android SDK 36에서 `:app:assembleDebug :app:lintDebug`(46개 작업)와 서명 환경변수로 `:app:bundleRelease :app:lintRelease`(56개 작업)가 모두 성공했다. 릴리스 AAB 서명은 로컬 개인 키로 적용했으며 키·암호·바이너리는 Git에 넣지 않았다. Play Console의 내부 테스트 업로드·배포 승인, 실제 Android 기기 설치는 이 빌드 성공과 별개다.

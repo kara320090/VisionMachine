@@ -40,6 +40,8 @@ python -m venv .venv
 
 `scripts/check.py`는 의존성·pytest·계약/OpenAPI 동기화·합성 manifest·실제 localhost HTTP 기동을 점검한다. HTTP 점검 프로세스는 스크립트가 종료한다. Android 빌드·lint는 `apps/android/gradlew`로 별도 확인하며 실기기/센서/AI 성능 시험은 포함하지 않는다.
 
+Google Play 내부 시험 빌드와 서명키 취급은 [PLAY_INTERNAL_TEST](docs/PLAY_INTERNAL_TEST.md)를 따른다. 현재 릴리스 빌드도 사진 촬영·로컬 저장 초기 버전이며, 센서·운영 서버·AI는 미구현이다.
+
 ```powershell
 & ./.venv/Scripts/python.exe scripts/export_contracts.py --check
 & ./.venv/Scripts/python.exe -m vm_data.validate_manifest data/examples/manifest.synthetic.csv --allow-synthetic

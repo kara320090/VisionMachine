@@ -52,3 +52,5 @@
 개발 인계: [NEXT_STEPS](NEXT_STEPS.md), 최신 배선·조립도: [HARDWARE](HARDWARE.md), 구매 가격·총액: [PURCHASE_PLAN](PURCHASE_PLAN.md). 검증한 단위마다 main에서 commit하고 origin/main에 push한다. 다른 사람이 먼저 push했으면 양쪽 커밋을 보존하여 병합·재검증한 뒤 다시 push한다. 모든 작업 프롬프트와 Git 절차를 이 원칙으로 통일했다.
 
 2026-10-07 구매안 수정: 사용자 확인에 따라 AI·SW 159,000원은 구매 목록에서 제외했다. UNO R4, 쉴드·허브, 센서 4종, USB-C 데이터 케이블을 디바이스마트 한 판매처의 동일 모델로 재조회해 160,820원(VAT 포함, 66,000원 이상 묶음 무료배송 가정)으로 정리했다. 다른 기존 구매 예상액과 회의비를 유지한 현재 편성 합계는 350,650원이며 지원액 대비 149,350원이 미배정이다. 구매·학교 예산 정정·실물 호환시험은 아직 진행하지 않았다. 상세 URL과 조건은 [PURCHASE_PLAN](PURCHASE_PLAN.md)에 기록했다.
+
+2026-10-16 Android Play 시험 준비: Google Play의 신규 앱 대상 API 36에 맞춰 compileSdk/targetSdk를 36으로, AGP를 8.10.1로, Gradle Wrapper를 8.11.1로 올렸다. 릴리스 서명은 로컬 환경변수로만 주입한다. JDK 17/SDK 36에서 디버그 APK·린트와 서명된 릴리스 AAB·린트 빌드가 통과했다. 서명키와 바이너리는 Git에서 제외한다. Play Console에 VisionMachine 앱 초안을 생성했으나, 실제 내부 테스트 출시·설치 및 기기 시험은 별도 확인이 필요하다. [PLAY_INTERNAL_TEST](PLAY_INTERNAL_TEST.md)를 따른다.
