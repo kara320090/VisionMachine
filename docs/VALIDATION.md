@@ -54,4 +54,4 @@ JSON/CSV와 테스트에 등장하는 측정값·ID·시각·해시는 합성 �
 
 2026-09-29 모의 결과 표시 보완: 디버그 APK 빌드·lint와 에뮬레이터 계측 시험 14건 통과. 새 시험은 모의 완료 결과의 모의 표시 유지와 분석 대기 응답에 판정값이 섞인 경우 거부를 확인한다. 앞선 실제 서버 왕복은 이 보완 전 코드에서 수행했으며, 보완 후 전송 형식은 기존 가짜 서버 시험으로 재확인했다.
 
-2026-10-16 Play 빌드 설정 검증: Temurin JDK 17, Android SDK 36에서 `:app:assembleDebug :app:lintDebug`(46개 작업)와 서명 환경변수로 `:app:bundleRelease :app:lintRelease`(56개 작업)가 모두 성공했다. 릴리스 AAB 서명은 로컬 개인 키로 적용했으며 키·암호·바이너리는 Git에 넣지 않았다. Play Console의 내부 테스트 업로드·배포 승인, 실제 Android 기기 설치는 이 빌드 성공과 별개다.
+2026-10-16 Play 빌드·등록 검증: Temurin JDK 17, Android SDK 36에서 `:app:assembleDebug :app:lintDebug`(46개 작업)와 서명 환경변수로 `:app:bundleRelease :app:lintRelease`(56개 작업)가 모두 성공했다. Play Console은 AAB 0.1.0, versionCode 1, minSdk 26, targetSdk 36을 확인했고 내부 테스트 트랙을 활성화하여 본인 테스터 1명에게 제공한다고 표시했다. R8 가독화 파일·네이티브 기호 미첨부 경고 2개는 남아 있다. 별도 내부 앱 공유 APK는 앱 게시 선행 요건으로 거절되었다. 기기 설치·촬영·실측 USB·운영 서버·AI 기능은 검증하지 않았다. 키·암호·바이너리는 Git에 넣지 않았다.

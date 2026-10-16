@@ -53,4 +53,4 @@
 
 2026-10-07 구매안 수정: 사용자 확인에 따라 AI·SW 159,000원은 구매 목록에서 제외했다. UNO R4, 쉴드·허브, 센서 4종, USB-C 데이터 케이블을 디바이스마트 한 판매처의 동일 모델로 재조회해 160,820원(VAT 포함, 66,000원 이상 묶음 무료배송 가정)으로 정리했다. 다른 기존 구매 예상액과 회의비를 유지한 현재 편성 합계는 350,650원이며 지원액 대비 149,350원이 미배정이다. 구매·학교 예산 정정·실물 호환시험은 아직 진행하지 않았다. 상세 URL과 조건은 [PURCHASE_PLAN](PURCHASE_PLAN.md)에 기록했다.
 
-2026-10-16 Android Play 시험 준비: Google Play의 신규 앱 대상 API 36에 맞춰 compileSdk/targetSdk를 36으로, AGP를 8.10.1로, Gradle Wrapper를 8.11.1로 올렸다. 릴리스 서명은 로컬 환경변수로만 주입한다. JDK 17/SDK 36에서 디버그 APK·린트와 서명된 릴리스 AAB·린트 빌드가 통과했다. 서명키와 바이너리는 Git에서 제외한다. Play Console에 VisionMachine 앱 초안을 생성했으나, 실제 내부 테스트 출시·설치 및 기기 시험은 별도 확인이 필요하다. [PLAY_INTERNAL_TEST](PLAY_INTERNAL_TEST.md)를 따른다.
+2026-10-16 Android Play 내부 시험: Google Play의 신규 앱 대상 API 36에 맞춰 compileSdk/targetSdk를 36으로, AGP를 8.10.1로, Gradle Wrapper를 8.11.1로 올렸다. 릴리스 서명은 로컬 환경변수로만 주입한다. JDK 17/SDK 36에서 디버그 APK·린트와 서명된 릴리스 AAB·린트 빌드가 통과했다. Play Console에 VisionMachine을 만들고 서명된 AAB 버전 0.1.0을 본인 계정 1명으로 제한한 내부 테스트 트랙에 출시했다. 콘솔은 이를 '내부 테스터에게 제공됨/검토되지 않음'으로 표시한다. 별도 APK 내부 공유는 앱 게시 선행 요건으로 거절되었다. 실기기 설치·촬영 시험, 공개 출시, 센서·서버·AI 구현은 아직 완료되지 않았다. 서명키와 바이너리는 Git에서 제외한다. [PLAY_INTERNAL_TEST](PLAY_INTERNAL_TEST.md)를 따른다.
