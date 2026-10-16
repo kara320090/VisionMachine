@@ -1,0 +1,17 @@
+﻿image_id,crop,folder_label_candidate,processed_relpath,pixel_mae_0to1
+00133688ea4763d233af613a,basil,0,basil/normal/healthy_wilted_mildew_train/images-2023-12-05T112458-168_jpeg.rf.11513352c3b88ed3100e75c7d1119ecf.jpg,0.0
+0027ff946c85379d6467e2d0,basil,1,basil/disease/fusarium/basil_health_train/IMG_20220513_212350_train_box1_jpg.rf.c791ceb487d38252b5931c27cb5a2b26.jpg,0.0
+012fde7e02f5d51b52bfda0c,bok_choy,0,bok_choy/normal/disease_detection/train/bokchoy_healthy102_jpg.rf.567338e03642b882a202c7600d080ea6.jpg,0.06959252573787233
+02de987428ec1966c223002a,bok_choy,1,bok_choy/disease/black_rot/bok_choy_disease/train/BLACK-ROT58_png_jpg.rf.67ecfb1f4fc9192f035bce9056157f0d.jpg,0.05515081090721824
+0000263b737750e25247d9f7,cucumber,0,cucumber/normal/aihub/train/V006_77_0_00_08_01_13_0_c21_20201117_0047_S01_1.JPG,0.015045601834998947
+00027d183e41e4bacb4613d2,cucumber,1,cucumber/disease/mosaic_virus/aihub/train/V006_77_1_15_08_03_12_1_1096q_20201101_7.JPG,0.007204939661651032
+raw_00cc57542c5b01d14780,kale,0,raw-kale:Day 20/Species 1/D20S1 (39).jpg,0.007257824867035603
+raw_02cc91f724b97ef1a9d0,kale,1,raw-kale:Day 10b/Species 2/D10bS2 (52).jpg,0.00626060346029648
+000c2af0784e8ff3533d44a5,lettuce,0,lettuce/normal/aihub/train/V006_77_0_00_05_03_12_0_c17_20201211_0023_S01_1.jpg,0.0021253292976611826
+001386449794e440c8f0c4db,lettuce,1,lettuce/disease/sclerotinia_disease/aihub/train/V006_77_1_09_05_03_12_1_2761e_20201014_30.jpg,0.10978441034753425
+0002a8d9c9e6f7982f28d337,pepper,0,pepper/normal/aihub/train/V006_77_0_00_02_02_13_0_c29_20201203_0062_S01_1.jpg,0.001419708534310043
+000ecdc90d13b5888e145ff2,pepper,1,pepper/disease/mild_mottle_virus/aihub/valid/V006_77_1_03_02_03_12_1_8015y_20201104_193.jpeg,0.007199260058925358
+04f6e3e498801b8a7588e75a,rosemary,0,rosemary/normal/roboflow_v5/train/346_jpg.rf.0cd227de572573ab488fb48a4013adf9.jpg,0.0
+0126c8e5ea1bbea8f7a5fcc5,rosemary,1,rosemary/damage/pest_damage/roboflow_v5/train/291_jpg.rf.d5e6bdf69cd888a123e1e758bd4d21e4.jpg,0.0
+002624955bd34d4317b6f1f5,tomato,0,tomato/normal/quality_grading_original/quality_grading_original_01189.jpg,0.001009987283143841
+0006c7ba71f0e1954e46cfb5,tomato,1,tomato/rotten/quality_grading_original/quality_grading_original_00015.jpg,0.00274414454297128

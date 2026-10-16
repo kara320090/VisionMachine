@@ -1,0 +1,25 @@
+{
+  "checked_at": "2026-10-15T22:48:47.232805+00:00",
+  "command": [
+    "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/.venv/bin/python",
+    "-B",
+    "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/reproducibility/followups/inference_v1/infer_registered.py",
+    "--checkpoint",
+    "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/runs/A_seed17/checkpoints/best.pt",
+    "--processed-relpath",
+    "cucumber/normal/aihub/train/V006_77_0_00_08_01_13_0_c21_20201117_0047_S01_1.JPG"
+  ],
+  "split": "train",
+  "image_id": "0000263b737750e25247d9f7",
+  "output": {
+    "normal": 0.9999994039535522,
+    "abnormal": 6.487848054348433e-07,
+    "label": 0,
+    "threshold": 0.5,
+    "checkpoint_sha256": "6c381d34a57d44ef1a9be9eb29790b7b825a000484bedd6444c48f77923f0ff8",
+    "adapter_version": "inference_v1"
+  },
+  "frozen_code_unchanged": true,
+  "test_used": false,
+  "purpose": "Inference adapter smoke check, not research performance"
+}

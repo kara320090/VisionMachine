@@ -1,0 +1,9 @@
+{
+  "radius": 4,
+  "bits": 64,
+  "unique_sha_images_searched": 58788,
+  "candidate_pairs": 3769,
+  "cross_crop_pairs": 253,
+  "confirmed_duplicates": 0,
+  "limitations": "Rotation, crop, color conversion and repeated scenes may evade pHash; candidates require image/provenance review."
+}

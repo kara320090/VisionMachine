@@ -1,0 +1,39 @@
+참고문헌 확인 범위와 본 연구 설계의 구분
+확인일: 2026-10-16 KST
+
+1. Atila et al. (2021)
+Plant leaf disease classification using EfficientNet deep learning model.
+Ecological Informatics 61, 101182. DOI: 10.1016/j.ecoinf.2020.101182
+출판사: https://www.sciencedirect.com/science/article/pii/S1574954120301321
+
+출판사 초록·하이라이트에서 확인: PlantVillage의 여러 식물 질병 클래스를 EfficientNet 계열과 다른 CNN의 전이학습으로 비교했다. 원본 및 증강 데이터 실험을 수행하고 모든 층을 학습 가능하게 했다.
+확인 범위: 출판사 검색 색인에 제공된 초록·본문 일부. 이번 직접 DOI/본문 요청은 403이므로 전체 원문을 새로 확보했다고 주장하지 않는다.
+본 연구에서 참고하는 부분: 식물 이미지 전이학습에 EfficientNet을 적용하는 근거.
+본 연구의 별도 결정: B0 고정, 8종 정상·이상 단일 출력, 작물×상태 가중치, 촬영 그룹 분할과 3시드. 해당 논문의 정확도를 본 연구와 직접 비교해 우수성을 주장하지 않는다.
+
+2. Shahoveisi et al. (2023)
+Application of image processing and transfer learning for the detection of rust disease.
+Scientific Reports 13, 5133. DOI: 10.1038/s41598-023-31942-9
+출판사 원문: https://www.nature.com/articles/s41598-023-31942-9
+
+출판사 초록·방법에서 확인: 해바라기·강낭콩·완두의 온실/현장 정상·녹병 사진을 모아 전이학습을 비교했다. EfficientNet-B4, ResNet50, Xception, MobileNetV2 등의 모델과 최적화 설정을 평가했다.
+본 연구에서 참고하는 부분: 여러 작물의 정상·질병 이미지를 공통 판별 문제로 다룬 사례와 촬영 배경 다양성.
+본 연구의 별도 결정: 여러 병명·부패·손상을 공통 이상으로 정의하고, 구조 비교 대신 손실 가중 단위만 통제한다. 녹병 판별 연구를 모든 이상·새 환경의 일반화 근거로 확대하지 않는다.
+
+3. Tong-Le & Doan (2026)
+A Controlled Empirical Study of Loss Functions for Imbalanced Cassava Leaf Disease Classification.
+Journal of Advances in Information Technology 17(8), 1456–1465.
+DOI: 10.12720/jait.17.8.1456-1465
+학회지 원문 정보·초록: https://www.jait.us/show-273-1924-1.html
+발행일: 2026-08-12
+
+학회지 초록에서 확인: iCassava 2019의 5분류에 CE·가중 CE·Class-Balanced·Focal Loss를 비교하며 분할·증강·최적화 조건을 맞췄다. 효과는 모델 용량과 조건에 따라 달랐고 가중치가 항상 성능을 개선하지 않았다. 단일 데이터셋·단일 시드 범위임을 명시한다.
+확인 범위: 학회지 HTML 초록·서지정보. 이번 PDF 열기 요청이 실패하여 PDF의 모든 세부 설정을 재검증했다고 주장하지 않는다.
+본 연구에서 참고하는 부분: 손실 함수 비교에서 다른 조건을 맞추고 개선·악화를 모두 보고하는 원칙.
+본 연구의 별도 결정: B0 한 구조의 상태 보정 B와 작물×상태 보정 C 비교, 공통 촬영 그룹 분할, 3시드. 다중 클래스·다중 구조·TTA 비교를 기본 실험에 추가하지 않는다.
+
+인용 원칙
+- 위 요약은 출처의 확인된 범위만 간략히 바꿔 쓴 것이다. 아직 확인하지 못한 원문 세부 절차를 본 연구의 근거라고 쓰지 않는다.
+- 연구의 가중치 수식, 배치 평균 분모, 60/20/20 그룹 분할, 2+28 epoch, 검증 지표, 0.5 임계값은 이 실험의 설계이며 위 논문들을 그대로 재현한 방법이 아니다.
+- 외부 논문의 정확도와 본 연구 수치는 데이터·라벨·분할이 달라 직접적인 순위 비교 대상으로 사용하지 않는다.
+- 실제 측정 전에는 본 연구 결과·유의성·우수성 수치를 쓰지 않는다.

@@ -1,0 +1,10 @@
+﻿stage,image_entries,unique_sha256,confirmed_photo_components,conservative_leakage_groups,independently_verified_plant_count
+processed_original_entries,60593,58788,,,UNKNOWN outside publisher plant-ID raw kale subset
+registered_raw_kale_candidates,6400,6400,,,UNKNOWN outside publisher plant-ID raw kale subset
+included_before_same_photo_deduplication,56393,55952,55482,7773,UNKNOWN outside publisher plant-ID raw kale subset
+fixed_split_distinct_photo_representatives,55482,55482,55482,7773,UNKNOWN outside publisher plant-ID raw kale subset
+train_image_list,34622,34622,34622,4666,UNKNOWN outside publisher plant-ID raw kale subset
+validation_image_list,10127,10127,10127,1554,UNKNOWN outside publisher plant-ID raw kale subset
+validation_evaluation_representatives,1898,1898,1898,1554,UNKNOWN outside publisher plant-ID raw kale subset
+test_image_list,10733,10733,10733,1553,UNKNOWN outside publisher plant-ID raw kale subset
+test_evaluation_representatives,1884,1884,1884,1553,UNKNOWN outside publisher plant-ID raw kale subset

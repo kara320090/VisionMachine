@@ -1,0 +1,6 @@
+{
+  "time": "2026-10-15T18:53:37.135539+00:00",
+  "pid": 3609929,
+  "reason": "Resume after cache build; source files remain read-only",
+  "resume_required": true
+}

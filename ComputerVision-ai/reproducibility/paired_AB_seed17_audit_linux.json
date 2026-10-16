@@ -1,0 +1,15 @@
+{
+  "checked_at": "2026-10-15T20:33:21.680838+00:00",
+  "seed": 17,
+  "conditions": [
+    "A",
+    "B"
+  ],
+  "identical_initial_model_hash": true,
+  "initial_model_sha256": "1f8bef48c224c55433d5de027b1997e35cff9dcf4ac6d54792b2081a2a32b661",
+  "same_ordered_train_ids_crops_labels": true,
+  "train_n": 34622,
+  "frozen_hashes_match": true,
+  "saved_B_weights_match_formula": true,
+  "test_used": false
+}

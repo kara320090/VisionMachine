@@ -1,0 +1,31 @@
+{
+  "checked_at": "2026-10-15T20:37:59.829727+00:00",
+  "splits": {
+    "train": {
+      "image_entries": 34622,
+      "leakage_groups": 4666,
+      "evaluation_representatives": 0
+    },
+    "validation": {
+      "image_entries": 10127,
+      "leakage_groups": 1554,
+      "evaluation_representatives": 1898,
+      "minimum_groups_per_crop_state": 12,
+      "representative_id_sha256": "95493b2d5988bf75885b31312753b50cd84bc63f27215b5161c6a6286728aa65"
+    },
+    "test": {
+      "image_entries": 10733,
+      "leakage_groups": 1553,
+      "evaluation_representatives": 1884,
+      "minimum_groups_per_crop_state": 19,
+      "representative_id_sha256": "c98b5373ec9eb77ba5fc5506706ff8c5843c88f239904899695d5172a3924a9b"
+    }
+  },
+  "cross_split_leakage_group_overlap": 0,
+  "cross_split_confirmed_photo_overlap": 0,
+  "cross_split_exact_sha_overlap": 0,
+  "one_representative_per_group_crop_state": true,
+  "all_16_eval_groups_present": true,
+  "biological_independence_proven": false,
+  "performance_computed": false
+}

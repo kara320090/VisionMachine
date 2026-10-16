@@ -1,0 +1,20 @@
+SUPERSEDED: Advancing training artifacts prove ongoing work. Do not execute the resume command while progress advances. See linux_takeover_correction_20261015T2024Z.json.
+
+Linux CLI takeover — incomplete experiment
+
+The original job is interrupted. No live job was reported by jobctl list.
+Protocol and checkpoint hashes validated without changing frozen files.
+A_seed17 checkpoint contains 2 completed epochs, 1082 updates; 28 epochs remain.
+Eight other 30-epoch runs remain. No frozen test results exist.
+Validation values are preliminary and are not test performance or an A/B/C conclusion.
+
+Resume attempt failed before launch because the configured jobctl runs directory is read-only in this session.
+Do not bypass jobctl or copy/change its controller. From a server session with ordinary access to the configured controller, first recheck jobctl list/status, then resume only if no live suite exists:
+
+python3 /home/user/codex_gpu_jobs/jobctl.py start --name crop8-main-resume --cwd /home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829 -- /usr/bin/flock -n /home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/runs/execution.lock /home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/.venv/bin/python -B -u code/run_suite.py --root /home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829 --resume
+
+The existing suite automatically runs pre-training source SHA checks, all nine runs, nine frozen tests, report generation and final source SHA checks. Preserve 30 epochs, all three seeds, all eight crops and threshold 0.5.
+After completion verify tables/abc_summary.csv, crop_metrics.csv, paired_deltas.csv, run_resources.csv; figures; paper/results_discussion_draft.txt; environment and requirements records; runs/suite_completed.json and final audit/preservation_*.json.
+
+Laptop delivery remains unverified. The server bundle SHA and size match its receipt (3518 files), but that receipt describes bundle creation only. The Windows watcher must produce nine run receipts plus the final project snapshot transfer_verified.json. Validate the destination snapshot file list, sizes and SHA-256; preserve all server files. The server cannot establish whether the laptop watcher is currently running.
+Retain single AI annotation limitations (kale and some bok_choy/rosemary), seed variability, confounding and negative A/B/C outcomes in the final discussion.

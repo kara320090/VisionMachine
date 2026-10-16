@@ -1,0 +1,11 @@
+﻿crop,label_provenance,images,leakage_groups,evaluation_representatives
+basil,original_source_metadata,4588,1042,462
+bok_choy,AI_visual_annotation,344,276,106
+bok_choy,original_source_metadata,1005,238,99
+cucumber,original_source_metadata,15637,1387,569
+kale,AI_visual_annotation,551,312,138
+lettuce,original_source_metadata,17924,1820,722
+pepper,original_source_metadata,10949,336,125
+rosemary,AI_visual_annotation,194,176,87
+rosemary,original_source_metadata,378,114,57
+tomato,original_source_metadata,3912,2180,1417

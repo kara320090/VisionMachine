@@ -1,0 +1,14 @@
+!runs/
+!runs/*/
+!runs/*/checkpoints/
+!runs/*/checkpoints/best.pt
+!**/*.jpg
+!**/*.jpeg
+!**/*.png
+!**/*.svg
+!**/*.log
+**/epoch_*.pt
+**/last.pt
+*.tar
+*.zip
+__pycache__/

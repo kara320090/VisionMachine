@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-15T19:30:50.838385+00:00",
+  "reviewer": "Codex under user delegation",
+  "image": "review/cache_preprocessing_comparison.jpg",
+  "reviewed_source_groups": 16,
+  "resolution_recipe": "ffd2410217838b5a",
+  "decision": "acceptable as common input preprocessing for pilot",
+  "observations": "Major lesions, holes, discoloration, leaf shapes and fruit blemishes remain visible in compared 224-pixel crops. Original-to-cache resampling changes fine texture and must be applied equally to every condition.",
+  "label_validation_completed": false,
+  "research_split_defined_by_this_check": false
+}

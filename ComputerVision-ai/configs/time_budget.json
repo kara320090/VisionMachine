@@ -1,0 +1,13 @@
+{
+  "user_budget_hours": 18,
+  "accepted_at": "2026-10-15T18:50:11+00:00",
+  "scope": "remaining data correction, pilot, ABC nine runs, evaluation, report, verified laptop copy",
+  "epochs_change_allowed_for_budget": false,
+  "target_utc": "2026-10-16T12:50:11+00:00",
+  "target_kst": "2026-10-16T21:50:11+09:00",
+  "time_budget_policy": "18-hour completion target, not a cutoff",
+  "stop_at_target": false,
+  "continue_until_verified_completion": true,
+  "epochs_policy": "Keep the common scientifically chosen protocol; do not truncate runs solely because the 18-hour target elapses.",
+  "clarification": "User explicitly instructed to continue after 18 hours until the requested work is complete."
+}

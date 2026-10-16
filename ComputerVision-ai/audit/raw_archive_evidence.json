@@ -1,0 +1,1755 @@
+[
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/mendeley/cucumber/01_good_bad/cucumber_good_bad.zip",
+    "size_bytes": 43377322,
+    "mtime_ns": 1766640918000000000,
+    "entries": 980,
+    "extensions": {
+      ".jpeg": 980
+    },
+    "top_paths": [
+      [
+        "Good and Bad classification of Cucumber ( Cucumis/good/good",
+        500
+      ],
+      [
+        "Good and Bad classification of Cucumber ( Cucumis/bad/bad",
+        480
+      ]
+    ],
+    "metadata": {}
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/mendeley/tomato/01_quality_grading/tomato_maturity_quality_grading.zip",
+    "size_bytes": 5454204632,
+    "mtime_ns": 1693809040000000000,
+    "entries": 2,
+    "extensions": {
+      ".zip": 2
+    },
+    "top_paths": [
+      [
+        "Tomato Maturity Detection and Quality Grading Dataset/Tomato Maturity Detection Dataset.zip",
+        1
+      ],
+      [
+        "Tomato Maturity Detection and Quality Grading Dataset/Tomato Quality Grading Dataset.zip",
+        1
+      ]
+    ],
+    "metadata": {}
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/mendeley/tomato/02_tomato_detection/tomato_detection.zip",
+    "size_bytes": 43368567,
+    "mtime_ns": 1778685758000000000,
+    "entries": 1,
+    "extensions": {
+      ".zip": 1
+    },
+    "top_paths": [
+      [
+        "Tomato_detection/Tomato_Dataset.v5.zip",
+        1
+      ]
+    ],
+    "metadata": {}
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/mendeley/tomato/03_spoiled_fresh/spoiled_fresh_fruit_dataset.zip",
+    "size_bytes": 99928214,
+    "mtime_ns": 1604254317000000000,
+    "entries": 16017,
+    "extensions": {
+      "": 17,
+      ".jpg": 16000
+    },
+    "top_paths": [
+      [
+        "FRUIT-16K/",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/10.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/539.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/377.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/296.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/458.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/935.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/89.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/1000.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/773.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/692.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/854.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/575.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/737.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/656.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/494.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/818.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/100.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/971.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/1.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/890.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/179.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/557.jpg",
+        1
+      ],
+      [
+        "FRUIT-16K/F_Lemon/395.jpg",
+        1
+      ]
+    ],
+    "metadata": {}
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/other/kale/Kale_Dataset.zip",
+    "size_bytes": 71545722270,
+    "mtime_ns": 1790539725990800624,
+    "error": "BadZipFile: Corrupt zip64 end of central directory record",
+    "listing_exit_code": 0,
+    "listing_report": "audit/raw_kale_7z_listing.txt"
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/basil/Basil Health Detection.v1i.folder.zip",
+    "size_bytes": 26044686,
+    "mtime_ns": 1790501422985730000,
+    "entries": 3240,
+    "extensions": {
+      ".txt": 2,
+      "": 12,
+      ".jpg": 3226
+    },
+    "top_paths": [
+      [
+        "README.dataset.txt",
+        1
+      ],
+      [
+        "README.roboflow.txt",
+        1
+      ],
+      [
+        "test/",
+        1
+      ],
+      [
+        "test/fusarium/",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_203013_test_box2_jpg.rf.a9c790256c52706ad2e9b1d68a477620.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_203222_train_box0_jpg.rf.4aa62537d3fc9c38b61acf4632e73990.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_203712_test_box0_jpg.rf.a035f3317fd6667db52cb066750d86ca.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_210418_valid_box1_jpg.rf.bdce7ae77e0b65c866fb49b99c170976.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_211349_train_box0_jpg.rf.6717b7aa61080c17a9018ee7c0b65600.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_211822_valid_box1_jpg.rf.1b12fba03b921ce0f2b3940f13c26b8b.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_212036_valid_box1_jpg.rf.5238e051d549a63f7d8f43a93362ea89.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_212136_valid_box1_jpg.rf.6531d22f7695ab243ed6bd1187793edf.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_212148_valid_box3_jpg.rf.f140af4183f5a057930a90ca2acee44d.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_212159_valid_box4_jpg.rf.3b9398b765e6ea72dd743f7980d9f238.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_212215-Copy_train_box1_jpg.rf.9ab6e25fc4ed98d25551d123f6751538.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_212249_train_box0_jpg.rf.c40c446aec73b7e65e3f7dfb28e844d5.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220513_212410_valid_box0_jpg.rf.028f4ecbeb7baa06aed987fcf6908087.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220528_141945_valid_box2_jpg.rf.9add268f2ba913ed8a51d6679d9b8904.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220529_103452_test_box0_jpg.rf.cc5a4d0d9207e26090efa2465a1bf5da.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220529_103924_valid_box1_jpg.rf.4b0af73de77f81bbfbb6b7f64c0b2067.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220529_103957_valid_box3_jpg.rf.fd9ba6db4cd169ee0d906f8549c3fffa.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220529_104206_train_box1_jpg.rf.8ff6cc7fb14e90f3a634c3f38ee80a07.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220529_104206_train_box1_jpg.rf.ca62e4950201432550db56e5f77f7744.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220603_164507_train_box0_jpg.rf.25d9c0f215eb96a6427d4b80e176fb33.jpg",
+        1
+      ],
+      [
+        "test/fusarium/IMG_20220603_164507_train_box0_jpg.rf.f2fde7fc6271e47a8a747eb0053d942f.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "README.dataset.txt": "# Basil Health Detection > 2025-11-06 4:31am\nhttps://universe.roboflow.com/disease-detection-2r3sj/basil-health-detection-9crhs\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n",
+      "README.roboflow.txt": "\nBasil Health Detection - v1 2025-11-06 4:31am\n==============================\n\nThis dataset was exported via roboflow.com on November 5, 2025 at 7:03 PM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 3226 images.\nLeaves are annotated in folder format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 224x224 (Stretch)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* 50% probability of horizontal flip\n* 50% probability of vertical flip\n* Equal probability of one of the following 90-degree rotations: none, clockwise, counter-clockwise, upside-down\n* Randomly crop between 0 and 20 percent of the image\n* Random rotation of between -15 and +15 degrees\n* Random shear of between -10° to +10° horizontally and -10° to +10° vertically\n* Random brigthness adjustment of between -15 and +15 percent\n* Random exposure adjustment of between -10 and +10 percent\n* Random Gaussian blur of between 0 and 2.5 pixels\n* Salt and pepper noise was applied to 0.61 percent of pixels\n\n\n"
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/basil/healthy-wilted-mildew-basil.v1i.folder.zip",
+    "size_bytes": 72489157,
+    "mtime_ns": 1790501674167063000,
+    "entries": 1456,
+    "extensions": {
+      ".txt": 2,
+      "": 12,
+      ".jpg": 1442
+    },
+    "top_paths": [
+      [
+        "README.dataset.txt",
+        1
+      ],
+      [
+        "README.roboflow.txt",
+        1
+      ],
+      [
+        "test/",
+        1
+      ],
+      [
+        "test/healthy/",
+        1
+      ],
+      [
+        "test/healthy/Plant19_front_Color_png.rf.86266e3083a9469167f4e0c108cecd09.jpg",
+        1
+      ],
+      [
+        "test/healthy/Plant1_top_Color_png.rf.3a0c7a86d43aaf395418f177608eb964.jpg",
+        1
+      ],
+      [
+        "test/healthy/Plant38_front_Color_png.rf.4b832bf8c9d51a8e1b3fa9350289e9cb.jpg",
+        1
+      ],
+      [
+        "test/healthy/Plant3_front_Color_png.rf.e4f3e9e9e694910329600fa8b7eb07e4.jpg",
+        1
+      ],
+      [
+        "test/healthy/download-20-_jpeg.rf.37010f2380c5ff944491b5cbce4b113b.jpg",
+        1
+      ],
+      [
+        "test/healthy/download_jpeg.rf.f9b4ec7476f6b5a730b3c00ba85eaca9.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-2023-12-05T111625-578_jpeg.rf.5f58cae5e861e795babb7767493e316a.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-2023-12-05T111929-829_jpeg.rf.29d0806224a656c5430eb5210dde9d16.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-2023-12-05T111958-874_jpeg.rf.21d35d308dcd625affd1c91a9b3a875a.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-2023-12-05T112036-860_jpeg.rf.18528a1615d7105d40d5be2e0569ac2b.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-2023-12-05T113508-994_jpeg.rf.1c0dc38f3c95bca687d88067d73e8d09.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-2023-12-05T113733-082_jpeg.rf.7ff56a3247f9c2535549f497b7636791.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-2023-12-05T114114-289_jpeg.rf.f1eab032d0d3dbb611db2fd57600c4c3.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-2023-12-05T114145-354_jpeg.rf.8fb3290d2703f1866f592d9184a3aefe.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-76-_jpeg.rf.d298ba2fe2c7208d8a5dce8f50b3a92e.jpg",
+        1
+      ],
+      [
+        "test/healthy/images-88-_jpeg.rf.b2ec4c3b57de91039c5b47ebf34613a9.jpg",
+        1
+      ],
+      [
+        "test/mildew/",
+        1
+      ],
+      [
+        "test/mildew/Basil-with-Mildew-103_jpg.rf.75327da7c35f4c15bab16f091f8208d4.jpg",
+        1
+      ],
+      [
+        "test/mildew/Basil-with-Mildew-11_jpg.rf.90e7de0918d8ff49b67ba4ff20a208a4.jpg",
+        1
+      ],
+      [
+        "test/mildew/Basil-with-Mildew-138_jpg.rf.c5c77be3350727b76ae4ca61db9f7a8a.jpg",
+        1
+      ],
+      [
+        "test/mildew/Basil-with-Mildew-139_jpg.rf.8e2f79714eb8f2a23d0ba445db662a4c.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "README.dataset.txt": "# healthy-wilted-mildew-basil > 2023-12-18 2:33pm\nhttps://universe.roboflow.com/gial/healthy-wilted-mildew-basil\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n",
+      "README.roboflow.txt": "\nhealthy-wilted-mildew-basil - v1 2023-12-18 2:33pm\n==============================\n\nThis dataset was exported via roboflow.com on December 18, 2023 at 12:34 PM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 1442 images.\nBasil are annotated in folder format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Equal probability of one of the following 90-degree rotations: none, clockwise, counter-clockwise\n* Random rotation of between -17 and +17 degrees\n* Random shear of between -19° to +19° horizontally and -19° to +19° vertically\n* Random brigthness adjustment of between -25 and +25 percent\n* Random exposure adjustment of between -26 and +26 percent\n\n\n"
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/Bok Choy Disease Detection.v2i.yolov11.zip",
+    "size_bytes": 115953938,
+    "mtime_ns": 1790499993185664000,
+    "entries": 3942,
+    "extensions": {
+      ".txt": 1967,
+      ".yaml": 1,
+      "": 9,
+      ".jpg": 1965
+    },
+    "top_paths": [
+      [
+        "README.dataset.txt",
+        1
+      ],
+      [
+        "README.roboflow.txt",
+        1
+      ],
+      [
+        "data.yaml",
+        1
+      ],
+      [
+        "test/",
+        1
+      ],
+      [
+        "test/images/",
+        1
+      ],
+      [
+        "test/images/105_jpg.rf.a3d643fb27f8c556b5c75eb27d3c5211.jpg",
+        1
+      ],
+      [
+        "test/images/106_jpg.rf.5b547dedb15e0f6c4e2c0ff9b2618626.jpg",
+        1
+      ],
+      [
+        "test/images/106_jpg.rf.fc1fc4a7f3e86581e7b6be387111aa8e.jpg",
+        1
+      ],
+      [
+        "test/images/107_jpg.rf.5e9d8391bb85e61161e2296e40f0c0cd.jpg",
+        1
+      ],
+      [
+        "test/images/108_jpg.rf.7787dd10878a49868c07d6447f91cac1.jpg",
+        1
+      ],
+      [
+        "test/images/108_jpg.rf.a35b0a954cb79f42c9e4ec7d35f03689.jpg",
+        1
+      ],
+      [
+        "test/images/10_jpg.rf.5b66b0671e71002d710b54647cdc1d02.jpg",
+        1
+      ],
+      [
+        "test/images/110_jpg.rf.cd58285071e1790c71101d6cd3649812.jpg",
+        1
+      ],
+      [
+        "test/images/111_jpg.rf.6271543f41f314ebe1fd3bd4710354ed.jpg",
+        1
+      ],
+      [
+        "test/images/113_jpg.rf.c2ca4c39d5f4a2cc2c24f377de4103c4.jpg",
+        1
+      ],
+      [
+        "test/images/11_jpg.rf.fad83fdce47922c88d63d4024001ff5f.jpg",
+        1
+      ],
+      [
+        "test/images/123_jpg.rf.01ce26ce031b72a63773391dd79adcd9.jpg",
+        1
+      ],
+      [
+        "test/images/123_jpg.rf.06fc364181068f03685046c319b8078b.jpg",
+        1
+      ],
+      [
+        "test/images/12_jpg.rf.1a5c0a26bf2855d4251c1ee609af8e3f.jpg",
+        1
+      ],
+      [
+        "test/images/12_jpg.rf.92ba5202a9abac55cfc22a5bd7058d17.jpg",
+        1
+      ],
+      [
+        "test/images/13_jpg.rf.adcd9e8ed3d79925b431067d7d001dfb.jpg",
+        1
+      ],
+      [
+        "test/images/13_jpg.rf.d5674adb4def8466fd9060cfcf482535.jpg",
+        1
+      ],
+      [
+        "test/images/14_jpg.rf.03bf6e6d7db0c6db5292234e84263813.jpg",
+        1
+      ],
+      [
+        "test/images/14_jpg.rf.ee99e48bb8d5a678e2bfe537a4f6e48a.jpg",
+        1
+      ],
+      [
+        "test/images/16_jpg.rf.b37f4294447c1ad8ee8ae7381d81e1d5.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "README.dataset.txt": "# Bok Choy Disease Detection > 2025-04-25 10:15pm\nhttps://universe.roboflow.com/bok-choy/bok-choy-disease-detection\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n",
+      "README.roboflow.txt": "\nBok Choy Disease Detection - v2 2025-04-25 10:15pm\n==============================\n\nThis dataset was exported via roboflow.com on April 25, 2025 at 3:16 PM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 1965 images.\nHealthy-diseased are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Resize to 640x640 (Stretch)\n\nNo image augmentation techniques were applied.\n\n\n",
+      "data.yaml": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 2\nnames: ['diseased', 'healthy']\n\nroboflow:\n  workspace: bok-choy\n  project: bok-choy-disease-detection\n  version: 2\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/bok-choy/bok-choy-disease-detection/dataset/2"
+    },
+    "label_entries": 1965,
+    "empty_label_entries": 0,
+    "label_class_counts": {
+      "0": 1387,
+      "1": 1772
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/PechayDoctor.v1i.yolov11.zip",
+    "size_bytes": 171632664,
+    "mtime_ns": 1790500025319587000,
+    "entries": 5636,
+    "extensions": {
+      ".txt": 2814,
+      ".yaml": 1,
+      "": 9,
+      ".jpg": 2812
+    },
+    "top_paths": [
+      [
+        "README.dataset.txt",
+        1
+      ],
+      [
+        "README.roboflow.txt",
+        1
+      ],
+      [
+        "data.yaml",
+        1
+      ],
+      [
+        "test/",
+        1
+      ],
+      [
+        "test/images/",
+        1
+      ],
+      [
+        "test/images/1471_jpg.rf.72182bfa2ef8d65fc93f1af919aec8ce.jpg",
+        1
+      ],
+      [
+        "test/images/1627_jpg.rf.30460c138faa62bbf04fbefb3fe86762.jpg",
+        1
+      ],
+      [
+        "test/images/19-Copy-2-Copy_jpg.rf.1a4f8b62757834546d6c3d7defb9f1b7.jpg",
+        1
+      ],
+      [
+        "test/images/1e3dcaa6-ea18-470d-a770-82e1e5f068e9_jpg.rf.1e984b864277a79f4612db72bbd2d57d.jpg",
+        1
+      ],
+      [
+        "test/images/2-37-_jpg.rf.ba48878c9c047c33c14a2bbb62b999f9.jpg",
+        1
+      ],
+      [
+        "test/images/2-6-_jpg.rf.95dd4cc3ba626bcba9131cac34c0b01b.jpg",
+        1
+      ],
+      [
+        "test/images/21-Copy-2-Copy_jpg.rf.b35321e88e26ad35dc08789960ab096c.jpg",
+        1
+      ],
+      [
+        "test/images/253_jpg.rf.8c70fb7f4bcb87b91ad89d8ed293dd2f.jpg",
+        1
+      ],
+      [
+        "test/images/262_jpg.rf.62db68ee3dd58a26e56169312381ff9f.jpg",
+        1
+      ],
+      [
+        "test/images/267_jpg.rf.33d5dde15d45263dc16fbe648fbb5b4c.jpg",
+        1
+      ],
+      [
+        "test/images/269_jpg.rf.e01976279c3d6c8b5d233b64af223c34.jpg",
+        1
+      ],
+      [
+        "test/images/270_jpg.rf.f672e716879854df114c073daaeb3755.jpg",
+        1
+      ],
+      [
+        "test/images/276_jpg.rf.08c2d4c2c54bf7682dbaf53b99a41d70.jpg",
+        1
+      ],
+      [
+        "test/images/277_jpg.rf.ea58b6bea1e078f08051e8b1cbfd9efd.jpg",
+        1
+      ],
+      [
+        "test/images/281_jpg.rf.9a114013d6907082b2983665b26fc767.jpg",
+        1
+      ],
+      [
+        "test/images/282_jpg.rf.ab6e082642b5a505043c4d0b2b8cff21.jpg",
+        1
+      ],
+      [
+        "test/images/2865772b-0b03-4c6f-9c24-3e40687792da_jpg.rf.128e7c602976af257512d636c3475d08.jpg",
+        1
+      ],
+      [
+        "test/images/2865772b-0b03-4c6f-9c24-3e40687792da_jpg.rf.61432d694054e1c6c2eff53ac70bb9f2.jpg",
+        1
+      ],
+      [
+        "test/images/2865772b-0b03-4c6f-9c24-3e40687792da_jpg.rf.ee328506609bdeb9d03a3dba2b1c55af.jpg",
+        1
+      ],
+      [
+        "test/images/286_jpg.rf.e7f108efa037ad49f37fc52e656c5dd9.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "README.dataset.txt": "# PechayDoctor > 2024-10-04 6:48pm\nhttps://universe.roboflow.com/pechaydoctor/pechaydoctor\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n",
+      "README.roboflow.txt": "\nPechayDoctor - v1 2024-10-04 6:48pm\n==============================\n\nThis dataset was exported via roboflow.com on December 28, 2024 at 6:54 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 2812 images.\nPechay-Diseases are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n* Grayscale (CRT phosphor)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Equal probability of one of the following 90-degree rotations: none, clockwise, counter-clockwise, upside-down\n* Random Gaussian blur of between 0 and 2.5 pixels\n\n\n",
+      "data.yaml": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 6\nnames: ['Alternaria', 'Bacterial Soft Rot', 'Blackrot', 'Downy-Mildew', 'HEALTHY-PECHAY', 'Undefined']\n\nroboflow:\n  workspace: pechaydoctor\n  project: pechaydoctor\n  version: 1\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/pechaydoctor/pechaydoctor/dataset/1"
+    },
+    "label_entries": 2812,
+    "empty_label_entries": 0,
+    "label_class_counts": {
+      "1": 766,
+      "5": 2953,
+      "0": 9639,
+      "4": 405,
+      "2": 991,
+      "3": 2582
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/bok choy disease.v1i.yolov11.zip",
+    "size_bytes": 84006371,
+    "mtime_ns": 1790500361279356000,
+    "entries": 2961,
+    "extensions": {
+      ".jpg": 1478,
+      ".txt": 1480,
+      ".yaml": 3
+    },
+    "top_paths": [
+      [
+        "data.yaml",
+        3
+      ],
+      [
+        "train/images/bokchoy_healthy171_jpg.rf.c7a098484ba0560b4e48960eff403b19.jpg",
+        1
+      ],
+      [
+        "train/images/de647052-8fc5-4aa0-9560-ae37000405d7_jpg.rf.3049feb3808fb7780bb49e777dbc9a2c.jpg",
+        1
+      ],
+      [
+        "train/images/bokchoy_healthy182_jpg.rf.b7f67abe108d3a3e269e6f84cc204eea.jpg",
+        1
+      ],
+      [
+        "train/images/dm6_JPG_jpg.rf.35a53ad2d53afdfd19bdc05f276ce4e4.jpg",
+        1
+      ],
+      [
+        "train/images/dm6_JPG_jpg.rf.ff675a536a95caa00c56d56bf220db35.jpg",
+        1
+      ],
+      [
+        "train/images/dm15_JPG_jpg.rf.5d791864e5b83115e23024cb4aac1a23.jpg",
+        1
+      ],
+      [
+        "train/images/dm13_JPG_jpg.rf.229ef181c139e263e7e7b350124115b9.jpg",
+        1
+      ],
+      [
+        "train/images/dm16_JPG_jpg.rf.3524b6dc2f12d98af7b9789b4532aa4e.jpg",
+        1
+      ],
+      [
+        "train/images/bokchoy_healthy172_jpg.rf.7642d351190b172edcd4265ea729168c.jpg",
+        1
+      ],
+      [
+        "train/images/dm15_JPG_jpg.rf.3efb80794b76c55300d3ee5ac64bfaac.jpg",
+        1
+      ],
+      [
+        "train/images/BLACK-ROT68_png_jpg.rf.42691b147fdb4729bc3f3ea65f4808f7.jpg",
+        1
+      ],
+      [
+        "train/images/thumb-40-_jpg.rf.bdf6165bd9e667f3d80411083a09359f.jpg",
+        1
+      ],
+      [
+        "train/images/bokchoy_healthy182_jpg.rf.942cbc2bbacba1dc08e5145912421f1e.jpg",
+        1
+      ],
+      [
+        "train/images/bokchoy_healthy189_jpg.rf.4af3b322b08332e0b38bfe41e65180e9.jpg",
+        1
+      ],
+      [
+        "train/images/dm6_JPG_jpg.rf.eaa980e627dbc19315f73beedb00aebe.jpg",
+        1
+      ],
+      [
+        "train/images/thumb-5-_jpg.rf.4c865072b81941b27245856980d72f76.jpg",
+        1
+      ],
+      [
+        "train/images/dm3_JPG_jpg.rf.03383d767409c33f6cc3291d6a68da7b.jpg",
+        1
+      ],
+      [
+        "train/images/thumb-27-_jpg.rf.51f5fb39bf14ccebb9fc47bee9b7124e.jpg",
+        1
+      ],
+      [
+        "train/images/dm15_JPG_jpg.rf.ac5b0b74007db98efa2af9d2e4d8b0bb.jpg",
+        1
+      ],
+      [
+        "train/images/BLACK-ROT67_png_jpg.rf.1d326207e9eec463c69572d157114397.jpg",
+        1
+      ],
+      [
+        "train/images/bokchoy_healthy136_jpg.rf.13cc9741bbb20716b4e1963d8bf84c2d.jpg",
+        1
+      ],
+      [
+        "train/images/bokchoy_healthy158_jpg.rf.1290eecd57958a6b7e956e028a1a0db3.jpg",
+        1
+      ],
+      [
+        "train/images/bokchoy_healthy158_jpg.rf.738151772768f4fc113d7e4ac13df10b.jpg",
+        1
+      ],
+      [
+        "train/images/bokchoy_healthy158_jpg.rf.7d430049f643f7617707cb72e2c60938.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "data.yaml": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 4\nnames: ['bok_choy-alternaria', 'bok_choy-blackrot', 'bok_choy-downy_mildew', 'bok_choy-healthy']\n\nroboflow:\n  workspace: khoa-wlumr\n  project: bok-choy-disease-lt8gr-el6ub\n  version: 1\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/khoa-wlumr/bok-choy-disease-lt8gr-el6ub/dataset/1",
+      "README.roboflow.txt": "\nbok choy disease - v1 2026-01-23 5:12pm\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 9:07 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 1478 images.\nBok-choy are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 512x512 (Stretch)\n* Auto-contrast via contrast stretching\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Randomly crop between 0 and 29 percent of the image\n* Random Gaussian blur of between 0 and 4.8 pixels\n* Salt and pepper noise was applied to 1.92 percent of pixels\n\n\n",
+      "README.dataset.txt": "# bok choy disease > 2026-01-23 5:12pm\nhttps://universe.roboflow.com/khoa-wlumr/bok-choy-disease-lt8gr-el6ub\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+    },
+    "label_entries": 1478,
+    "empty_label_entries": 0,
+    "label_class_counts": {
+      "3": 812,
+      "2": 2326,
+      "0": 2055,
+      "1": 1027
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v2-healthy-kales.yolov11.zip",
+    "size_bytes": 10127496,
+    "mtime_ns": 1790503479785202000,
+    "entries": 296,
+    "extensions": {
+      ".jpg": 146,
+      ".txt": 148,
+      ".yaml": 2
+    },
+    "top_paths": [
+      [
+        "data.yaml",
+        2
+      ],
+      [
+        "train/images/A260152XX_01475_jpg.rf.56e35b4e780b0d05ccd6455af751b0cf.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01431_jpg.rf.173796cbc63c359a0b75ac908db9b0f8.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01638_jpg.rf.83450861c549ea4d1bc1f360f9aff499.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01715_jpg.rf.897ab0f70271231e99c2be990a62f1b9.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01515_jpg.rf.001b47fc76d8a7c053309249e4e20d98.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01416_jpg.rf.94aa3627569732167408cad079e653a1.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01465_jpg.rf.df53db23bb045f34fc25be98dc544541.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01724_jpg.rf.01d40e1f157aa02faf0fd9d81a862162.jpg",
+        1
+      ],
+      [
+        "train/images/kaleasdf4662_jpg.rf.adf9e4b6a964fa98089dd74c1bc4664b.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_02059_jpg.rf.464397991e957b4d3259069d783d5e14.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01580_jpg.rf.fa435597f59ea3f533707ad0f6ff780c.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01914_jpg.rf.581bc7dc8fd05e1f0a7b9f91e8a2b9be.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01536_jpg.rf.971d182f72a2b6e4864f23c121f1d4e6.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01562_jpg.rf.396e563f1efa0fffaff3ed01c1499f2f.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01459_jpg.rf.21094c96e7742a0b6397a8742edf961d.jpg",
+        1
+      ],
+      [
+        "train/images/4dac7257b2b5f4b6bfbc9bf378980dbc1_jpg.rf.6ba8aee67eaf3879c08ddaa5cce78b29.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01622_jpg.rf.633405a7fcf655b23a6edb8e11507e8c.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01628_jpg.rf.9b44b8f2e3744084a6b3d11b973972a7.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01754_jpg.rf.b723ff237940646fe13bb903e4a7da80.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01699_jpg.rf.df5f8af0b8ad5615d9b664b5c621bb67.jpg",
+        1
+      ],
+      [
+        "train/images/kaleasf523264123_jpg.rf.930ad4bbfc9d54d3a3cdd0c418f99a6f.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01688_jpg.rf.d89c53a8a432b76aa1ac970a2f019d1d.jpg",
+        1
+      ],
+      [
+        "train/images/kaleasd02kms_jpg.rf.1f2bf4028e483109062c34213e70ecbc.jpg",
+        1
+      ],
+      [
+        "train/images/A260152XX_01458_jpg.rf.efa87f12495648caa7a0f2f3d39e825a.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "data.yaml": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 1\nnames: ['59']\n\nroboflow:\n  workspace: vitakale\n  project: kale-plant-models\n  version: 2\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/vitakale/kale-plant-models/dataset/2",
+      "README.roboflow.txt": "\nKale plant models  - v2 Healthy kales\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 10:03 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 146 images.\nKales are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Random Gaussian blur of between 0 and 1 pixels\n\nThe following transformations were applied to the bounding boxes of each image:\n* 50% probability of horizontal flip\n* 50% probability of vertical flip\n* Randomly crop between 0 and 10 percent of the bounding box\n* Random brigthness adjustment of between -5 and +5 percent\n\n\n",
+      "README.dataset.txt": "# Kale plant models  > Healthy kales\nhttps://universe.roboflow.com/vitakale/kale-plant-models\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+    },
+    "label_entries": 146,
+    "empty_label_entries": 0,
+    "label_class_counts": {
+      "0": 189
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v3-black-rot.yolov11.zip",
+    "size_bytes": 7342114,
+    "mtime_ns": 1790503408858008000,
+    "entries": 235,
+    "extensions": {
+      ".jpg": 115,
+      ".txt": 117,
+      ".yaml": 3
+    },
+    "top_paths": [
+      [
+        "data.yaml",
+        3
+      ],
+      [
+        "test/images/alternaria_png.rf.8bca0e9149ccee40e56a2f552f755830.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA31_jpg.rf.2968818a8d6a90c3b3a34cb75547539b.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA6_png.rf.26eaec7fd843e2c7fbe89bc88dd6cf86.jpg",
+        1
+      ],
+      [
+        "test/images/WHITE-RUST69_jpg.rf.5e193caea2a09e63d6d05489ce9e70eb.jpg",
+        1
+      ],
+      [
+        "test/images/ALTERNARIA2_png.rf.c5b4818952f800bd1f2908148118db12.jpg",
+        1
+      ],
+      [
+        "test/images/ALTERNARIA40_png.rf.5fac2669c55b6a813bbe5ac703ed6911.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA21_jpg.rf.82261d880824ac682bfc9056101021ad.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA50_png.rf.773f1b7e57089cabc37ca2f390cf24d9.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA21_jpg.rf.0cdcda352405b1582a3dc2358b55fb41.jpg",
+        1
+      ],
+      [
+        "test/images/ALTERNARIA45_png.rf.164d5924c4b87cfb658b7ab6ffd7ec04.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA50_png.rf.5d88fbfb1b63f24cfd23b531c4630f06.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA28_jpg.rf.7dc3f3c94180cc30bdd64699b4db07a6.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA5_png.rf.aaa1f68e351491897c8b8014bfc39478.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA3_png.rf.63c9ae2718d6fdc98fa09275b372b857.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA3_png.rf.958c4750fbab18b86c0b3e97eb325dea.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA37_jpg.rf.b88d86f99bc2dd2e74417fb75769f1c3.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA12_png.rf.51a072f060e003a76bce622c8c3a7e0d.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA6_png.rf.52e730f97c53371a3dec862073634a68.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA24_png.rf.f73a9f9ab484a567633f5e29263afe58.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA12_png.rf.325394691c777dcdc2e47ef1ff82755a.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA30_jpg.rf.f5372d0cf006dae0d65ec78c5c3ece55.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA39_jpg.rf.851a80abd924732850ac584f5323b4ad.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA11_png.rf.99b75487fa7271d3a836699cc1bd9291.jpg",
+        1
+      ],
+      [
+        "train/images/ALTERNARIA53_png.rf.e1ae7b225e1584a560d4574344ef32e7.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "data.yaml": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 0\nnames: []\n\nroboflow:\n  workspace: vitakale\n  project: kale-plant-models\n  version: 3\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/vitakale/kale-plant-models/dataset/3",
+      "README.roboflow.txt": "\nKale plant models  - v3 Black Rot\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 10:03 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 115 images.\nKales are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Random Gaussian blur of between 0 and 1 pixels\n\nThe following transformations were applied to the bounding boxes of each image:\n* 50% probability of horizontal flip\n* 50% probability of vertical flip\n* Randomly crop between 0 and 10 percent of the bounding box\n* Random brigthness adjustment of between -5 and +5 percent\n\n\n",
+      "README.dataset.txt": "# Kale plant models  > Black Rot\nhttps://universe.roboflow.com/vitakale/kale-plant-models\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+    },
+    "label_entries": 115,
+    "empty_label_entries": 115,
+    "label_class_counts": {}
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v4-downy-mildew.yolov11.zip",
+    "size_bytes": 4511944,
+    "mtime_ns": 1790503381435933000,
+    "entries": 175,
+    "extensions": {
+      ".jpg": 85,
+      ".txt": 87,
+      ".yaml": 3
+    },
+    "top_paths": [
+      [
+        "data.yaml",
+        3
+      ],
+      [
+        "test/images/de647052-8fc5-4aa0-9560-ae37000405d7_jpg.rf.0979ce7aa26824dc6d3e72d198afbd03.jpg",
+        1
+      ],
+      [
+        "test/images/brassica-downy-mildew-2_jpg.rf.c0697b0474e0ad661b93262183241c8d.jpg",
+        1
+      ],
+      [
+        "test/images/dm6_JPG_jpg.rf.0b8c0177d9f08888cc76a211ff9f4702.jpg",
+        1
+      ],
+      [
+        "test/images/2865772b-0b03-4c6f-9c24-3e40687792da_jpg.rf.4668e0f2e80e1170894e0e5555563633.jpg",
+        1
+      ],
+      [
+        "test/images/dm16_JPG_jpg.rf.97a835c105144774b03ba312683f8733.jpg",
+        1
+      ],
+      [
+        "test/images/dm6_JPG_jpg.rf.b05d050bc13ab88d239f90d8a25be1ae.jpg",
+        1
+      ],
+      [
+        "test/images/2865772b-0b03-4c6f-9c24-3e40687792da_jpg.rf.2d488e497cd0ef61d53853c365343025.jpg",
+        1
+      ],
+      [
+        "train/images/549156d2-4bd7-44ed-b71c-abf194a0ecb8_jpg.rf.02bc4e1d7d9715237df62abf996212f0.jpg",
+        1
+      ],
+      [
+        "test/images/c2aa2ea2-3134-4f1b-b845-8df30dd54a39_jpg.rf.54cac93fc7e0774838935769a56d67d4.jpg",
+        1
+      ],
+      [
+        "test/images/5b6c5155-8643-4ea8-869d-8120fcde1866_jpg.rf.d095e6c9e59b931188eb305d6b96090e.jpg",
+        1
+      ],
+      [
+        "train/images/c2aa2ea2-3134-4f1b-b845-8df30dd54a39_jpg.rf.45d1b02a1279f3352434f0b894c70ab4.jpg",
+        1
+      ],
+      [
+        "test/images/cf365846-8e80-435b-833d-a151cd1ce26b_jpg.rf.02c07aa6ff98c06a7762346668ca3d5f.jpg",
+        1
+      ],
+      [
+        "train/images/dm6_JPG_jpg.rf.5a34856e642a735a0f27c279932bd2c6.jpg",
+        1
+      ],
+      [
+        "train/images/1e3dcaa6-ea18-470d-a770-82e1e5f068e9_jpg.rf.892ab1a863c7a68f50e0ca1542be9c4e.jpg",
+        1
+      ],
+      [
+        "train/images/dm1_JPG_jpg.rf.11d6acdea7f138bb3933c0a09b03265a.jpg",
+        1
+      ],
+      [
+        "train/images/DownyMildew_jpg.rf.a3ae73e3bf68b171c91eb8ba49f225c9.jpg",
+        1
+      ],
+      [
+        "train/images/ws5_jpg.rf.8628390b33568eb84ccc9072faea5727.jpg",
+        1
+      ],
+      [
+        "train/images/de647052-8fc5-4aa0-9560-ae37000405d7_jpg.rf.c8435b3c087c7898a59f8aaf737eedad.jpg",
+        1
+      ],
+      [
+        "train/images/ws5_jpg.rf.43283aaac2148095e09297d7ea14eda2.jpg",
+        1
+      ],
+      [
+        "train/images/2865772b-0b03-4c6f-9c24-3e40687792da_jpg.rf.134fbd209930466a41d72d1281af611e.jpg",
+        1
+      ],
+      [
+        "train/images/de647052-8fc5-4aa0-9560-ae37000405d7_jpg.rf.504480d217cde43cb4aa6feffa5d12c8.jpg",
+        1
+      ],
+      [
+        "train/images/dm5_JPG_jpg.rf.03b9052a1ceb5d07e62609c641c5419e.jpg",
+        1
+      ],
+      [
+        "train/images/549156d2-4bd7-44ed-b71c-abf194a0ecb8_jpg.rf.c3155854adb70905c89b69815b886a37.jpg",
+        1
+      ],
+      [
+        "train/images/50217ed6-0a8f-4caf-a132-7eed5694e77d_jpg.rf.1795d0aa3ec9f2bfc25173fb38acff1f.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "data.yaml": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 1\nnames: ['Downy-Mildew']\n\nroboflow:\n  workspace: vitakale\n  project: kale-plant-models\n  version: 4\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/vitakale/kale-plant-models/dataset/4",
+      "README.roboflow.txt": "\nKale plant models  - v4 Downy Mildew\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 10:02 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 85 images.\nKales are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n\nNo image augmentation techniques were applied.\n\n\n",
+      "README.dataset.txt": "# Kale plant models  > Downy Mildew\nhttps://universe.roboflow.com/vitakale/kale-plant-models\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+    },
+    "label_entries": 85,
+    "empty_label_entries": 57,
+    "label_class_counts": {
+      "0": 28
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v5-powdery-mildew.yolov11.zip",
+    "size_bytes": 9261363,
+    "mtime_ns": 1790503361693880000,
+    "entries": 263,
+    "extensions": {
+      ".jpg": 129,
+      ".txt": 131,
+      ".yaml": 3
+    },
+    "top_paths": [
+      [
+        "data.yaml",
+        3
+      ],
+      [
+        "test/images/image-26-_JPG.rf.de9555043d28fe57e3a9fc2de9cea112.jpg",
+        1
+      ],
+      [
+        "test/images/image-47-_JPG.rf.cca505cb259b5b762e4e744eeae61438.jpg",
+        1
+      ],
+      [
+        "test/images/image-76-_JPG.rf.908ce65ed1cc1d47c147f8932e61044e.jpg",
+        1
+      ],
+      [
+        "test/images/image-118-_JPG.rf.60262c395c02d709a46d9eb5f64325d1.jpg",
+        1
+      ],
+      [
+        "test/images/image-94-_JPG.rf.5f7eafa353e3ff353add74151ef1627f.jpg",
+        1
+      ],
+      [
+        "train/images/image-6-_JPG.rf.08e8f9ecc043cbe0f29fb9017275d0de.jpg",
+        1
+      ],
+      [
+        "test/images/image-92-_JPG.rf.56dffb7527bd06dd4954c817b2e18e52.jpg",
+        1
+      ],
+      [
+        "test/images/image-114-_JPG.rf.2a34d09362085b84e6e4952220ade1e4.jpg",
+        1
+      ],
+      [
+        "test/images/image-65-_JPG.rf.cec07372c47a8ec8e386b2dff0316e21.jpg",
+        1
+      ],
+      [
+        "test/images/image-32-_JPG.rf.c26c2a736bda2954a3d243c0d1576cd5.jpg",
+        1
+      ],
+      [
+        "test/images/image-23-_JPG.rf.29434530a1847a4b58169a8be770d6ee.jpg",
+        1
+      ],
+      [
+        "test/images/image-57-_jpg.rf.d130d639f9c86f560f1319916665759b.jpg",
+        1
+      ],
+      [
+        "test/images/image-70-_JPG.rf.5ae1cd9150115af4ad93d9101b81b65d.jpg",
+        1
+      ],
+      [
+        "train/images/image-82-_JPG.rf.15122e8ec939509bbef373419d5d2ce4.jpg",
+        1
+      ],
+      [
+        "test/images/image-69-_JPG.rf.837c6f22ecb0b68b791a77ec6536e4a9.jpg",
+        1
+      ],
+      [
+        "train/images/image-67-_JPG.rf.4396fe98c1aa8d01d8b93242d17d42d6.jpg",
+        1
+      ],
+      [
+        "test/images/image-2-_JPG.rf.7653cdd2b64054e533bf70ee281ea4f4.jpg",
+        1
+      ],
+      [
+        "train/images/image-56-_JPG.rf.3e3c95db0fe930f935aa7cedd0209016.jpg",
+        1
+      ],
+      [
+        "train/images/image-40-_JPG.rf.6aad33acc8e52c8876a21606ab4d3ef4.jpg",
+        1
+      ],
+      [
+        "train/images/image-83-_jpg.rf.df15515bb8c6a99e7ac3eddd9f491428.jpg",
+        1
+      ],
+      [
+        "train/images/image-113-_JPG.rf.7f763d3f0703c39ab8622002a374ed92.jpg",
+        1
+      ],
+      [
+        "train/images/image-127-_JPG.rf.aef3645d8b14d5aa88d9427ce1be5258.jpg",
+        1
+      ],
+      [
+        "train/images/image-60-_JPG.rf.b9a75b1385075e93a0772410a9792613.jpg",
+        1
+      ],
+      [
+        "train/images/image-22-_JPG.rf.dd02c2d71ed745a30ac6791b419e6536.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "data.yaml": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 1\nnames: ['mildew']\n\nroboflow:\n  workspace: vitakale\n  project: kale-plant-models\n  version: 5\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/vitakale/kale-plant-models/dataset/5",
+      "README.roboflow.txt": "\nKale plant models  - v5 Powdery Mildew\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 10:02 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 129 images.\nKales are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n\nNo image augmentation techniques were applied.\n\n\n",
+      "README.dataset.txt": "# Kale plant models  > Powdery Mildew\nhttps://universe.roboflow.com/vitakale/kale-plant-models\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+    },
+    "label_entries": 129,
+    "empty_label_entries": 0,
+    "label_class_counts": {
+      "0": 129
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/lettuce/Selada.v2i.folder.zip",
+    "size_bytes": 2354334,
+    "mtime_ns": 1790494665367163000,
+    "entries": 199,
+    "extensions": {
+      ".jpg": 197,
+      ".txt": 2
+    },
+    "top_paths": [
+      [
+        "test/busuk/ba6_3_png.rf.6e9298a23f863730dc2a8b1b11f4d802.jpg",
+        1
+      ],
+      [
+        "test/segar/22_jpg.rf.cf72d48d8d75a079d7678f90455b8764.jpg",
+        1
+      ],
+      [
+        "test/busuk/03_0_png.rf.726186f6d9208ec746a41d6bb42f4fcc.jpg",
+        1
+      ],
+      [
+        "test/segar/34_jpeg.rf.0ae54a419b7d7437ca68ada066929da7.jpg",
+        1
+      ],
+      [
+        "test/segar/42_jpg.rf.a76b19ce2661fca4db110cf794ca3842.jpg",
+        1
+      ],
+      [
+        "test/segar/59_jpg.rf.498fd34f26710c404e61740371962c53.jpg",
+        1
+      ],
+      [
+        "test/segar/77_jpg.rf.856652b350b4b78ebd1ee80c0c13f12a.jpg",
+        1
+      ],
+      [
+        "test/busuk/s01_2_png.rf.b3d9a2563ea84df37cb2fd0408300784.jpg",
+        1
+      ],
+      [
+        "test/busuk/18_2_png.rf.911958c5720d7ab11646c2d694b35b57.jpg",
+        1
+      ],
+      [
+        "test/segar/84_jpg.rf.18af8e5aa666ee83efd7df563ea80801.jpg",
+        1
+      ],
+      [
+        "test/busuk/augmented_8_jpg.rf.10f4758e887ffb948ba8be2468f1cb6d.jpg",
+        1
+      ],
+      [
+        "test/segar/55_jpg.rf.16d3eec51b237d84f5f90828939bb7ed.jpg",
+        1
+      ],
+      [
+        "test/busuk/s02_2_png.rf.23dda18332b214c41bcd93b9e72c560e.jpg",
+        1
+      ],
+      [
+        "test/segar/23_jpg.rf.95dd08a20bd3ea3643f6527707d765ea.jpg",
+        1
+      ],
+      [
+        "test/busuk/augmented_33_jpg.rf.a430052022587350bde09b84b6e6d350.jpg",
+        1
+      ],
+      [
+        "test/segar/91_png.rf.67e114ce244e466deae1ae6e6541fb6b.jpg",
+        1
+      ],
+      [
+        "train/busuk/augmented_29_jpg.rf.3b8544e848fcdc7294d84b3064523c7c.jpg",
+        1
+      ],
+      [
+        "train/segar/61_jpg.rf.2bb3e8c9d56760fe7af9a6ad083dedd5.jpg",
+        1
+      ],
+      [
+        "test/busuk/augmented_31_jpg.rf.0e3aeb3de370c108909512a4fae0ce34.jpg",
+        1
+      ],
+      [
+        "train/segar/60_jpg.rf.b53212c580bd966b5dbe4b1f0f35a6fe.jpg",
+        1
+      ],
+      [
+        "train/busuk/augmented_21_jpg.rf.54c52b04497b54ded8bf69235f8806df.jpg",
+        1
+      ],
+      [
+        "train/busuk/augmented_0_jpg.rf.4d6ebccee583404dfd948349794831b1.jpg",
+        1
+      ],
+      [
+        "train/busuk/augmented_25_jpg.rf.4c953b4dc1d674adb07918874741c14d.jpg",
+        1
+      ],
+      [
+        "train/segar/66_jpg.rf.92cb63a35a3d356386781a617c93f758.jpg",
+        1
+      ],
+      [
+        "train/busuk/ba1_0-Copy_png.rf.6293b41bb765c582d48c850f6e5b78d6.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "README.roboflow.txt": "\nSelada - v2 2025-02-17 3:24pm\n==============================\n\nThis dataset was exported via roboflow.com on September 22, 2026 at 5:21 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 197 images.\nBusuk-segar are annotated in folder format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 224x224 (Stretch)\n\nNo image augmentation techniques were applied.\n\n\n",
+      "README.dataset.txt": "# Selada > 2025-02-17 3:24pm\nhttps://universe.roboflow.com/asambasa/selada-3bmjb\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/lettuce/lettuce disease.v1i.folder.zip",
+    "size_bytes": 140259062,
+    "mtime_ns": 1790494626231015000,
+    "entries": 4336,
+    "extensions": {
+      ".jpg": 4334,
+      ".txt": 2
+    },
+    "top_paths": [
+      [
+        "valid/healthy/augmented_8_jpg.rf.8a295e1cb4967ca3034e0be24f7ff62c.jpg",
+        1
+      ],
+      [
+        "train/Powdery_mildew_on_lettuce/images-5-_jpg.rf.936c968551a3b02f93d989664f60e5b5.jpg",
+        1
+      ],
+      [
+        "train/Powdery_mildew_on_lettuce/-13-_jpg.rf.fecbd78de9ebe465bd2c334e577800a9.jpg",
+        1
+      ],
+      [
+        "train/healthy/healthy_original_h52_1-png_c4eebe6b-63a7-449d-b8ec-b690f53cbb48_png.rf.0ea2feb1f7ad7803d4256231f8cdf4a6.jpg",
+        1
+      ],
+      [
+        "train/Wilt_and_leaf_blight_on_lettuce/-13-_jpg.rf.056f1d149c92aaf709b3325ba5f330d1.jpg",
+        1
+      ],
+      [
+        "train/Bacterial/augmented_182_jpg.rf.025e5e2cf9d555c5ce13228b67112c61.jpg",
+        1
+      ],
+      [
+        "valid/healthy/h1_jpg.rf.8f57c95ee2a31a71e1d39871d0d37267.jpg",
+        1
+      ],
+      [
+        "train/healthy/healthy_original_h22_4-png_5fc5f1c3-a71c-4eb3-a2f7-9d8153f9c9e7_png.rf.d07a53398e21fd19d09252f7ad28503b.jpg",
+        1
+      ],
+      [
+        "train/healthy/images-7-_jpg.rf.2d9a5b68421a87980d601da7ef21f50e.jpg",
+        1
+      ],
+      [
+        "test/Powdery_mildew_on_lettuce/-_jpg.rf.4cd9624572f79c6b9ff72991c7a851c7.jpg",
+        1
+      ],
+      [
+        "valid/healthy/h15_jpg.rf.fbc711f2fe1e10fdc0e3812cbf055c3a.jpg",
+        1
+      ],
+      [
+        "train/fungal/wl02_2_png.rf.0e12c13bd170a0691e81dbb503b0b505.jpg",
+        1
+      ],
+      [
+        "train/healthy/healthy_original_h70_2-png_335bcf23-5e05-4c13-bd07-bb82631945c6_png.rf.14343bc493c8d32d55fc663f6901f8e0.jpg",
+        1
+      ],
+      [
+        "train/healthy/healthy_original_h5_2-png_1af1520d-4184-4927-b56d-b1909b696c9a_png.rf.78598737181eee16fc38d44888abc387.jpg",
+        1
+      ],
+      [
+        "valid/healthy/augmented_45_jpg.rf.b3da95ceabbff6eca2230ee434414212.jpg",
+        1
+      ],
+      [
+        "valid/healthy/51g4XZv6KPL-_SL1024__jpg.rf.5a705659ca58123b438941740bf14187.jpg",
+        1
+      ],
+      [
+        "train/healthy/healthy_original_h22_1-png_414f07c9-d984-4e0a-94b7-72d949e45ecb_png.rf.ee10ca1e43cb6acbf1925584de188671.jpg",
+        1
+      ],
+      [
+        "train/Bacterial/augmented_117_jpg.rf.12aea9bfc61891dfb12173ddbaa19c9f.jpg",
+        1
+      ],
+      [
+        "train/Wilt_and_leaf_blight_on_lettuce/-4-_jpg.rf.1934fa4c439c5a1b06729573c995cb21.jpg",
+        1
+      ],
+      [
+        "test/Wilt_and_leaf_blight_on_lettuce/-_jpg.rf.0708e85891008df9160e401ee67a0e76.jpg",
+        1
+      ],
+      [
+        "valid/healthy/h43_3_png.rf.08289d884289272844e5b09993ff0fc2.jpg",
+        1
+      ],
+      [
+        "train/healthy/images-1-_jpg.rf.0ebb180aa2aa0ef57282c23ab0adfc12.jpg",
+        1
+      ],
+      [
+        "test/Bacterial/ba9_jpg.rf.b7348fd4dd2c3a89efc322f48858728a.jpg",
+        1
+      ],
+      [
+        "train/healthy/healthy_original_h59_0-png_9f07b633-0c65-468c-9b6a-4303e345113e_png.rf.7e17c9ec155aefd2ee74727eccff5c73.jpg",
+        1
+      ],
+      [
+        "test/healthy/lettuce-1_jpg.rf.905c56769f425ff16e022342028a003c.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "README.roboflow.txt": "\nlettuce disease - v1 2025-03-01 1:17pm\n==============================\n\nThis dataset was exported via roboflow.com on August 15, 2026 at 11:23 PM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 4334 images.\nHealthy-fungal-bacterial are annotated in folder format.\n\nThe following pre-processing was applied to each image:\n\nNo image augmentation techniques were applied.\n\n\n",
+      "README.dataset.txt": "# lettuce disease > 2025-03-01 1:17pm\nhttps://universe.roboflow.com/leaf-5npig/lettuce-disease-uuxm6-2pz3s\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/roboflow/rosemary/Rosemary.v5-final-version.yolov11.zip",
+    "size_bytes": 18887035,
+    "mtime_ns": 1790502193077216000,
+    "entries": 2550,
+    "extensions": {
+      ".txt": 1271,
+      ".yaml": 1,
+      "": 9,
+      ".jpg": 1269
+    },
+    "top_paths": [
+      [
+        "README.dataset.txt",
+        1
+      ],
+      [
+        "README.roboflow.txt",
+        1
+      ],
+      [
+        "data.yaml",
+        1
+      ],
+      [
+        "test/",
+        1
+      ],
+      [
+        "test/images/",
+        1
+      ],
+      [
+        "test/images/108_jpg.rf.79ef3fa8724e9f0f267b57816354f888.jpg",
+        1
+      ],
+      [
+        "test/images/109_jpg.rf.e99dbb149aba044b91c81b96ac4695e1.jpg",
+        1
+      ],
+      [
+        "test/images/10_jpg.rf.93fd1390d342937c341f36a455aac4d6.jpg",
+        1
+      ],
+      [
+        "test/images/115_jpg.rf.5c4ef233a281f9406962393af29ddede.jpg",
+        1
+      ],
+      [
+        "test/images/116_jpg.rf.1d0024aa756f1430c70ca26599de427b.jpg",
+        1
+      ],
+      [
+        "test/images/116_jpg.rf.324725055973d677df404a12585ec0d8.jpg",
+        1
+      ],
+      [
+        "test/images/118_jpg.rf.52d47b54d40c196e94e4a744e9155080.jpg",
+        1
+      ],
+      [
+        "test/images/118_jpg.rf.ef7a95a4b2da380bc134430efb85c232.jpg",
+        1
+      ],
+      [
+        "test/images/121_jpg.rf.2d67090edbfc236020254862c1a7456b.jpg",
+        1
+      ],
+      [
+        "test/images/125_jpg.rf.66e5627f3bd2efb3e2df8af80e07d09f.jpg",
+        1
+      ],
+      [
+        "test/images/132_jpg.rf.ee7bb99a366e1aa034999c7b1a659fa9.jpg",
+        1
+      ],
+      [
+        "test/images/136_jpg.rf.773d93583091c1765018b3867c8b374a.jpg",
+        1
+      ],
+      [
+        "test/images/13_jpg.rf.1294560cbce2b9571329b96d4f8c81fa.jpg",
+        1
+      ],
+      [
+        "test/images/146_jpg.rf.a9e57e215a26af7bf7a7fda25c19d49f.jpg",
+        1
+      ],
+      [
+        "test/images/146_jpg.rf.aeb8bc422e743b0872a3831f865d01d7.jpg",
+        1
+      ],
+      [
+        "test/images/149_jpg.rf.caa48303f0b4539008b6ff525e71db3b.jpg",
+        1
+      ],
+      [
+        "test/images/14_jpg.rf.6ab49235f940d9cfff796a391cfdd3ee.jpg",
+        1
+      ],
+      [
+        "test/images/157_jpg.rf.afe04de970de2d7fbc00044a740f27e0.jpg",
+        1
+      ],
+      [
+        "test/images/15_jpg.rf.9de41601907d7d64d4184670faa9055a.jpg",
+        1
+      ],
+      [
+        "test/images/15_jpg.rf.bc74877688cbc4680eaed16f37eaaf3f.jpg",
+        1
+      ]
+    ],
+    "metadata": {
+      "README.dataset.txt": "# Rosemary > Final Version\nhttps://universe.roboflow.com/smart-pot/rosemary-yqkfo\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n",
+      "README.roboflow.txt": "\nRosemary - v5 Final Version\n==============================\n\nThis dataset was exported via roboflow.com on May 1, 2025 at 3:45 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 1269 images.\nCondition are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Resize to 256x256 (Stretch)\n\nThe following augmentation was applied to create 1 versions of each source image:\n\nThe following transformations were applied to the bounding boxes of each image:\n* 50% probability of horizontal flip\n* 50% probability of vertical flip\n* Random rotation of between -20 and +20 degrees\n\n\n",
+      "data.yaml": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 4\nnames: ['Rosemary', 'Rosemary Leaf Spot', 'Rosemary Pest Damage', 'Rosemary Powdery Mildew']\n\nroboflow:\n  workspace: smart-pot\n  project: rosemary-yqkfo\n  version: 5\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/smart-pot/rosemary-yqkfo/dataset/5"
+    },
+    "label_entries": 1269,
+    "empty_label_entries": 9,
+    "label_class_counts": {
+      "0": 614,
+      "2": 470,
+      "1": 159,
+      "3": 285
+    }
+  },
+  {
+    "path": "/home/user/data/ComputerVision_data/raw/zenodo/cucumber/01_disease_freshness/cucumber_disease.zip",
+    "size_bytes": 491497492,
+    "mtime_ns": 1790566085108506010,
+    "entries": 1137,
+    "extensions": {
+      "": 8,
+      ".jpg": 1129
+    },
+    "top_paths": [
+      [
+        "cucumber_disease/",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (1).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (10).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (100).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (101).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (102).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (103).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (104).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (105).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (106).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (107).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (108).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (109).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (11).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (110).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (111).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (112).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (113).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (114).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (115).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (116).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (117).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (118).jpg",
+        1
+      ],
+      [
+        "cucumber_disease/Anthracnose/Anthracnose (119).jpg",
+        1
+      ]
+    ],
+    "metadata": {}
+  }
+]

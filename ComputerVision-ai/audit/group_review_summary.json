@@ -1,0 +1,10 @@
+{
+  "created_at": "2026-10-15T19:05:39.514105+00:00",
+  "candidate_entries": 66993,
+  "conservative_boundaries": 8083,
+  "cross_crop_boundaries": 136,
+  "label_approval_changed": false,
+  "fixed_split_created": false,
+  "independent_original_count": null,
+  "note": "Grouping similar images together is a precaution against leakage, not proof they are duplicates. Source/pair adjudication is still required."
+}

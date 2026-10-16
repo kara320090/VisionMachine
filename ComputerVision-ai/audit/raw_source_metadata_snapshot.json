@@ -1,0 +1,194 @@
+[
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/basil/Basil Health Detection.v1i.folder.zip",
+    "member": "README.dataset.txt",
+    "sha256": "f9dc46f3aeb698c930c5d2ee58748924eace00819aff9e043f2b708976d99cad",
+    "text": "# Basil Health Detection > 2025-11-06 4:31am\nhttps://universe.roboflow.com/disease-detection-2r3sj/basil-health-detection-9crhs\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/basil/Basil Health Detection.v1i.folder.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "e89d70d45d570dd2d083e339fce903c26ae6c45f6684e0e72fb9b900fe5f07d4",
+    "text": "\nBasil Health Detection - v1 2025-11-06 4:31am\n==============================\n\nThis dataset was exported via roboflow.com on November 5, 2025 at 7:03 PM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 3226 images.\nLeaves are annotated in folder format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 224x224 (Stretch)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* 50% probability of horizontal flip\n* 50% probability of vertical flip\n* Equal probability of one of the following 90-degree rotations: none, clockwise, counter-clockwise, upside-down\n* Randomly crop between 0 and 20 percent of the image\n* Random rotation of between -15 and +15 degrees\n* Random shear of between -10° to +10° horizontally and -10° to +10° vertically\n* Random brigthness adjustment of between -15 and +15 percent\n* Random exposure adjustment of between -10 and +10 percent\n* Random Gaussian blur of between 0 and 2.5 pixels\n* Salt and pepper noise was applied to 0.61 percent of pixels\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/basil/healthy-wilted-mildew-basil.v1i.folder.zip",
+    "member": "README.dataset.txt",
+    "sha256": "c18c163b58e22c524e84b5ad1e0160f50c5dd298b1fe299f7d103da1756cbf32",
+    "text": "# healthy-wilted-mildew-basil > 2023-12-18 2:33pm\nhttps://universe.roboflow.com/gial/healthy-wilted-mildew-basil\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/basil/healthy-wilted-mildew-basil.v1i.folder.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "d5c9817b34ff9a2f546e2ff2a6c0475a493b47981a314c0916cd98adb6931cc3",
+    "text": "\nhealthy-wilted-mildew-basil - v1 2023-12-18 2:33pm\n==============================\n\nThis dataset was exported via roboflow.com on December 18, 2023 at 12:34 PM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 1442 images.\nBasil are annotated in folder format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Equal probability of one of the following 90-degree rotations: none, clockwise, counter-clockwise\n* Random rotation of between -17 and +17 degrees\n* Random shear of between -19° to +19° horizontally and -19° to +19° vertically\n* Random brigthness adjustment of between -25 and +25 percent\n* Random exposure adjustment of between -26 and +26 percent\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/Bok Choy Disease Detection.v2i.yolov11.zip",
+    "member": "data.yaml",
+    "sha256": "5500f457ef3e81c32f04f8caabaeb55825c6e756abb087bb034cf1dd4f562919",
+    "text": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 2\nnames: ['diseased', 'healthy']\n\nroboflow:\n  workspace: bok-choy\n  project: bok-choy-disease-detection\n  version: 2\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/bok-choy/bok-choy-disease-detection/dataset/2"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/Bok Choy Disease Detection.v2i.yolov11.zip",
+    "member": "README.dataset.txt",
+    "sha256": "e570fabcfb1b5431698af3d5e3e29db0c5c440068e2cef7b61492ea34b428f83",
+    "text": "# Bok Choy Disease Detection > 2025-04-25 10:15pm\nhttps://universe.roboflow.com/bok-choy/bok-choy-disease-detection\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/Bok Choy Disease Detection.v2i.yolov11.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "27ebe0afd7e4bd0459f73a0edb8d0e277cfc9fe97187ebc09296285dca5f7b46",
+    "text": "\nBok Choy Disease Detection - v2 2025-04-25 10:15pm\n==============================\n\nThis dataset was exported via roboflow.com on April 25, 2025 at 3:16 PM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 1965 images.\nHealthy-diseased are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Resize to 640x640 (Stretch)\n\nNo image augmentation techniques were applied.\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/PechayDoctor.v1i.yolov11.zip",
+    "member": "data.yaml",
+    "sha256": "030fbaa9438d223d94e52b499e220ec4b37798435b9bc6d7d510f4379dc456c6",
+    "text": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 6\nnames: ['Alternaria', 'Bacterial Soft Rot', 'Blackrot', 'Downy-Mildew', 'HEALTHY-PECHAY', 'Undefined']\n\nroboflow:\n  workspace: pechaydoctor\n  project: pechaydoctor\n  version: 1\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/pechaydoctor/pechaydoctor/dataset/1"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/PechayDoctor.v1i.yolov11.zip",
+    "member": "README.dataset.txt",
+    "sha256": "5f1427c3becd600e3cbbe2f9625d185823403f3a95e9cefe93018cf04795ce6c",
+    "text": "# PechayDoctor > 2024-10-04 6:48pm\nhttps://universe.roboflow.com/pechaydoctor/pechaydoctor\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/PechayDoctor.v1i.yolov11.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "de26b0ac6901f457c31bab0c4d6022159885b67fa41447746b1e9b4285715d12",
+    "text": "\nPechayDoctor - v1 2024-10-04 6:48pm\n==============================\n\nThis dataset was exported via roboflow.com on December 28, 2024 at 6:54 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 2812 images.\nPechay-Diseases are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n* Grayscale (CRT phosphor)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Equal probability of one of the following 90-degree rotations: none, clockwise, counter-clockwise, upside-down\n* Random Gaussian blur of between 0 and 2.5 pixels\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/bok choy disease.v1i.yolov11.zip",
+    "member": "data.yaml",
+    "sha256": "4ec070a4a856557eef82a48eaaa8ed21d75e9b4cf79fb7f5b53171602c12762d",
+    "text": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 4\nnames: ['bok_choy-alternaria', 'bok_choy-blackrot', 'bok_choy-downy_mildew', 'bok_choy-healthy']\n\nroboflow:\n  workspace: khoa-wlumr\n  project: bok-choy-disease-lt8gr-el6ub\n  version: 1\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/khoa-wlumr/bok-choy-disease-lt8gr-el6ub/dataset/1"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/bok choy disease.v1i.yolov11.zip",
+    "member": "README.dataset.txt",
+    "sha256": "edfa9da059c845b4d1923e480b6c1f0ee78f65bba6c818b4562b317b331b9e7c",
+    "text": "# bok choy disease > 2026-01-23 5:12pm\nhttps://universe.roboflow.com/khoa-wlumr/bok-choy-disease-lt8gr-el6ub\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/bok_choy/bok choy disease.v1i.yolov11.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "6c027e1187813ec24b6de2321e897b1cb1267f18f70a144e6bdd284bd71d4878",
+    "text": "\nbok choy disease - v1 2026-01-23 5:12pm\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 9:07 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 1478 images.\nBok-choy are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 512x512 (Stretch)\n* Auto-contrast via contrast stretching\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Randomly crop between 0 and 29 percent of the image\n* Random Gaussian blur of between 0 and 4.8 pixels\n* Salt and pepper noise was applied to 1.92 percent of pixels\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v2-healthy-kales.yolov11.zip",
+    "member": "data.yaml",
+    "sha256": "106daea6d31840fe281445031a1c86dbb82e317526b74c714c52dfd8b50e97dd",
+    "text": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 1\nnames: ['59']\n\nroboflow:\n  workspace: vitakale\n  project: kale-plant-models\n  version: 2\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/vitakale/kale-plant-models/dataset/2"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v2-healthy-kales.yolov11.zip",
+    "member": "README.dataset.txt",
+    "sha256": "20f7431466f2aa539b9314885c3f5ae47b381b9db6da8d079c1ceeba6d44ef57",
+    "text": "# Kale plant models  > Healthy kales\nhttps://universe.roboflow.com/vitakale/kale-plant-models\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v2-healthy-kales.yolov11.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "d7a30d2310b1e9f4fa864a852212a2dbced459c0735c8f22efe74173066f4a17",
+    "text": "\nKale plant models  - v2 Healthy kales\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 10:03 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 146 images.\nKales are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Random Gaussian blur of between 0 and 1 pixels\n\nThe following transformations were applied to the bounding boxes of each image:\n* 50% probability of horizontal flip\n* 50% probability of vertical flip\n* Randomly crop between 0 and 10 percent of the bounding box\n* Random brigthness adjustment of between -5 and +5 percent\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v3-black-rot.yolov11.zip",
+    "member": "data.yaml",
+    "sha256": "a7f561467ad00fe2ec0a0f79de0a1fac291d47aae0ef00a8643c665832333eb9",
+    "text": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 0\nnames: []\n\nroboflow:\n  workspace: vitakale\n  project: kale-plant-models\n  version: 3\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/vitakale/kale-plant-models/dataset/3"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v3-black-rot.yolov11.zip",
+    "member": "README.dataset.txt",
+    "sha256": "3d2d251edcce41030ef69acb33346efba35a241d47eddd2a55334003be0d51f5",
+    "text": "# Kale plant models  > Black Rot\nhttps://universe.roboflow.com/vitakale/kale-plant-models\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v3-black-rot.yolov11.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "851821fc785ede83eaa27f131eed6e2210f576faac7c54f10fa0dbab94e0ae0f",
+    "text": "\nKale plant models  - v3 Black Rot\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 10:03 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 115 images.\nKales are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n\nThe following augmentation was applied to create 3 versions of each source image:\n* Random Gaussian blur of between 0 and 1 pixels\n\nThe following transformations were applied to the bounding boxes of each image:\n* 50% probability of horizontal flip\n* 50% probability of vertical flip\n* Randomly crop between 0 and 10 percent of the bounding box\n* Random brigthness adjustment of between -5 and +5 percent\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v4-downy-mildew.yolov11.zip",
+    "member": "data.yaml",
+    "sha256": "eafebff71dbb6e2aabfb325d24d96060874128313e51fbf635e254b8fc44043a",
+    "text": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 1\nnames: ['Downy-Mildew']\n\nroboflow:\n  workspace: vitakale\n  project: kale-plant-models\n  version: 4\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/vitakale/kale-plant-models/dataset/4"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v4-downy-mildew.yolov11.zip",
+    "member": "README.dataset.txt",
+    "sha256": "78811dc745fc0612a92aafde7cfd88a46354878dfdec00d16c0b62c0072a19bf",
+    "text": "# Kale plant models  > Downy Mildew\nhttps://universe.roboflow.com/vitakale/kale-plant-models\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v4-downy-mildew.yolov11.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "3fddc54ab1e7ae6040a59052e1c84bc9997edc8d3e4e50810892653ca50863ef",
+    "text": "\nKale plant models  - v4 Downy Mildew\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 10:02 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 85 images.\nKales are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n\nNo image augmentation techniques were applied.\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v5-powdery-mildew.yolov11.zip",
+    "member": "data.yaml",
+    "sha256": "492a1af9ccdc2a9fb4f0794fcac8ae40aede2bec1d87883a59135b75dc371c00",
+    "text": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 1\nnames: ['mildew']\n\nroboflow:\n  workspace: vitakale\n  project: kale-plant-models\n  version: 5\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/vitakale/kale-plant-models/dataset/5"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v5-powdery-mildew.yolov11.zip",
+    "member": "README.dataset.txt",
+    "sha256": "7d5b6e2b43a1f38246ceb9a7848823c2ec964aaab2a9f4297b870aa4d86d8c5d",
+    "text": "# Kale plant models  > Powdery Mildew\nhttps://universe.roboflow.com/vitakale/kale-plant-models\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/kale/Kale plant models.v5-powdery-mildew.yolov11.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "900c2fdb3a66b8f72a93ba322da4be72d05f02d2cf2e52b41e9f37bad6684d8a",
+    "text": "\nKale plant models  - v5 Powdery Mildew\n==============================\n\nThis dataset was exported via roboflow.com on September 27, 2026 at 10:02 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 129 images.\nKales are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 640x640 (Stretch)\n\nNo image augmentation techniques were applied.\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/lettuce/Selada.v2i.folder.zip",
+    "member": "README.dataset.txt",
+    "sha256": "e27826b49061d16f58650796d0d8dc4541d0f8d3374df030ff47a03056ae9ac0",
+    "text": "# Selada > 2025-02-17 3:24pm\nhttps://universe.roboflow.com/asambasa/selada-3bmjb\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/lettuce/Selada.v2i.folder.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "aa7c1c5a82310915d100c56a051d0272887970fe58d7642828b60d84f4e3e4dd",
+    "text": "\nSelada - v2 2025-02-17 3:24pm\n==============================\n\nThis dataset was exported via roboflow.com on September 22, 2026 at 5:21 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 197 images.\nBusuk-segar are annotated in folder format.\n\nThe following pre-processing was applied to each image:\n* Auto-orientation of pixel data (with EXIF-orientation stripping)\n* Resize to 224x224 (Stretch)\n\nNo image augmentation techniques were applied.\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/lettuce/lettuce disease.v1i.folder.zip",
+    "member": "README.dataset.txt",
+    "sha256": "8c5220f7fabbc94279f8d1d6d0fea8d52799c68a553b41d2271df19d3421b895",
+    "text": "# lettuce disease > 2025-03-01 1:17pm\nhttps://universe.roboflow.com/leaf-5npig/lettuce-disease-uuxm6-2pz3s\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/lettuce/lettuce disease.v1i.folder.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "e8ead496fa0ddef49a9fd998fb524a16816051d4ca9bbeaecd9bccf66bbd6c4b",
+    "text": "\nlettuce disease - v1 2025-03-01 1:17pm\n==============================\n\nThis dataset was exported via roboflow.com on August 15, 2026 at 11:23 PM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 4334 images.\nHealthy-fungal-bacterial are annotated in folder format.\n\nThe following pre-processing was applied to each image:\n\nNo image augmentation techniques were applied.\n\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/rosemary/Rosemary.v5-final-version.yolov11.zip",
+    "member": "data.yaml",
+    "sha256": "4f9145ac9f9a1a654be09e824bea0df8c4d26699f1976a878ee171dd2d48e1d2",
+    "text": "train: ../train/images\nval: ../valid/images\ntest: ../test/images\n\nnc: 4\nnames: ['Rosemary', 'Rosemary Leaf Spot', 'Rosemary Pest Damage', 'Rosemary Powdery Mildew']\n\nroboflow:\n  workspace: smart-pot\n  project: rosemary-yqkfo\n  version: 5\n  license: CC BY 4.0\n  url: https://universe.roboflow.com/smart-pot/rosemary-yqkfo/dataset/5"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/rosemary/Rosemary.v5-final-version.yolov11.zip",
+    "member": "README.dataset.txt",
+    "sha256": "274e07583ad14c9cd1d4c8a75e0b1f8ab8461d376252d7bdb05a177907a221c4",
+    "text": "# Rosemary > Final Version\nhttps://universe.roboflow.com/smart-pot/rosemary-yqkfo\n\nProvided by a Roboflow user\nLicense: CC BY 4.0\n\n"
+  },
+  {
+    "archive": "/home/user/data/ComputerVision_data/raw/roboflow/rosemary/Rosemary.v5-final-version.yolov11.zip",
+    "member": "README.roboflow.txt",
+    "sha256": "6194cd2ef4ac109707cde0abcfce460e3b705fc7263ffaca752578d4e7befe63",
+    "text": "\nRosemary - v5 Final Version\n==============================\n\nThis dataset was exported via roboflow.com on May 1, 2025 at 3:45 AM GMT\n\nRoboflow is an end-to-end computer vision platform that helps you\n* collaborate with your team on computer vision projects\n* collect & organize images\n* understand and search unstructured image data\n* annotate, and create datasets\n* export, train, and deploy computer vision models\n* use active learning to improve your dataset over time\n\nFor state of the art Computer Vision training notebooks you can use with this dataset,\nvisit https://github.com/roboflow/notebooks\n\nTo find over 100k other datasets and pre-trained models, visit https://universe.roboflow.com\n\nThe dataset includes 1269 images.\nCondition are annotated in YOLOv11 format.\n\nThe following pre-processing was applied to each image:\n* Resize to 256x256 (Stretch)\n\nThe following augmentation was applied to create 1 versions of each source image:\n\nThe following transformations were applied to the bounding boxes of each image:\n* 50% probability of horizontal flip\n* 50% probability of vertical flip\n* Random rotation of between -20 and +20 degrees\n\n\n"
+  }
+]

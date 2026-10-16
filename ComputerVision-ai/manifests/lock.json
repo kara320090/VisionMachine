@@ -1,0 +1,17 @@
+{
+  "created_at": "2026-10-15T19:47:49.637944+00:00",
+  "split_sha256": "5aee4093c550316ae7bf4b0d40268210644e2627d52b8f3256038457e595b659",
+  "approval_sha256": "aac4503f20f4b92d71c5a745f1fe39bda2034c85481688f7d185b148416e0f03",
+  "code_sha256": "b0af68896113372457445d646481112c4f56bf691386816f994f758d5f7bbdde",
+  "source_corrections_sha256": "b9f8bab19fc3adf9a7247346dbf622e112eeed3ec83de90a4452cfdea950fb45",
+  "ratios": [
+    0.6,
+    0.2,
+    0.2
+  ],
+  "seed": 20261016,
+  "low_data_crops": [
+    "rosemary",
+    "kale"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-15T19:42:31.532392+00:00",
+  "day": 10,
+  "images": 320,
+  "candidate_plant_groups": 320,
+  "selection_before_health_annotation": true,
+  "health_labels_assigned": 0,
+  "review_display_only_crop": true,
+  "training_inputs_still_use_full_source_image": true
+}

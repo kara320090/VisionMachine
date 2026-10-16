@@ -1,0 +1,10 @@
+{
+  "recorded_at": "2026-10-15T22:48:47.232805+00:00",
+  "decision": "Versioned inference-only follow-up; preserve frozen main suite and original code/infer.py.",
+  "confirmed_problem": "Original code/infer.py constructs an image row without sha256, but frozen cache adapter requires sha256. Reproduced KeyError on a registered training image.",
+  "resolution": "Load complete registered row from fixed manifest, use identical frozen evaluation preprocessing and completed validation-selected checkpoint. Model receives image tensor only.",
+  "scope": "No training, checkpoint selection, test predictions, labels, thresholds, splits or frozen settings changed.",
+  "reviewer": "Codex under delegated research authority",
+  "baseline_code_sha256": "6ff3ca71d567a5a2d629cebfc6dd1fe2d89b364f420ff89eefe3e80b167a0329",
+  "verification": "smoke_result.json"
+}

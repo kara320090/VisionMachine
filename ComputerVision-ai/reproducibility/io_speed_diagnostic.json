@@ -1,0 +1,32 @@
+{
+  "created_at": "2026-10-15T18:48:23.241359+00:00",
+  "results": [
+    {
+      "pipeline": "training_augmentation",
+      "input_entries": 4096,
+      "measured_images": 3584,
+      "measured_seconds": 62.26577389694285,
+      "images_per_second": 57.559711791777296,
+      "total_seconds_including_startup": 71.54407617892139,
+      "measured_batches": 56,
+      "batch_size": 64,
+      "workers": 6
+    },
+    {
+      "pipeline": "evaluation_preprocessing",
+      "input_entries": 4096,
+      "measured_images": 3584,
+      "measured_seconds": 41.11433125997428,
+      "images_per_second": 87.17155040994439,
+      "total_seconds_including_startup": 50.98197278403677,
+      "measured_batches": 56,
+      "batch_size": 64,
+      "workers": 6
+    }
+  ],
+  "images_selected_from": "current original_split=train entries only, shuffled seed24680",
+  "research_training_performed": false,
+  "labels_used": false,
+  "input_root": "/home/user/data/ComputerVision_data/processed",
+  "limitations": "One 4096-image sample; filesystem cache state and final source mix may differ. No model overlaps this IO diagnostic."
+}

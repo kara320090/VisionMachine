@@ -1,0 +1,89 @@
+{
+  "checked_at": "2026-10-15T20:26:30.544030+00:00",
+  "train_n": 34622,
+  "train_group_n": 16,
+  "conditions": {
+    "A": {
+      "total": 34622.0,
+      "mean": 1.0,
+      "state_sums": {
+        "0": 25019.0,
+        "1": 9603.0
+      },
+      "group_sums": {
+        "basil:0": 1089.0,
+        "basil:1": 1524.0,
+        "bok_choy:0": 208.0,
+        "bok_choy:1": 535.0,
+        "cucumber:0": 8557.0,
+        "cucumber:1": 708.0,
+        "kale:0": 235.0,
+        "kale:1": 103.0,
+        "lettuce:0": 7528.0,
+        "lettuce:1": 3577.0,
+        "pepper:0": 5868.0,
+        "pepper:1": 2020.0,
+        "rosemary:0": 94.0,
+        "rosemary:1": 183.0,
+        "tomato:0": 1440.0,
+        "tomato:1": 953.0
+      },
+      "saved_seed17_weights_match": true
+    },
+    "B": {
+      "total": 34622.0,
+      "mean": 1.0,
+      "state_sums": {
+        "0": 17311.0,
+        "1": 17311.0
+      },
+      "group_sums": {
+        "basil:0": 753.4945041768256,
+        "basil:1": 2747.262730396751,
+        "bok_choy:0": 143.91814221191893,
+        "bok_choy:1": 964.4262209726128,
+        "cucumber:0": 5920.709340900915,
+        "cucumber:1": 1276.2874101843174,
+        "kale:0": 162.59982413365842,
+        "kale:1": 185.67458086014787,
+        "lettuce:0": 5208.729685439066,
+        "lettuce:1": 6448.135686764553,
+        "pepper:0": 4060.152204324713,
+        "pepper:1": 3641.384983859211,
+        "rosemary:0": 65.03992965346336,
+        "rosemary:1": 329.8878475476414,
+        "tomato:0": 996.3563691594388,
+        "tomato:1": 1717.9405394147664
+      },
+      "saved_seed17_weights_match": null
+    },
+    "C": {
+      "total": 34622.0,
+      "mean": 1.0,
+      "state_sums": {
+        "0": 17311.0,
+        "1": 17311.0
+      },
+      "group_sums": {
+        "basil:0": 2163.875,
+        "basil:1": 2163.875,
+        "bok_choy:0": 2163.875,
+        "bok_choy:1": 2163.875,
+        "cucumber:0": 2163.875,
+        "cucumber:1": 2163.875,
+        "kale:0": 2163.875,
+        "kale:1": 2163.875,
+        "lettuce:0": 2163.875,
+        "lettuce:1": 2163.875,
+        "pepper:0": 2163.875,
+        "pepper:1": 2163.875,
+        "rosemary:0": 2163.875,
+        "rosemary:1": 2163.875,
+        "tomato:0": 2163.875,
+        "tomato:1": 2163.875
+      },
+      "saved_seed17_weights_match": null
+    }
+  },
+  "protocol_modified": false
+}

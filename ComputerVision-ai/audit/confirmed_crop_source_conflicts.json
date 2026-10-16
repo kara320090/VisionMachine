@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-10-15T19:17:16.941190+00:00",
+  "misassigned_kale_images": 129,
+  "verified_source_crop": "Squash",
+  "primary_source": "https://github.com/spMohanty/PlantVillage-Dataset/tree/master/raw/color/Squash___Powdery_mildew",
+  "method": "Perceptual candidates were followed by one-to-one whole-image pixel agreement and visual photograph comparison.",
+  "worst_pixel_mae_0to1": 0.032450856726154005,
+  "minimum_full_image_correlation": 0.9699696464575083,
+  "reference_photos_admitted_to_training": 0,
+  "original_files_changed": 0,
+  "eight_crop_research_still_requires_valid_kale_abnormal_images": true
+}

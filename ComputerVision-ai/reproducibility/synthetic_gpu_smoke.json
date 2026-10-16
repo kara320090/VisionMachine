@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "kind": "synthetic_random_tensor_plumbing_only",
+  "research_training_performed": false,
+  "input_shape": [
+    4,
+    3,
+    224,
+    224
+  ],
+  "output_shape": [
+    4,
+    2
+  ],
+  "seconds": 5.31510955397971,
+  "max_gpu_memory_bytes": 312949248,
+  "results": [
+    {
+      "condition": "A",
+      "synthetic_loss": 0.667724609375,
+      "gradient_norm": 5.463825225830078
+    },
+    {
+      "condition": "B",
+      "synthetic_loss": 0.620849609375,
+      "gradient_norm": 6.414851188659668
+    },
+    {
+      "condition": "C",
+      "synthetic_loss": 0.490264892578125,
+      "gradient_norm": 5.653223037719727
+    }
+  ],
+  "pretrained_weights_sha256": "7f5810bc96def8f7552d5b7e68d53c4786f81167d28291b21c0d90e1fca14934",
+  "pretrained_weights_bytes": 21444401
+}

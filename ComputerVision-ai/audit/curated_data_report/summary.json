@@ -1,0 +1,103 @@
+{
+  "created_at": "2026-10-15T20:18:12.762599+00:00",
+  "frozen_split_sha256": "5aee4093c550316ae7bf4b0d40268210644e2627d52b8f3256038457e595b659",
+  "frozen_code_sha256": "6ff3ca71d567a5a2d629cebfc6dd1fe2d89b364f420ff89eefe3e80b167a0329",
+  "config_sha256": "cad6ce37b9026e8930e13f2a969cf9c40431b6ad983bce0d03e793564a6afd6a",
+  "all_eight_crops_present": true,
+  "train_images": 34622,
+  "dataset_crops_max_min_ratio": 32.52994555353902,
+  "training_crops_max_min_ratio": 40.09025270758123,
+  "training_images_per_crop": {
+    "basil": 2613,
+    "bok_choy": 743,
+    "cucumber": 9265,
+    "kale": 338,
+    "lettuce": 11105,
+    "pepper": 7888,
+    "rosemary": 277,
+    "tomato": 2393
+  },
+  "low_data_crops": [
+    "rosemary",
+    "kale"
+  ],
+  "stages": [
+    {
+      "stage": "processed_original_entries",
+      "image_entries": 60593,
+      "unique_sha256": 58788,
+      "confirmed_photo_components": "",
+      "conservative_leakage_groups": "",
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    },
+    {
+      "stage": "registered_raw_kale_candidates",
+      "image_entries": 6400,
+      "unique_sha256": 6400,
+      "confirmed_photo_components": "",
+      "conservative_leakage_groups": "",
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    },
+    {
+      "stage": "included_before_same_photo_deduplication",
+      "image_entries": 56393,
+      "unique_sha256": 55952,
+      "confirmed_photo_components": 55482,
+      "conservative_leakage_groups": 7773,
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    },
+    {
+      "stage": "fixed_split_distinct_photo_representatives",
+      "image_entries": 55482,
+      "unique_sha256": 55482,
+      "confirmed_photo_components": 55482,
+      "conservative_leakage_groups": 7773,
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    },
+    {
+      "stage": "train_image_list",
+      "image_entries": 34622,
+      "unique_sha256": 34622,
+      "confirmed_photo_components": 34622,
+      "conservative_leakage_groups": 4666,
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    },
+    {
+      "stage": "validation_image_list",
+      "image_entries": 10127,
+      "unique_sha256": 10127,
+      "confirmed_photo_components": 10127,
+      "conservative_leakage_groups": 1554,
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    },
+    {
+      "stage": "validation_evaluation_representatives",
+      "image_entries": 1898,
+      "unique_sha256": 1898,
+      "confirmed_photo_components": 1898,
+      "conservative_leakage_groups": 1554,
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    },
+    {
+      "stage": "test_image_list",
+      "image_entries": 10733,
+      "unique_sha256": 10733,
+      "confirmed_photo_components": 10733,
+      "conservative_leakage_groups": 1553,
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    },
+    {
+      "stage": "test_evaluation_representatives",
+      "image_entries": 1884,
+      "unique_sha256": 1884,
+      "confirmed_photo_components": 1884,
+      "conservative_leakage_groups": 1553,
+      "independently_verified_plant_count": "UNKNOWN outside publisher plant-ID raw kale subset"
+    }
+  ],
+  "biological_independence_fully_established": false,
+  "synthetic_metrics_used": false,
+  "model_or_split_modified": false,
+  "new_visual_labels_are_single_AI_annotations": true,
+  "script_sha256": "8ed673bc141b5650eefbf99eceb7bddc1c381598ff99a1eca5d1eaf5ee49e6b0"
+}

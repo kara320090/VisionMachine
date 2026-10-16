@@ -1,0 +1,12 @@
+{
+  "checked_at": "2026-10-15T22:30:36.899748+00:00",
+  "seed": 2026,
+  "conditions": [
+    "A",
+    "B",
+    "C"
+  ],
+  "initial_model_hashes_match": true,
+  "frozen_hashes_match": true,
+  "test_used": false
+}

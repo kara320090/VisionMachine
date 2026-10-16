@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="380" height="350" preserveAspectRatio="xMinYMin meet" viewBox="0 0 380 350" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="380" height="350"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-350)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="380" height="350" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="52" y="325" style="font-family: Helvetica-Bold; font-size: 17px;fill: rgb(12%,20%,29%); stroke:none;" transform="translate(0,650) scale(1,-1)">Shared learning-rate schedule</text>
+			<text x="52" y="305" style="font-family: Helvetica; font-size: 13px;fill: rgb(32%,40%,49%); stroke:none;" transform="translate(0,610) scale(1,-1)">Learning rate (log scale)</text>
+			<rect x="52" y="75" width="16.241379310344826" height="217" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(92%,94%,95%); fill-rule: evenodd;"/>
+			<g transform="">
+				<g transform="">
+					<g transform="">
+						<path d="M 52,75 L 366,75 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+					</g>
+					<g transform="">
+						<path d="M 52,75 L 52,70 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+						<path d="M 149.448276,75 L 149.448276,70 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+						<path d="M 257.724138,75 L 257.724138,70 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+						<path d="M 366,75 L 366,70 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+					</g>
+					<g transform="">
+						<g transform=" matrix(1,0,0,1,52,70)">
+							<text x="-3.8920000000000003" y="-14.000000000000002" style="font-family: Helvetica; font-size: 14px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,-28) scale(1,-1)">1</text>
+						</g>
+						<g transform=" matrix(1,0,0,1,149.448276,70)">
+							<text x="-7.784000000000001" y="-14.000000000000002" style="font-family: Helvetica; font-size: 14px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,-28) scale(1,-1)">10</text>
+						</g>
+						<g transform=" matrix(1,0,0,1,257.724138,70)">
+							<text x="-7.784000000000001" y="-14.000000000000002" style="font-family: Helvetica; font-size: 14px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,-28) scale(1,-1)">20</text>
+						</g>
+						<g transform=" matrix(1,0,0,1,366,70)">
+							<text x="-7.784000000000001" y="-14.000000000000002" style="font-family: Helvetica; font-size: 14px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,-28) scale(1,-1)">30</text>
+						</g>
+					</g>
+				</g>
+				<g transform="">
+					<g transform="">
+						<path d="M 52,75 L 52,292 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+					</g>
+					<g transform="">
+						<path d="M 52,75 L 47,75 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+						<path d="M 52,147.333333 L 47,147.333333 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+						<path d="M 52,219.666667 L 47,219.666667 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+						<path d="M 52,292 L 47,292 Z" style="stroke: rgb(54%,61%,68%); stroke-linecap: butt; stroke-width: 1;"/>
+					</g>
+					<g transform="">
+						<g transform=" matrix(1,0,0,1,47,75)">
+							<text x="-29.601000000000003" y="-5.2" style="font-family: Times-Roman; font-size: 13px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,-10) scale(1,-1)">1e-06</text>
+						</g>
+						<g transform=" matrix(1,0,0,1,47,147.333333)">
+							<text x="-29.601000000000003" y="-5.2" style="font-family: Times-Roman; font-size: 13px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,-10) scale(1,-1)">1e-05</text>
+						</g>
+						<g transform=" matrix(1,0,0,1,47,219.666667)">
+							<text x="-35.75" y="-5.2" style="font-family: Times-Roman; font-size: 13px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,-10) scale(1,-1)">0.0001</text>
+						</g>
+						<g transform=" matrix(1,0,0,1,47,292)">
+							<text x="-29.25" y="-5.2" style="font-family: Times-Roman; font-size: 13px;fill: rgb(0%,0%,0%); stroke:none;" transform="translate(0,-10) scale(1,-1)">0.001</text>
+						</g>
+					</g>
+				</g>
+				<path d="M 52,147.333333 L 366,147.333333 Z" style="stroke: rgb(88%,90%,93%); stroke-linecap: butt; stroke-width: 0.6;"/>
+				<path d="M 52,219.666667 L 366,219.666667 Z" style="stroke: rgb(88%,90%,93%); stroke-linecap: butt; stroke-width: 0.6;"/>
+				<path d="M 52,292 L 366,292 Z" style="stroke: rgb(88%,90%,93%); stroke-linecap: butt; stroke-width: 0.6;"/>
+				<g transform="">
+					<polyline points="73.65517 219.6667, 84.48276 219.5613, 95.31034 219.2447, 106.1379 218.7146, 116.9655 217.9675, 127.7931 216.9983, 138.6207 215.8002, 149.4483 214.3644, 160.2759 212.6801, 171.1034 210.734, 181.931 208.5096, 192.7586 205.9872, 203.5862 203.1425, 214.4138 199.946, 225.2414 196.3613, 236.069 192.3435, 246.8966 187.836, 257.7241 182.7676, 268.5517 177.0462, 279.3793 170.5516, 290.2069 163.1237, 301.0345 154.5456, 311.8621 144.52, 322.6897 132.6449, 333.5172 118.4327, 344.3448 101.6297, 355.1724 84.06945, 366 75" style="stroke: rgb(11%,39%,65%); stroke-linecap: round; stroke-width: 2; fill: None; fill-rule: evenodd;"/>
+					<polyline points="52 292, 62.82759 292, 73.65517 292, 84.48276 291.8947, 95.31034 291.578, 106.1379 291.0479, 116.9655 290.3009, 127.7931 289.3317, 138.6207 288.1335, 149.4483 286.6978, 160.2759 285.0135, 171.1034 283.0673, 181.931 280.8429, 192.7586 278.3205, 203.5862 275.4758, 214.4138 272.2793, 225.2414 268.6946, 236.069 264.6768, 246.8966 260.1694, 257.7241 255.1009, 268.5517 249.3796, 279.3793 242.885, 290.2069 235.457, 301.0345 226.8789, 311.8621 216.8533, 322.6897 204.9782, 333.5172 190.766, 344.3448 173.963, 355.1724 156.4028, 366 147.3333" style="stroke: rgb(72%,44%,0%); stroke-linecap: round; stroke-width: 2; fill: None; fill-rule: evenodd;"/>
+				</g>
+			</g>
+			<text x="191.115" y="44" style="font-family: Times-Roman; font-size: 14px;fill: rgb(32%,40%,49%); stroke:none;" transform="translate(0,88) scale(1,-1)">Epoch</text>
+			<path d="M 65,22 L 85,22 Z" style="stroke: rgb(11%,39%,65%); stroke-linecap: butt; stroke-width: 2.2;"/>
+			<text x="92" y="17" style="font-family: Times-Roman; font-size: 14px;fill: rgb(12%,20%,29%); stroke:none;" transform="translate(0,34) scale(1,-1)">Backbone</text>
+			<path d="M 207,22 L 227,22 Z" style="stroke: rgb(72%,44%,0%); stroke-linecap: butt; stroke-width: 2.2;"/>
+			<text x="234" y="17" style="font-family: Times-Roman; font-size: 14px;fill: rgb(12%,20%,29%); stroke:none;" transform="translate(0,34) scale(1,-1)">Classifier</text>
+		</g>
+	</g>
+</svg>

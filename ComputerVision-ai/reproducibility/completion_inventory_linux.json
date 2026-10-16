@@ -1,0 +1,85 @@
+{
+  "observed_at": "2026-10-15T23:01:40.661966+00:00",
+  "purpose": "Completion inventory while existing suite runs. File presence alone is not proof of scientific completion.",
+  "runs": {
+    "A_seed17": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    },
+    "B_seed17": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    },
+    "C_seed17": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    },
+    "A_seed42": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    },
+    "B_seed42": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    },
+    "C_seed42": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    },
+    "A_seed2026": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    },
+    "B_seed2026": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    },
+    "C_seed2026": {
+      "training_completed": true,
+      "test_metrics_present": true,
+      "epochs_recorded": 30
+    }
+  },
+  "artifacts": {
+    "tables/abc_summary.csv": true,
+    "tables/crop_metrics.csv": true,
+    "tables/paired_deltas.csv": true,
+    "tables/run_resources.csv": true,
+    "figures/crop_f1_comparison.png": true,
+    "figures/crop_c_minus_b.png": true,
+    "paper/results_discussion_draft.txt": true,
+    "paper/reference_evidence.txt": true,
+    "paper/annotation_scope_notes.txt": true,
+    "reproducibility/environment.json": true,
+    "reproducibility/requirements.lock.txt": true,
+    "runs/suite_completed.json": true,
+    "paper/thesis_draft_ko.md": true,
+    "paper/measured_interpretation_conclusion_ko.md": true,
+    "reproducibility/REPRODUCE_LINUX.md": true,
+    "evaluation/error_examples_with_label_evidence.csv": true
+  },
+  "pending_checks": [
+    "Copy and verify artifacts under /home/user/ComputerVision_ai/ after session write access becomes available."
+  ],
+  "transfer_observation": "User superseded Windows delivery. Require unique Linux destination snapshot, file list/size/SHA-256 verification and receipt. Preserve server originals.",
+  "delivery_destination": "/home/user/ComputerVision_ai/20261016T031000_KST_crop8_effb0_c901e829",
+  "delivery_status": "blocked_before_copy: actual mkdir attempt failed with errno 30; transfer/linux_destination_access_attempt.json",
+  "independent_training_and_test_verification": "completed_runs_integrity_linux.json: all nine training and tests verified",
+  "aggregation_verification": "final_aggregation_audit_linux.json",
+  "plot_inspection": "A/B/C confusion matrices, crop comparison, crop C-B and A/B/C error panels visually inspected",
+  "source_preservation_final": {
+    "checked_at": "2026-10-15T23:00:03.694081+00:00",
+    "full_image_hash_check": true,
+    "image_entries": 66993,
+    "issues": [],
+    "passed": true
+  }
+}

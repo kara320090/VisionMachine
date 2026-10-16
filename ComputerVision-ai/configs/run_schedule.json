@@ -1,0 +1,38 @@
+[
+  {
+    "condition": "A",
+    "seed": 17
+  },
+  {
+    "condition": "B",
+    "seed": 17
+  },
+  {
+    "condition": "C",
+    "seed": 17
+  },
+  {
+    "condition": "A",
+    "seed": 42
+  },
+  {
+    "condition": "B",
+    "seed": 42
+  },
+  {
+    "condition": "C",
+    "seed": 42
+  },
+  {
+    "condition": "A",
+    "seed": 2026
+  },
+  {
+    "condition": "B",
+    "seed": 2026
+  },
+  {
+    "condition": "C",
+    "seed": 2026
+  }
+]

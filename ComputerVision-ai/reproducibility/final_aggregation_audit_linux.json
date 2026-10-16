@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-15T22:46:40.620121+00:00",
+  "summary_rows_verified": 9,
+  "crop_metric_rows_verified": 72,
+  "paired_delta_rows_verified": 27,
+  "means_and_sample_sd_verified": true,
+  "fixed_error_example_rule_verified": true,
+  "error_examples": 108,
+  "test_population_per_run": 1884,
+  "no_new_training_or_settings_selected": true
+}

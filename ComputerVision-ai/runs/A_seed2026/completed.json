@@ -1,0 +1,22 @@
+{
+  "run": "A_seed2026",
+  "condition": "A",
+  "seed": 2026,
+  "phase": "main",
+  "completed_at": "2026-10-15T22:12:05.158465+00:00",
+  "selected_epoch": 20,
+  "best_validation_equal_crop_binary_macro_f1": 0.9279614131846217,
+  "epochs": 30,
+  "updates": 16228,
+  "amp_skips": 2,
+  "gradient_clips": 2949,
+  "elapsed_seconds": 999.0720436470583,
+  "max_gpu_memory_bytes": 3020664832,
+  "best_checkpoint_sha256": "7e824a530c53675ee75b975eb2cd3ad51360be619a35fec0f414711f215a0550",
+  "initial_model_sha256": "c33bfbd707fa47e0c9237862e186932515b786742c0dcb0c28ac33633dbbcbe1",
+  "split_sha256": "5aee4093c550316ae7bf4b0d40268210644e2627d52b8f3256038457e595b659",
+  "config_sha256": "cad6ce37b9026e8930e13f2a969cf9c40431b6ad983bce0d03e793564a6afd6a",
+  "code_sha256": "6ff3ca71d567a5a2d629cebfc6dd1fe2d89b364f420ff89eefe3e80b167a0329",
+  "restart_count": 0,
+  "transfer_pending": true
+}

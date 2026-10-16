@@ -1,0 +1,21 @@
+{
+  "checked_at": "2026-10-15T22:50:09.800821+00:00",
+  "sources": [
+    {
+      "title": "Plant leaf disease classification using EfficientNet deep learning model",
+      "url": "https://www.sciencedirect.com/science/article/pii/S1574954120301321",
+      "scope": "Direct fetch 403; publisher search-index abstract/highlights available. EfficientNet transfer-learning comparison on PlantVillage confirmed. Full article not newly accessed."
+    },
+    {
+      "title": "Application of image processing and transfer learning for the detection of rust disease",
+      "url": "https://www.nature.com/articles/s41598-023-31942-9",
+      "scope": "Publisher HTML abstract and methods accessible; healthy/rust field and greenhouse images, three hosts, four CNN models confirmed."
+    },
+    {
+      "title": "A Controlled Empirical Study of Loss Functions for Imbalanced Cassava Leaf Disease Classification",
+      "url": "https://www.jait.us/show-273-1924-1.html",
+      "scope": "Journal HTML abstract and bibliography accessible; matched splits, augmentation and optimization for loss comparison; single dataset and seed limitation confirmed. PDF not newly accessed."
+    }
+  ],
+  "application": "Motivation and comparison control only; our B0/eight-crop/group-split/three-seed design is separate. No cross-dataset accuracy superiority claim."
+}

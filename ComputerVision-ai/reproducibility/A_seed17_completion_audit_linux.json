@@ -1,0 +1,16 @@
+{
+  "verified_at": "2026-10-15T20:31:55.801388+00:00",
+  "run": "A_seed17",
+  "epochs_verified": 30,
+  "selection_rule_verified": true,
+  "selected_epoch": 24,
+  "checkpoint_sha256_verified": true,
+  "frozen_hashes_match": true,
+  "updates": 16227,
+  "amp_skips": 3,
+  "attempted_batches": 16230,
+  "elapsed_seconds": 990.5034666539868,
+  "test_evaluated": false,
+  "next_run_observed": "B_seed17",
+  "destination_copy_status": "pending: /home/user/ComputerVision_ai is read-only in current session"
+}

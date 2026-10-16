@@ -1,0 +1,14 @@
+{
+  "candidate_images": 6400,
+  "unique_sha256": 6400,
+  "decode_errors": 0,
+  "candidate_plant_ids": 320,
+  "source_url": "https://research.wur.nl/en/datasets/top-view-images-of-kale-brassica-oleracea/",
+  "source_doi": "10.5281/zenodo.4315436",
+  "source_describes": "320 plants, two varieties, 20 days; no binary disease labels",
+  "local_archive_status": "Python ZIP directory validation fails; extracted files audited separately, archive equivalence not certified",
+  "training_images_added": 0,
+  "health_labels_assigned": 0,
+  "duration_seconds": 392.5357475259807,
+  "next_requirement": "Verify plant identity across days and judge visible normal/abnormal status; do not label all growth images normal."
+}

@@ -1,0 +1,9 @@
+{
+  "created_at": "2026-10-15T19:51:00.114147+00:00",
+  "source_groups": 16,
+  "source_split": "fixed reviewed training split only",
+  "does_not_define_research_split": true,
+  "recipe_id": "ffd2410217838b5a",
+  "mean_pixel_mae": 0.017799696658351162,
+  "review_required": "Check lesion visibility and cropping in review/cache_preprocessing_comparison.jpg before final protocol freeze."
+}

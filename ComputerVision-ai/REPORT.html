@@ -1,0 +1,198 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><title>8종 작물 연구 구현·검증 보고서</title>
+<style>body{font:16px/1.65 sans-serif;max-width:1100px;margin:40px auto;padding:0 24px;color:#233243}h1,h2{line-height:1.3}table{border-collapse:collapse;width:100%}td,th{border:1px solid #ccd4dd;padding:7px;text-align:left}pre{background:#eef2f5;padding:18px;white-space:pre-wrap}img{max-width:100%}.gate{padding:18px;border-left:6px solid #bf7226;background:#fff4e5}</style>
+<h1>8종 작물 연구 구현·검증 보고서</h1><p>실험 ID: 20261016T031000_KST_crop8_effb0_c901e829<br>생성 시각: 2026-10-15T22:46:08.150965+00:00</p>
+<p class="gate"><b>8종 모두 필수.</b> 라벨·그룹 검토 및 8종 고정 분할 완료. 본실험 완료 9/9회. 합성 입력 검사와 시간 시나리오는 연구 분류 성능이 아닙니다.</p>
+<h2>검토 후 학습 대상과 고정 분할</h2><p>사용자가 모든 판단을 Codex에 위임한 지시에 따라 출처 검증과 실제 이미지 검토를 새 manifest에 기록했습니다. 케일은 WUR 원본의 10일차·20일차를 직접 검토해 정상 외관 또는 눈에 보이는 잎 조직 소실로 새 주석을 만들었습니다. 같은 개체의 모든 날짜는 한 분할에 묶었습니다. 빈 라벨이나 폴더명으로 정답을 추정하지 않았습니다.</p>
+<p><b>케일 주석은 단일 AI 육안 검토이며 식물병리 전문가나 병원균 검사로 검증된 정답이 아닙니다.</b> 손상 원인·병명을 확정하지 않습니다. 품종·생육 시기·촬영 단계와 상태가 연관된 한계를 결과 해석에 반영해야 합니다. 공개 이미지의 서로 다른 촬영 그룹은 서로 다른 생물학적 개체임을 완전히 증명하지 못하므로 표의 그룹 수를 독립 개체 수로 단정하지 않습니다.</p>
+<pre>{
+  &quot;at&quot;: &quot;2026-10-15T19:47:46.205841+00:00&quot;,
+  &quot;inventory_entries&quot;: 66993,
+  &quot;included_entries&quot;: 56393,
+  &quot;excluded_entries&quot;: 10600,
+  &quot;source_files_modified&quot;: 0,
+  &quot;eight_crops_retained&quot;: true,
+  &quot;expert_health_labels_claimed&quot;: false,
+  &quot;counts&quot;: [
+    {
+      &quot;crop&quot;: &quot;basil&quot;,
+      &quot;binary_label&quot;: 0,
+      &quot;included_entries&quot;: 1856,
+      &quot;leakage_groups&quot;: 496
+    },
+    {
+      &quot;crop&quot;: &quot;basil&quot;,
+      &quot;binary_label&quot;: 1,
+      &quot;included_entries&quot;: 2738,
+      &quot;leakage_groups&quot;: 606
+    },
+    {
+      &quot;crop&quot;: &quot;bok_choy&quot;,
+      &quot;binary_label&quot;: 0,
+      &quot;included_entries&quot;: 364,
+      &quot;leakage_groups&quot;: 276
+    },
+    {
+      &quot;crop&quot;: &quot;bok_choy&quot;,
+      &quot;binary_label&quot;: 1,
+      &quot;included_entries&quot;: 1599,
+      &quot;leakage_groups&quot;: 238
+    },
+    {
+      &quot;crop&quot;: &quot;cucumber&quot;,
+      &quot;binary_label&quot;: 0,
+      &quot;included_entries&quot;: 14468,
+      &quot;leakage_groups&quot;: 478
+    },
+    {
+      &quot;crop&quot;: &quot;cucumber&quot;,
+      &quot;binary_label&quot;: 1,
+      &quot;included_entries&quot;: 1200,
+      &quot;leakage_groups&quot;: 909
+    },
+    {
+      &quot;crop&quot;: &quot;kale&quot;,
+      &quot;binary_label&quot;: 0,
+      &quot;included_entries&quot;: 372,
+      &quot;leakage_groups&quot;: 233
+    },
+    {
+      &quot;crop&quot;: &quot;kale&quot;,
+      &quot;binary_label&quot;: 1,
+      &quot;included_entries&quot;: 179,
+      &quot;leakage_groups&quot;: 135
+    },
+    {
+      &quot;crop&quot;: &quot;lettuce&quot;,
+      &quot;binary_label&quot;: 0,
+      &quot;included_entries&quot;: 12326,
+      &quot;leakage_groups&quot;: 885
+    },
+    {
+      &quot;crop&quot;: &quot;lettuce&quot;,
+      &quot;binary_label&quot;: 1,
+      &quot;included_entries&quot;: 5828,
+      &quot;leakage_groups&quot;: 961
+    },
+    {
+      &quot;crop&quot;: &quot;pepper&quot;,
+      &quot;binary_label&quot;: 0,
+      &quot;included_entries&quot;: 7489,
+      &quot;leakage_groups&quot;: 106
+    },
+    {
+      &quot;crop&quot;: &quot;pepper&quot;,
+      &quot;binary_label&quot;: 1,
+      &quot;included_entries&quot;: 3484,
+      &quot;leakage_groups&quot;: 230
+    },
+    {
+      &quot;crop&quot;: &quot;rosemary&quot;,
+      &quot;binary_label&quot;: 0,
+      &quot;included_entries&quot;: 194,
+      &quot;leakage_groups&quot;: 176
+    },
+    {
+      &quot;crop&quot;: &quot;rosemary&quot;,
+      &quot;binary_label&quot;: 1,
+      &quot;included_entries&quot;: 378,
+      &quot;leakage_groups&quot;: 114
+    },
+    {
+      &quot;crop&quot;: &quot;tomato&quot;,
+      &quot;binary_label&quot;: 0,
+      &quot;included_entries&quot;: 2350,
+      &quot;leakage_groups&quot;: 2180
+    },
+    {
+      &quot;crop&quot;: &quot;tomato&quot;,
+      &quot;binary_label&quot;: 1,
+      &quot;included_entries&quot;: 1568,
+      &quot;leakage_groups&quot;: 1425
+    }
+  ]
+}</pre>
+<table><tr><th>작물</th><th>상태</th><th>분할</th><th>이미지</th><th>검토한 누출 방지 그룹</th><th>평가 대표 수</th></tr><tr><td>basil</td><td>0</td><td>train</td><td>1089</td><td>297</td><td>0</td></tr><tr><td>basil</td><td>0</td><td>validation</td><td>432</td><td>98</td><td>98</td></tr><tr><td>basil</td><td>0</td><td>test</td><td>330</td><td>101</td><td>101</td></tr><tr><td>basil</td><td>1</td><td>train</td><td>1524</td><td>343</td><td>0</td></tr><tr><td>basil</td><td>1</td><td>validation</td><td>555</td><td>125</td><td>125</td></tr><tr><td>basil</td><td>1</td><td>test</td><td>658</td><td>138</td><td>138</td></tr><tr><td>bok_choy</td><td>0</td><td>train</td><td>208</td><td>170</td><td>0</td></tr><tr><td>bok_choy</td><td>0</td><td>validation</td><td>69</td><td>54</td><td>54</td></tr><tr><td>bok_choy</td><td>0</td><td>test</td><td>67</td><td>52</td><td>52</td></tr><tr><td>bok_choy</td><td>1</td><td>train</td><td>535</td><td>139</td><td>0</td></tr><tr><td>bok_choy</td><td>1</td><td>validation</td><td>241</td><td>47</td><td>47</td></tr><tr><td>bok_choy</td><td>1</td><td>test</td><td>229</td><td>52</td><td>52</td></tr><tr><td>cucumber</td><td>0</td><td>train</td><td>8557</td><td>273</td><td>0</td></tr><tr><td>cucumber</td><td>0</td><td>validation</td><td>3273</td><td>101</td><td>101</td></tr><tr><td>cucumber</td><td>0</td><td>test</td><td>2617</td><td>104</td><td>104</td></tr><tr><td>cucumber</td><td>1</td><td>train</td><td>708</td><td>545</td><td>0</td></tr><tr><td>cucumber</td><td>1</td><td>validation</td><td>279</td><td>189</td><td>189</td></tr><tr><td>cucumber</td><td>1</td><td>test</td><td>203</td><td>175</td><td>175</td></tr><tr><td>kale</td><td>0</td><td>train</td><td>235</td><td>149</td><td>0</td></tr><tr><td>kale</td><td>0</td><td>validation</td><td>71</td><td>43</td><td>43</td></tr><tr><td>kale</td><td>0</td><td>test</td><td>66</td><td>41</td><td>41</td></tr><tr><td>kale</td><td>1</td><td>train</td><td>103</td><td>81</td><td>0</td></tr><tr><td>kale</td><td>1</td><td>validation</td><td>38</td><td>27</td><td>27</td></tr><tr><td>kale</td><td>1</td><td>test</td><td>38</td><td>27</td><td>27</td></tr><tr><td>lettuce</td><td>0</td><td>train</td><td>7528</td><td>546</td><td>0</td></tr><tr><td>lettuce</td><td>0</td><td>validation</td><td>1434</td><td>163</td><td>163</td></tr><tr><td>lettuce</td><td>0</td><td>test</td><td>3329</td><td>176</td><td>176</td></tr><tr><td>lettuce</td><td>1</td><td>train</td><td>3577</td><td>578</td><td>0</td></tr><tr><td>lettuce</td><td>1</td><td>validation</td><td>1202</td><td>215</td><td>215</td></tr><tr><td>lettuce</td><td>1</td><td>test</td><td>854</td><td>168</td><td>168</td></tr><tr><td>pepper</td><td>0</td><td>train</td><td>5868</td><td>75</td><td>0</td></tr><tr><td>pepper</td><td>0</td><td>validation</td><td>900</td><td>12</td><td>12</td></tr><tr><td>pepper</td><td>0</td><td>test</td><td>720</td><td>19</td><td>19</td></tr><tr><td>pepper</td><td>1</td><td>train</td><td>2020</td><td>136</td><td>0</td></tr><tr><td>pepper</td><td>1</td><td>validation</td><td>701</td><td>44</td><td>44</td></tr><tr><td>pepper</td><td>1</td><td>test</td><td>740</td><td>50</td><td>50</td></tr><tr><td>rosemary</td><td>0</td><td>train</td><td>94</td><td>89</td><td>0</td></tr><tr><td>rosemary</td><td>0</td><td>validation</td><td>53</td><td>41</td><td>41</td></tr><tr><td>rosemary</td><td>0</td><td>test</td><td>47</td><td>46</td><td>46</td></tr><tr><td>rosemary</td><td>1</td><td>train</td><td>183</td><td>57</td><td>0</td></tr><tr><td>rosemary</td><td>1</td><td>validation</td><td>111</td><td>32</td><td>32</td></tr><tr><td>rosemary</td><td>1</td><td>test</td><td>84</td><td>25</td><td>25</td></tr><tr><td>tomato</td><td>0</td><td>train</td><td>1440</td><td>1330</td><td>0</td></tr><tr><td>tomato</td><td>0</td><td>validation</td><td>453</td><td>420</td><td>420</td></tr><tr><td>tomato</td><td>0</td><td>test</td><td>453</td><td>430</td><td>430</td></tr><tr><td>tomato</td><td>1</td><td>train</td><td>953</td><td>858</td><td>0</td></tr><tr><td>tomato</td><td>1</td><td>validation</td><td>315</td><td>287</td><td>287</td></tr><tr><td>tomato</td><td>1</td><td>test</td><td>298</td><td>280</td><td>280</td></tr></table>
+<p><a href="review/visual_annotation_ledger.csv">새 육안 주석과 실제 이미지 근거</a> · <a href="LOCAL_ONLY.md">전체 포함·제외 판정</a> · <a href="LOCAL_ONLY.md">고정 분할 manifest</a></p>
+<h2>현재 processed 재점검</h2><p>이미지 항목 60,593개, 고유 SHA-256 58,788개, 디코딩 실패 0개. 고유 SHA 수는 독립 촬영 표본 수가 아닙니다.</p>
+<table><tr><th>작물</th><th>현재 상태 후보(0/1)</th><th>파일 항목</th><th>고유 SHA</th><th>파일명 후보 계열</th></tr><tr><td>basil</td><td>0</td><td>1886</td><td>1886</td><td>514</td></tr><tr><td>basil</td><td>1</td><td>2782</td><td>2782</td><td>630</td></tr><tr><td>bok_choy</td><td>0</td><td>1491</td><td>872</td><td>314</td></tr><tr><td>bok_choy</td><td>1</td><td>3154</td><td>2114</td><td>418</td></tr><tr><td>cucumber</td><td>0</td><td>14468</td><td>14448</td><td>14468</td></tr><tr><td>cucumber</td><td>1</td><td>1200</td><td>1190</td><td>1200</td></tr><tr><td>kale</td><td>0</td><td>146</td><td>146</td><td>58</td></tr><tr><td>kale</td><td>1</td><td>329</td><td>264</td><td>200</td></tr><tr><td>lettuce</td><td>0</td><td>12625</td><td>12623</td><td>11922</td></tr><tr><td>lettuce</td><td>1</td><td>6368</td><td>6344</td><td>4723</td></tr><tr><td>pepper</td><td>0</td><td>7489</td><td>7488</td><td>7489</td></tr><tr><td>pepper</td><td>1</td><td>3484</td><td>3461</td><td>3481</td></tr><tr><td>rosemary</td><td>0</td><td>582</td><td>582</td><td>209</td></tr><tr><td>rosemary</td><td>1</td><td>671</td><td>671</td><td>213</td></tr><tr><td>tomato</td><td>0</td><td>2350</td><td>2350</td><td>2350</td></tr><tr><td>tomato</td><td>1</td><td>1568</td><td>1568</td><td>1568</td></tr></table>
+<img src="figures/unvalidated_crop_distribution.png" alt="검증 전 작물별 데이터 분포">
+<h2>raw 확인 결과와 연구 성립 조건</h2>
+<p class="gate">케일 v5 흰가루병 129장은 저자 제공 PlantVillage의 Squash___Powdery_mildew 사진과 일대일로 대응하여 호박으로 확인됐습니다. 새 manifest의 교정 사항이며 기존 이미지는 수정하지 않았습니다. 해당 이미지 ID·SHA-256은 케일 학습 포함을 차단합니다. 케일을 제외한 7종 본실험으로 대체하지 않습니다.</p>
+<p><a href="https://github.com/spMohanty/PlantVillage-Dataset/tree/master/raw/color/Squash___Powdery_mildew">PlantVillage 원 출처</a> · <a href="review/confirmed_crop_source_conflicts.csv">129장별 대응·교정 근거</a> · <a href="LOCAL_ONLY.md">정답 확정 전 전체 검토 manifest</a></p>
+<pre>{
+  &quot;created_at&quot;: &quot;2026-10-15T19:17:16.941190+00:00&quot;,
+  &quot;misassigned_kale_images&quot;: 129,
+  &quot;verified_source_crop&quot;: &quot;Squash&quot;,
+  &quot;primary_source&quot;: &quot;https://github.com/spMohanty/PlantVillage-Dataset/tree/master/raw/color/Squash___Powdery_mildew&quot;,
+  &quot;method&quot;: &quot;Perceptual candidates were followed by one-to-one whole-image pixel agreement and visual photograph comparison.&quot;,
+  &quot;worst_pixel_mae_0to1&quot;: 0.032450856726154005,
+  &quot;minimum_full_image_correlation&quot;: 0.9699696464575083,
+  &quot;reference_photos_admitted_to_training&quot;: 0,
+  &quot;original_files_changed&quot;: 0,
+  &quot;eight_crop_research_still_requires_valid_kale_abnormal_images&quot;: true
+}</pre>
+<p>Roboflow raw ZIP에서도 케일 v3 클래스 정의가 비어 있고 115개 라벨이 비어 있습니다. v4에는 빈 라벨 57개가 있습니다. v2의 객체 클래스 이름은 59이며, 이 문자열만으로 정상 의미를 확정할 수 없습니다.</p>
+<p>별도 raw 케일 자료의 출처 설명은 320개체의 20일 반복 촬영, 총 6,400장입니다. 정상·질병 라벨 데이터셋은 아닙니다. 로컬 ZIP의 디렉터리 검증은 실패했고, 기존 추출본을 따로 검사했습니다. 실제 사진을 검토한 항목만 새 주석 근거를 남겨 포함했습니다.</p>
+<p><a href="https://research.wur.nl/en/datasets/top-view-images-of-kale-brassica-oleracea/">Wageningen University 원출처</a> · <a href="review/index.html">케일·청경채 충돌 및 라벨 검토 이미지</a> · <a href="review/raw_kale_examples.jpg">raw 케일 대표 이미지</a></p>
+<pre>{
+  &quot;candidate_images&quot;: 6400,
+  &quot;unique_sha256&quot;: 6400,
+  &quot;decode_errors&quot;: 0,
+  &quot;candidate_plant_ids&quot;: 320,
+  &quot;source_url&quot;: &quot;https://research.wur.nl/en/datasets/top-view-images-of-kale-brassica-oleracea/&quot;,
+  &quot;source_doi&quot;: &quot;10.5281/zenodo.4315436&quot;,
+  &quot;source_describes&quot;: &quot;320 plants, two varieties, 20 days; no binary disease labels&quot;,
+  &quot;local_archive_status&quot;: &quot;Python ZIP directory validation fails; extracted files audited separately, archive equivalence not certified&quot;,
+  &quot;training_images_added&quot;: 0,
+  &quot;health_labels_assigned&quot;: 0,
+  &quot;duration_seconds&quot;: 392.5357475259807,
+  &quot;next_requirement&quot;: &quot;Verify plant identity across days and judge visible normal/abnormal status; do not label all growth images normal.&quot;
+}</pre>
+<p>불명확한 기존 케일 폴더는 제외하고 검토된 raw 사진으로 대체했습니다. 로즈마리·청경채 정상 후보는 검토표의 실제 사진을 확인했고, 충돌·모호한 항목은 제외했습니다. 16개 그룹 모두 학습에 존재하고 검증·테스트 각각 10개 이상 누출 방지 그룹을 확보하는 검사를 적용했습니다.</p>
+<h2>구현과 검증</h2><p>고정 그룹 분할, A/B/C 이미지별 가중 CE, 이미지→2로짓 EfficientNet-B0, 재개 체크포인트, 0.5 임계값 평가, 결과 집계, 원본 보호 검사, 해시 검증 전송 코드를 구현했습니다.</p>
+<p>18시간은 완료 목표이며 자동 중단 제한이 아닙니다. 시간이 지나도 미완료 작업을 계속합니다. 반복 JPEG 디코딩 비용을 줄이기 위해 실험 디렉터리에 EXIF 방향 반영·짧은 변 320픽셀 PNG 캐시를 생성했습니다. 이는 손실 없는 PNG 저장이라는 뜻이며, 320픽셀 리사이즈 자체는 새 공통 전처리입니다. 병변·크롭 품질 검사 결과는 reproducibility의 전처리 점검 기록에 남겼습니다.</p>
+<pre>{
+  &quot;created_at&quot;: &quot;2026-10-15T18:56:11.301787+00:00&quot;,
+  &quot;results&quot;: [
+    {
+      &quot;pipeline&quot;: &quot;training_augmentation&quot;,
+      &quot;input_entries&quot;: 4096,
+      &quot;measured_images&quot;: 3584,
+      &quot;measured_seconds&quot;: 3.062864003935829,
+      &quot;images_per_second&quot;: 1170.1466324964163,
+      &quot;total_seconds_including_startup&quot;: 4.084457596996799,
+      &quot;measured_batches&quot;: 56,
+      &quot;batch_size&quot;: 64,
+      &quot;workers&quot;: 6
+    },
+    {
+      &quot;pipeline&quot;: &quot;evaluation_preprocessing&quot;,
+      &quot;input_entries&quot;: 4096,
+      &quot;measured_images&quot;: 3584,
+      &quot;measured_seconds&quot;: 2.849208559957333,
+      &quot;images_per_second&quot;: 1257.8931743956541,
+      &quot;total_seconds_including_startup&quot;: 3.5659436610294506,
+      &quot;measured_batches&quot;: 56,
+      &quot;batch_size&quot;: 64,
+      &quot;workers&quot;: 6
+    }
+  ],
+  &quot;images_selected_from&quot;: &quot;current original_split=train entries only, shuffled seed24680&quot;,
+  &quot;research_training_performed&quot;: false,
+  &quot;labels_used&quot;: false,
+  &quot;input_root&quot;: &quot;/home/user/data/ComputerVision_data/processed&quot;,
+  &quot;ready_cache_subset&quot;: true,
+  &quot;limitations&quot;: &quot;One 4096-image sample; filesystem cache state and final source mix may differ. No model overlaps this IO diagnostic.&quot;
+}</pre>
+<pre>{
+  &quot;checked_at&quot;: &quot;2026-10-15T20:04:22.599351+00:00&quot;,
+  &quot;run&quot;: 17,
+  &quot;failures&quot;: 0,
+  &quot;errors&quot;: 0,
+  &quot;skipped&quot;: 0,
+  &quot;passed&quot;: true,
+  &quot;code_sha256&quot;: &quot;6ff3ca71d567a5a2d629cebfc6dd1fe2d89b364f420ff89eefe3e80b167a0329&quot;
+}</pre>
+<p><a href="reproducibility/preflight.json">본실험 준비 상태</a> · <a href="reproducibility/test_results.txt">테스트 상세</a> · <a href="reproducibility/environment.json">전용 환경</a> · <a href="reproducibility/synthetic_gpu_smoke.json">합성 GPU 동작 검사</a> · <a href="README.md">실행·재현 절차</a></p>
+<h2>실행 순서</h2><p>근거 검토 → 새 manifest 교정 → 그룹 분할 검증 → 실제 데이터 소수 배치·처리량 검사 → 공통 설정 확정 → A/B/C×3시드 → 고정 테스트·논문 결과. 각 실행의 실제 상태는 runs와 evaluation의 완료 기록을 확인합니다.</p>
+<h2>원본 보호와 결과 보관</h2><p>입력 파일은 읽기 전용입니다. 제외·재라벨링은 실험 manifest로만 표현합니다. 서버 실험 파일은 자동 삭제하지 않습니다. 최종 보관 위치는 사용자 최신 지시에 따라 /home/user/ComputerVision_ai/입니다. 현재 세션의 파일시스템 쓰기 제한으로 목적지 복사는 미완료이며, 모든 결과는 이 서버 실험 폴더에 보존 중입니다.</p><h2>9회 본실험과 고정 테스트 실측</h2><table><tr><th>조건</th><th>작물 평균 macro-F1</th><th>전체 pooled macro-F1</th><th>정확도</th></tr><tr><td>A</td><td>90.73 ± 0.51%</td><td>95.31 ± 0.12%</td><td>95.31 ± 0.12%</td></tr><tr><td>B</td><td>90.44 ± 0.48%</td><td>94.93 ± 0.30%</td><td>94.94 ± 0.29%</td></tr><tr><td>C</td><td>91.32 ± 0.13%</td><td>95.36 ± 0.16%</td><td>95.36 ± 0.16%</td></tr></table><p>3시드 평균 ± 표본 SD. 통계적 유의성을 뜻하지 않습니다.</p><p><a href="paper/results_discussion_draft.txt">실측 결과·논의 초안</a></p><img src="figures/crop_f1_comparison.png"><img src="figures/crop_c_minus_b.png"><section><h2>Linux 최종 검증 상태</h2><p>9회 30 epoch 학습·고정 테스트 완료. 종료 후 원본 66,993항목 전체 SHA 검사 통과, 변경 사항 0. 주지표·pooled 지표·평균·표본 SD·대응 차이를 원시 예측에서 독립 검증했습니다.</p><p>최종 목적지 복사는 읽기 전용 제한으로 미완료입니다. 서버 묶음 검증과 목적지 보관 완료는 구분합니다.</p><p><a href="paper/thesis_draft_ko.md">통합 논문 초안</a> · <a href="paper/measured_interpretation_conclusion_ko.md">실측 해석·오분류·결론</a> · <a href="evaluation/error_examples_with_label_evidence.csv">오분류와 정답 근거</a> · <a href="reproducibility/REPRODUCE_LINUX.md">재현·추론 안내</a> · <a href="reproducibility/final_study_status_linux.json">최종 검증 상태</a></p><p>기존 폴더 기준 분포 그림은 검토 전 라벨 집계입니다. 최종 학습 분포는 아래 그림과 frozen_training_distribution.csv를 사용합니다.</p><img src="figures/frozen_training_distribution.png" alt="고정 학습 목록 16그룹 분포"><p>일부 청경채·로즈마리 정상 주석과 새 케일 주석은 단일 AI 시각 판정입니다. 독립 전문가 검증이나 새 환경 일반화의 증거로 해석하지 않습니다.</p></section></html>

@@ -1,0 +1,20 @@
+{
+  "observed_at": "2026-10-15T20:24:51.378744+00:00",
+  "evidence": "Training advanced from 2 completed epochs to 17; batch progressed from 126 to 251 within epoch 18 between observations. Jobctl process visibility contradicts advancing authoritative artifacts.",
+  "action": "Preserve existing suite; no duplicate launch. Do not infer failure from this sandbox process visibility.",
+  "progress": {
+    "stage": "training",
+    "run": "A_seed17",
+    "epoch": 18,
+    "batch": 426,
+    "batches": 541,
+    "updates": 9623,
+    "amp_skips": 0,
+    "updated_at": "2026-10-15T20:24:50.058873+00:00"
+  },
+  "completed_epochs": 17,
+  "main_runs_completed": 0,
+  "laptop_delivery": "unverified",
+  "resume_attempt": "failed before job directory creation; no duplicate training launched",
+  "attachment_read": "Complete 967-line attachment inspected, including raw correction authorization, mandatory eight crops, continue beyond target, delegated judgments."
+}

@@ -1,0 +1,61 @@
+{
+  "created_at": "2026-10-15T20:18:13.139444+00:00",
+  "files": [
+    {
+      "path": "actual_training_weights.csv",
+      "bytes": 1488,
+      "sha256": "51f5bdbedade495b96f8d558c6b5a8056a092872b62d7766f9bb9f0047dee1e4"
+    },
+    {
+      "path": "crop_state_distribution.csv",
+      "bytes": 1931,
+      "sha256": "36ff6d3bfee12f1738a46d82c6b25042394676c064231c2150557c172f6d0451"
+    },
+    {
+      "path": "curated_crop_state_distribution.png",
+      "bytes": 73420,
+      "sha256": "8e63d9af088545f5eb4a3b2be840209be9760c026d2ebbbcb92a07efc3fc6ec5"
+    },
+    {
+      "path": "curated_crop_state_distribution.svg",
+      "bytes": 34027,
+      "sha256": "0167409e76ff0913e0168a2a81ea229f1888148cd97f3eb75bedf6fe286727f2"
+    },
+    {
+      "path": "data_lineage_counts.csv",
+      "bytes": 1044,
+      "sha256": "638dde699036afd1f300e4f0dfbee0a0d3f2c890f7ced57da3f3890d49518788"
+    },
+    {
+      "path": "exclusion_reasons.csv",
+      "bytes": 580,
+      "sha256": "9a6b393ef0fc84b1616878a0529a5ed5a09c458f31b766094628f8e6d0fa8018"
+    },
+    {
+      "path": "index.html",
+      "bytes": 9628,
+      "sha256": "b1425936f2397a5a9fd25b38cc8fddfd533fde22de35fe0d61c1ebedb7a4797f"
+    },
+    {
+      "path": "kale_acquisition_confounding.csv",
+      "bytes": 1074,
+      "sha256": "6c7b96f92437e954eb84f99018f324ab6368c64fae220cc78145ba78e1b14d1f"
+    },
+    {
+      "path": "label_provenance.csv",
+      "bytes": 532,
+      "sha256": "fa77e7deed3397f7b1510d23a4c21724a58623bca334cc45db575b5280d3276a"
+    },
+    {
+      "path": "source_split_distribution.csv",
+      "bytes": 6150,
+      "sha256": "33a9cf67f07f96b1a71263e8d7f5e9b60540525a6d8b23b6a483d4baa5c0b2f1"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 3744,
+      "sha256": "37a31db9dac513fe228a733fd56d6aaae7bfe4264cef033a33e5ef9d1b492fe2"
+    }
+  ],
+  "protocol_unchanged": true
+}

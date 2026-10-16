@@ -1,0 +1,17 @@
+﻿crop,binary_label,included_entries,leakage_groups
+basil,0,1856,496
+basil,1,2738,606
+bok_choy,0,364,276
+bok_choy,1,1599,238
+cucumber,0,14468,478
+cucumber,1,1200,909
+kale,0,372,233
+kale,1,179,135
+lettuce,0,12326,885
+lettuce,1,5828,961
+pepper,0,7489,106
+pepper,1,3484,230
+rosemary,0,194,176
+rosemary,1,378,114
+tomato,0,2350,2180
+tomato,1,1568,1425

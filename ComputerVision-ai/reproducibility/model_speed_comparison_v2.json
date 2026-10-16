@@ -1,0 +1,75 @@
+{
+  "created_at": "2026-10-15T18:41:11.050278+00:00",
+  "results": [
+    {
+      "model": "efficientnet_b0",
+      "batch_size": 64,
+      "warmup_steps": 15,
+      "measured_steps": 30,
+      "median_step_seconds": 0.03233696095412597,
+      "mean_step_seconds": 0.032344896858558056,
+      "synthetic_images_per_second": 1978.6738006884816,
+      "max_memory_bytes": 3035305984,
+      "amp_skips_including_warmup": 0,
+      "inference_batch64_seconds": 0.0070151074905879796,
+      "inference_single_image_seconds": 0.002670340007171035
+    },
+    {
+      "model": "mobilenet_v3_large",
+      "batch_size": 64,
+      "warmup_steps": 15,
+      "measured_steps": 30,
+      "median_step_seconds": 0.019463813514448702,
+      "mean_step_seconds": 0.019461955995454142,
+      "synthetic_images_per_second": 3288.4669976105642,
+      "max_memory_bytes": 1605343744,
+      "amp_skips_including_warmup": 0,
+      "inference_batch64_seconds": 0.0040096769807860255,
+      "inference_single_image_seconds": 0.002185231482144445
+    },
+    {
+      "model": "resnet18",
+      "batch_size": 64,
+      "warmup_steps": 15,
+      "measured_steps": 30,
+      "median_step_seconds": 0.01616139995167032,
+      "mean_step_seconds": 0.016164557298179717,
+      "synthetic_images_per_second": 3959.279479135937,
+      "max_memory_bytes": 1050354688,
+      "amp_skips_including_warmup": 0,
+      "inference_batch64_seconds": 0.004525784985162318,
+      "inference_single_image_seconds": 0.0008550110505893826
+    },
+    {
+      "model": "mobilenet_v3_small",
+      "batch_size": 64,
+      "warmup_steps": 15,
+      "measured_steps": 30,
+      "median_step_seconds": 0.009464189992286265,
+      "mean_step_seconds": 0.009463038272224366,
+      "synthetic_images_per_second": 6763.155570008728,
+      "max_memory_bytes": 660090880,
+      "amp_skips_including_warmup": 0,
+      "inference_batch64_seconds": 0.0018511025118641555,
+      "inference_single_image_seconds": 0.0018154089921154082
+    },
+    {
+      "model": "shufflenet_v2_x1_0",
+      "batch_size": 64,
+      "warmup_steps": 15,
+      "measured_steps": 30,
+      "median_step_seconds": 0.011181824025698006,
+      "mean_step_seconds": 0.011219100766660025,
+      "synthetic_images_per_second": 5704.557016743248,
+      "max_memory_bytes": 825784320,
+      "amp_skips_including_warmup": 0,
+      "inference_batch64_seconds": 0.0023695164709351957,
+      "inference_single_image_seconds": 0.0020043959957547486
+    }
+  ],
+  "input": "random GPU-resident tensors, 64 x 3 x 224 x 224",
+  "weights": "random initialization, 2-class heads",
+  "optimizer": "AdamW, full fine-tuning, AMP, deterministic algorithms, clip norm 1",
+  "limitations": "Excludes file IO, decoding, augmentation, transfer, validation and checkpointing. One short measurement per model; not an epoch estimate or accuracy comparison.",
+  "research_model_changed": false
+}

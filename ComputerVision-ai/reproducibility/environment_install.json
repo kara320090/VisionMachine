@@ -1,0 +1,30 @@
+{
+  "completed_at": "2026-10-15T18:23:22.028866+00:00",
+  "python": "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/.venv/bin/python",
+  "commands": [
+    [
+      "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/.venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "torch==2.9.0",
+      "torchvision==0.24.0",
+      "--index-url",
+      "https://download.pytorch.org/whl/cu128"
+    ],
+    [
+      "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/.venv/bin/python",
+      "-m",
+      "pip",
+      "install",
+      "numpy==2.2.6",
+      "Pillow==12.0.0",
+      "pandas==2.3.3",
+      "scikit-learn==1.7.2",
+      "scipy==1.15.3",
+      "matplotlib==3.10.8",
+      "PyYAML==6.0.3"
+    ]
+  ],
+  "shared_environment_modified": false
+}

@@ -1,0 +1,21 @@
+{
+  "approved": true,
+  "inventory_sha256": "c716b1bdb76136b31fa5f0458088129f9365ff836cdb887d31aa46a7e51e48fb",
+  "decisions_sha256": "698937593e5baad906af0fe6b040f61e37614dc56cebd428c08ddb3c94688d3c",
+  "group_review_sha256": "65f85cab20baf7719cba0c0f1ee7081306ca13f22751827b811195e07c77712a",
+  "reviewer": "Codex under explicit user delegation",
+  "evidence": "Source metadata rejoined to originals; source conflicts excluded; actual visual contact sheets reviewed; user delegation in review_authority.json",
+  "reviewed_at": "2026-10-15T19:47:46.052128+00:00",
+  "required_crops": [
+    "basil",
+    "bok_choy",
+    "cucumber",
+    "kale",
+    "lettuce",
+    "pepper",
+    "rosemary",
+    "tomato"
+  ],
+  "clinical_ground_truth_validation": false,
+  "annotation_config_sha256": "7863401e74130e9bade5d11d8faada791ee91ddbf74f7ef2399c71933236357d"
+}

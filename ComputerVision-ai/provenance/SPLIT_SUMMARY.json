@@ -1,0 +1,86 @@
+{
+  "split_counts": {
+    "train": 34622,
+    "test": 10733,
+    "validation": 10127
+  },
+  "crop_state_counts": {
+    "train": {
+      "cucumber:0": 8557,
+      "cucumber:1": 708,
+      "pepper:0": 5868,
+      "tomato:1": 953,
+      "lettuce:0": 7528,
+      "pepper:1": 2020,
+      "basil:0": 1089,
+      "lettuce:1": 3577,
+      "tomato:0": 1440,
+      "basil:1": 1524,
+      "rosemary:1": 183,
+      "bok_choy:0": 208,
+      "bok_choy:1": 535,
+      "rosemary:0": 94,
+      "kale:0": 235,
+      "kale:1": 103
+    },
+    "test": {
+      "rosemary:1": 84,
+      "tomato:1": 298,
+      "lettuce:1": 854,
+      "pepper:1": 740,
+      "lettuce:0": 3329,
+      "cucumber:0": 2617,
+      "basil:1": 658,
+      "tomato:0": 453,
+      "basil:0": 330,
+      "cucumber:1": 203,
+      "pepper:0": 720,
+      "bok_choy:1": 229,
+      "rosemary:0": 47,
+      "bok_choy:0": 67,
+      "kale:0": 66,
+      "kale:1": 38
+    },
+    "validation": {
+      "lettuce:0": 1434,
+      "cucumber:0": 3273,
+      "pepper:0": 900,
+      "cucumber:1": 279,
+      "basil:1": 555,
+      "lettuce:1": 1202,
+      "tomato:0": 453,
+      "basil:0": 432,
+      "pepper:1": 701,
+      "tomato:1": 315,
+      "rosemary:1": 111,
+      "bok_choy:1": 241,
+      "rosemary:0": 53,
+      "bok_choy:0": 69,
+      "kale:1": 38,
+      "kale:0": 71
+    }
+  },
+  "evaluation_representatives": {
+    "test": 1884,
+    "validation": 1898
+  },
+  "cross_split_overlap": {
+    "sha256": {
+      "train:validation": 0,
+      "train:test": 0,
+      "validation:test": 0
+    },
+    "parent_image_id": {
+      "train:validation": 0,
+      "train:test": 0,
+      "validation:test": 0
+    },
+    "leakage_group_id": {
+      "train:validation": 0,
+      "train:test": 0,
+      "validation:test": 0
+    }
+  },
+  "fixed_split_sha256": "5aee4093c550316ae7bf4b0d40268210644e2627d52b8f3256038457e595b659",
+  "note": "Aggregated from the original fixed split. The full image-by-image split is retained locally and excluded at user request."
+}

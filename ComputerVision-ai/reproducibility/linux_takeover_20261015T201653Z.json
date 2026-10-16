@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-10-15T20:16:53.099125+00:00",
+  "job": "crop8-main-20261015-200425Z-57bb0776",
+  "job_state": "interrupted",
+  "live_jobs_observed": 0,
+  "main_runs_completed": 0,
+  "main_runs_required": 9,
+  "checkpoint": {
+    "run": "A_seed17",
+    "completed_epochs": 2,
+    "next_batch": 0,
+    "updates": 1082,
+    "saved_at": "2026-10-15T20:16:15.089486+00:00",
+    "validation_equal_crop_binary_macro_f1": 0.8107041004232076,
+    "validation_pooled_binary_macro_f1": 0.8719696067515383
+  },
+  "protocol_validation": "passed: code, config, split, review approval and source correction locks",
+  "resume_attempt": "failed before launch: read-only filesystem at /home/user/codex_gpu_jobs/runs",
+  "test_evaluations_completed": 0,
+  "latest_existing_source_check": {
+    "checked_at": "2026-10-15T20:15:04.534959+00:00",
+    "entries": 66993,
+    "full_hash": true,
+    "passed": true
+  },
+  "server_bundle_sha256_verified": true,
+  "laptop_copy_verified": false,
+  "laptop_evidence": "No transfer_verified.json available in server experiment; server bundle receipt does not establish laptop delivery.",
+  "superseded_by": "linux_takeover_correction_20261015T2024Z.json",
+  "correction": "Process visibility was insufficient; subsequent advancing training artifacts contradict stopped-work interpretation."
+}

@@ -1,0 +1,12 @@
+{
+  "created_at": "2026-10-15T20:21:48.752275+00:00",
+  "basis": "A_seed17 actual completed full-finetuning epochs; train+validation+checkpoint overhead between records",
+  "completed_epochs": 12,
+  "median_observed_epoch_seconds": 32.1526435239939,
+  "common_30_epoch_one_run_estimate_seconds": 964.5793057198171,
+  "nine_run_training_estimate_hours": 2.4114482642995427,
+  "is_estimate_not_completion": true,
+  "excludes": "Source audit, setup, cache generation, final evaluation, final source rehash and transfer",
+  "protocol_changed": false,
+  "code_sha256": "6ff3ca71d567a5a2d629cebfc6dd1fe2d89b364f420ff89eefe3e80b167a0329"
+}

@@ -1,0 +1,95 @@
+{
+  "checked_at": "2026-10-15T20:04:24.854522+00:00",
+  "ready_for_research_training": true,
+  "required_crops": [
+    "basil",
+    "bok_choy",
+    "cucumber",
+    "kale",
+    "lettuce",
+    "pepper",
+    "rosemary",
+    "tomato"
+  ],
+  "checks": {
+    "source_label_evidence": [
+      {
+        "crop": "basil",
+        "status": "metadata_supported",
+        "images": 4594
+      },
+      {
+        "crop": "basil",
+        "status": "review_needed",
+        "images": 74
+      },
+      {
+        "crop": "bok_choy",
+        "status": "metadata_supported",
+        "images": 1599
+      },
+      {
+        "crop": "bok_choy",
+        "status": "review_needed",
+        "images": 3046
+      },
+      {
+        "crop": "cucumber",
+        "status": "metadata_supported",
+        "images": 15668
+      },
+      {
+        "crop": "kale",
+        "status": "review_needed",
+        "images": 475
+      },
+      {
+        "crop": "lettuce",
+        "status": "metadata_supported",
+        "images": 18154
+      },
+      {
+        "crop": "lettuce",
+        "status": "review_needed",
+        "images": 839
+      },
+      {
+        "crop": "pepper",
+        "status": "metadata_supported",
+        "images": 10973
+      },
+      {
+        "crop": "rosemary",
+        "status": "metadata_supported",
+        "images": 378
+      },
+      {
+        "crop": "rosemary",
+        "status": "review_needed",
+        "images": 875
+      },
+      {
+        "crop": "tomato",
+        "status": "metadata_supported",
+        "images": 3918
+      }
+    ],
+    "weights": {
+      "A": {
+        "sum": 34622.0,
+        "mean": 1.0
+      },
+      "B": {
+        "sum": 34622.0,
+        "mean": 1.0
+      },
+      "C": {
+        "sum": 34622.0,
+        "mean": 1.0
+      }
+    },
+    "eight_crops_and_split": "passed",
+    "protected_output_paths": "passed"
+  },
+  "blockers": []
+}

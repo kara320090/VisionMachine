@@ -1,0 +1,107 @@
+{
+  "at": "2026-10-15T19:47:46.205841+00:00",
+  "inventory_entries": 66993,
+  "included_entries": 56393,
+  "excluded_entries": 10600,
+  "source_files_modified": 0,
+  "eight_crops_retained": true,
+  "expert_health_labels_claimed": false,
+  "counts": [
+    {
+      "crop": "basil",
+      "binary_label": 0,
+      "included_entries": 1856,
+      "leakage_groups": 496
+    },
+    {
+      "crop": "basil",
+      "binary_label": 1,
+      "included_entries": 2738,
+      "leakage_groups": 606
+    },
+    {
+      "crop": "bok_choy",
+      "binary_label": 0,
+      "included_entries": 364,
+      "leakage_groups": 276
+    },
+    {
+      "crop": "bok_choy",
+      "binary_label": 1,
+      "included_entries": 1599,
+      "leakage_groups": 238
+    },
+    {
+      "crop": "cucumber",
+      "binary_label": 0,
+      "included_entries": 14468,
+      "leakage_groups": 478
+    },
+    {
+      "crop": "cucumber",
+      "binary_label": 1,
+      "included_entries": 1200,
+      "leakage_groups": 909
+    },
+    {
+      "crop": "kale",
+      "binary_label": 0,
+      "included_entries": 372,
+      "leakage_groups": 233
+    },
+    {
+      "crop": "kale",
+      "binary_label": 1,
+      "included_entries": 179,
+      "leakage_groups": 135
+    },
+    {
+      "crop": "lettuce",
+      "binary_label": 0,
+      "included_entries": 12326,
+      "leakage_groups": 885
+    },
+    {
+      "crop": "lettuce",
+      "binary_label": 1,
+      "included_entries": 5828,
+      "leakage_groups": 961
+    },
+    {
+      "crop": "pepper",
+      "binary_label": 0,
+      "included_entries": 7489,
+      "leakage_groups": 106
+    },
+    {
+      "crop": "pepper",
+      "binary_label": 1,
+      "included_entries": 3484,
+      "leakage_groups": 230
+    },
+    {
+      "crop": "rosemary",
+      "binary_label": 0,
+      "included_entries": 194,
+      "leakage_groups": 176
+    },
+    {
+      "crop": "rosemary",
+      "binary_label": 1,
+      "included_entries": 378,
+      "leakage_groups": 114
+    },
+    {
+      "crop": "tomato",
+      "binary_label": 0,
+      "included_entries": 2350,
+      "leakage_groups": 2180
+    },
+    {
+      "crop": "tomato",
+      "binary_label": 1,
+      "included_entries": 1568,
+      "leakage_groups": 1425
+    }
+  ]
+}

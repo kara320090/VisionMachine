@@ -1,0 +1,50 @@
+{
+  "scope": "Paper writing, review evidence, scientific code and results, and nine selected model checkpoints.",
+  "core_source_files": 3017,
+  "core_source_bytes": 102186394,
+  "selected_model_count": 9,
+  "selected_model_bytes": 437798942,
+  "original_source_not_modified": true,
+  "other_repository_paths_not_modified": true,
+  "excluded_categories": [
+    "intermediate/pilot checkpoints",
+    "duplicate tar/ZIP bundles",
+    "full image inventories and per-image split lists",
+    "cache/symlink/processed-path inventories",
+    "repeated per-image review draft/group decision lists",
+    "old snapshots and transfer debugging histories",
+    "full per-file source catalogs"
+  ],
+  "kept_review": "Visual review UI, its thumbnails, all final review panels, label annotation ledger, source/duplicate review evidence and aggregate reports.",
+  "html_link_edits": [
+    {
+      "path": "REPORT.html",
+      "link_rewrites": 4
+    },
+    {
+      "path": "q/outputs/AI모델_학습과정_상세정리.html",
+      "link_rewrites": 2
+    }
+  ],
+  "prepublication_local_full_archive_checks": {
+    "status": "passed",
+    "public_files": 3196,
+    "public_bytes": 1054961955,
+    "source_files_accounted": 7739,
+    "unique_source_files": 3182,
+    "duplicate_aliases": 4269,
+    "excluded_files": 288,
+    "selected_models": 9,
+    "epochs_checked": 270,
+    "optimizer_updates": 146042,
+    "amp_skips": 28,
+    "training_weights_checked": 311598,
+    "test_predictions_checked": 16956,
+    "python_syntax_files_checked": 61,
+    "html_local_links_checked": 3475,
+    "frozen_code_sha256": "6ff3ca71d567a5a2d629cebfc6dd1fe2d89b364f420ff89eefe3e80b167a0329",
+    "cross_split_hash_parent_group_overlap": 0,
+    "checkpoint_loading_or_training_executed": false
+  },
+  "models_included_in_this_commit": 0
+}

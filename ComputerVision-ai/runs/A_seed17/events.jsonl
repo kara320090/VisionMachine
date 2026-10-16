@@ -1,0 +1,1 @@
+{"event": "start", "time": "2026-10-15T20:15:06.313570+00:00", "command": ["/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/code/train.py", "--root", "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829", "--condition", "A", "--seed", "17"]}

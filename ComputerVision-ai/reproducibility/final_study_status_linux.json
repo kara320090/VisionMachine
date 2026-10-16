@@ -1,0 +1,40 @@
+{
+  "recorded_at": "2026-10-15T23:01:40.661966+00:00",
+  "state": "research_pipeline_complete_delivery_blocked",
+  "main_runs_completed": 9,
+  "epochs_per_run": 30,
+  "seeds": [
+    17,
+    42,
+    2026
+  ],
+  "conditions": [
+    "A",
+    "B",
+    "C"
+  ],
+  "test_runs_verified": 9,
+  "test_representatives_per_run": 1884,
+  "suite_completed_at": "2026-10-15T23:00:03.743108+00:00",
+  "jobctl_job": "crop8-main-20261015-200425Z-57bb0776",
+  "jobctl_exit_code": 0,
+  "source_preservation": {
+    "checked_at": "2026-10-15T23:00:03.694081+00:00",
+    "full_image_hash_check": true,
+    "image_entries": 66993,
+    "issues": [],
+    "passed": true
+  },
+  "source_preservation_artifact": "audit/preservation_2026-10-15T230003.694137_0000.json",
+  "training_test_integrity": "reproducibility/completed_runs_integrity_linux.json",
+  "aggregation_audit": "reproducibility/final_aggregation_audit_linux.json",
+  "integrated_paper": "paper/thesis_draft_ko.md",
+  "reproduction_guide": "reproducibility/REPRODUCE_LINUX.md",
+  "inference_followup": "reproducibility/followups/inference_v1/protocol_decision.json",
+  "destination": "/home/user/ComputerVision_ai/20261016T031000_KST_crop8_effb0_c901e829",
+  "destination_copy_verified": false,
+  "delivery_blocker": "Actual mkdir failed with errno 30: Read-only file system; destination outside session writable roots.",
+  "server_files_preserved": true,
+  "frozen_protocol_modified": false,
+  "overall_project_complete": false
+}

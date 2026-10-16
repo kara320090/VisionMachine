@@ -1,0 +1,112 @@
+{
+  "command": [
+    "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829/code/train.py",
+    "--root",
+    "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829",
+    "--condition",
+    "C",
+    "--seed",
+    "17"
+  ],
+  "seed": 17,
+  "condition": "C",
+  "phase": "main",
+  "code_sha256": "6ff3ca71d567a5a2d629cebfc6dd1fe2d89b364f420ff89eefe3e80b167a0329",
+  "config_sha256": "cad6ce37b9026e8930e13f2a969cf9c40431b6ad983bce0d03e793564a6afd6a",
+  "split_sha256": "5aee4093c550316ae7bf4b0d40268210644e2627d52b8f3256038457e595b659",
+  "started_or_resumed_at": "2026-10-15T20:48:28.517671+00:00",
+  "resume": false,
+  "config": {
+    "schema_version": 1,
+    "required_crops": [
+      "basil",
+      "bok_choy",
+      "cucumber",
+      "kale",
+      "lettuce",
+      "pepper",
+      "rosemary",
+      "tomato"
+    ],
+    "binary_labels": {
+      "normal": 0,
+      "abnormal": 1
+    },
+    "source_policy": "processed plus evidence-approved existing raw originals under the user's subsequent instruction; no automatic raw health labels",
+    "split_seed": 20261016,
+    "split_ratios": [
+      0.6,
+      0.2,
+      0.2
+    ],
+    "minimum_eval_groups_per_crop_label": 10,
+    "model": "efficientnet_b0",
+    "weights": "IMAGENET1K_V1",
+    "image_size": 224,
+    "eval_resize": 256,
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "crop_scale": [
+      0.9,
+      1.0
+    ],
+    "crop_ratio": [
+      0.95,
+      1.05
+    ],
+    "color_jitter": [
+      0.1,
+      0.1,
+      0.05,
+      0.0
+    ],
+    "horizontal_flip": 0.5,
+    "batch_size": 64,
+    "workers": 6,
+    "cpu_threads": 4,
+    "prefetch_factor": 2,
+    "head_epochs": 2,
+    "epochs": 30,
+    "backbone_lr": 0.0001,
+    "classifier_lr": 0.001,
+    "weight_decay": 0.0001,
+    "final_lr_ratio": 0.01,
+    "amp": true,
+    "amp_initial_scale": 1024,
+    "clip_grad_norm": 1.0,
+    "checkpoint_interval_seconds": 900,
+    "training_seeds": [
+      17,
+      42,
+      2026
+    ],
+    "pilot_seed": 101,
+    "early_stopping": false,
+    "threshold": 0.5,
+    "selection_metric": "equal_crop_binary_macro_f1",
+    "selection_tie_break": "earliest_epoch",
+    "image_cache_root": {
+      "experiment_root": "/home/user/ComputerVision-ai/experiments/20261016T031000_KST_crop8_effb0_c901e829",
+      "recipe_id": "ffd2410217838b5a"
+    },
+    "input_cache_recipe": {
+      "version": 1,
+      "format": "PNG",
+      "compress_level": 1,
+      "short_side": 320,
+      "interpolation": "PIL_BICUBIC",
+      "orientation": "EXIF_transpose_before_resize",
+      "preserve_aspect_ratio": true,
+      "only_downscale": true,
+      "color": "RGB"
+    }
+  }
+}

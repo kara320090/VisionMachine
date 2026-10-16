@@ -1,0 +1,7 @@
+{
+  "required_crops": 8,
+  "raw_inspection_authorized": true,
+  "source_files_read_only": true,
+  "raw_images_added": false,
+  "research_training_requires_verified_labels_and_group_split": true
+}

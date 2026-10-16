@@ -1,0 +1,12 @@
+{
+  "completed_at": "2026-10-15T19:14:03.238800+00:00",
+  "references_checked": 1835,
+  "reference_class": "Squash___Powdery_mildew",
+  "local_images_checked": 129,
+  "candidate_pairs": 129,
+  "distinct_local_candidates": 129,
+  "very_close_pixel_candidates": 93,
+  "errors": [],
+  "reference_images_saved_or_admitted_to_training": 0,
+  "conclusion": "Inspect candidate photographs and original source class before adjudicating crop identity; no pHash-only relabeling."
+}

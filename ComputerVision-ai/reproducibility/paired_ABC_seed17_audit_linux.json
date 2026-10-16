@@ -1,0 +1,14 @@
+{
+  "checked_at": "2026-10-15T20:50:42.447617+00:00",
+  "seed": 17,
+  "conditions": [
+    "A",
+    "B",
+    "C"
+  ],
+  "initial_model_hashes_identical": true,
+  "same_ordered_training_ids_labels_crops": true,
+  "frozen_hashes_identical": true,
+  "C_saved_weights_match_formula": true,
+  "test_used": false
+}
