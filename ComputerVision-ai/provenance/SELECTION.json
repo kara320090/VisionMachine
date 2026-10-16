@@ -46,5 +46,5 @@
     "cross_split_hash_parent_group_overlap": 0,
     "checkpoint_loading_or_training_executed": false
   },
-  "models_included_in_this_commit": 0
+  "models_included_in_this_commit": 3
 }
