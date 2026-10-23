@@ -45,6 +45,8 @@ C−B는 +0.88 ± 0.36 pp다. 3시드 변동이며 통계적 유의성·새 환�
 
 ## 무결성과 재현
 
+논문의 **손실 가중 단위**, B-A·C-B·C-A 관계와 실행 가능한 결과 재계산 절차는 [해석·재현 안내](followups/20261023_weighting_unit/README.md)에 정리했다. 저장 예측에서 주지표·작물별 지표·대응 차이를 재계산하는 Python 표준 라이브러리 스크립트와 결과 JSON을 제공한다.
+
 ```text
 python tools/verify_paper_bundle.py --require-all-models
 ```
