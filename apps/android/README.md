@@ -1,10 +1,12 @@
 # Android 앱 — 이봉헌·유재윤
 
+2026-11-05: 런처에 기기 내 RGB 사진 분석·기록 시험 화면을 추가했다. 기존 촬영 화면은 ‘기존 촬영·기록 화면 열기’로 유지한다. 최대 8장 선택, 개별/일괄 분석, 사진 변경 시 결과 초기화, 기록·CSV를 제공한다. 실제 모델 준비·시험과 제한은 [ANDROID_RGB](../../docs/ANDROID_RGB.md), 배포는 [PLAY_INTERNAL_TEST](../../docs/PLAY_INTERNAL_TEST.md)를 따른다. 아래 초기 촬영 경로의 서버·센서 구현 상태와 새 로컬 RGB 시험 경로를 구분한다.
+
 Kotlin/Compose Android 프로젝트와 Gradle wrapper를 생성했다. `app/src/main`은 기존 카메라 앱의 `TakePicture`로 원본 JPEG를 앱 전용 파일에 저장하고, 검사 ID·개체 ID·묶음 ID·작물 코드·사진 URI를 로컬 목록에 기록한다. 촬영 취소 시 빈 파일을 정리하고, 프로세스가 돌아온 뒤 미완료 촬영을 복구·정리할 수 있다. 현재 applicationId `org.visionmachine.agriclinic`은 개발용이며 Play 등록 전에 팀이 확정한다.
 
 현재 로컬 기록 목록·전송 상태는 SharedPreferences JSON이며 원본 사진은 앱 전용 `files/photos`에 저장한다. 디버그 앱은 사진 SHA-256과 계약 메타데이터를 로컬 서버 `POST /v1/inspections`에 전송한다. 업로드 실패·앱 중단 후에는 같은 검사 ID로 수동 재시도한다. `pending_model`은 AI 분석 대기로 표시하고, 완료된 모의 결과가 오면 모의 표시를 유지한다. Room, 자동 재전송 WorkManager, 실측 USB 수신은 후속 작업이다. thumbnail을 원본처럼 사용하지 않는다.
 
-빌드: Android SDK Platform 35, Gradle 8.9, AGP 8.7.0, Kotlin 2.0.21, JDK 17. 저장소의 `gradlew`/`gradlew.bat`를 사용한다. Windows PowerShell에서 JDK 17 `JAVA_HOME`과 `ANDROID_HOME`을 설정한 뒤 `./gradlew.bat :app:assembleDebug`를 실행한다. 산출물 `app/build/outputs/apk/debug/app-debug.apk`는 Git에서 제외한다. Android Studio의 기본 JDK가 25인 환경에서는 JDK 17을 별도로 지정해야 한다.
+빌드: Android SDK Platform 36, Gradle 8.11.1, AGP 8.10.1, Kotlin 2.0.21, 소스 타깃 JDK 17. 저장소의 `gradlew`/`gradlew.bat`를 사용한다. Windows PowerShell에서 JDK 17 또는 21 `JAVA_HOME`과 `ANDROID_HOME`을 설정한 뒤 `./gradlew.bat :app:assembleDebug`를 실행한다. 이번 Windows 검증은 JDK 21.0.13에서 수행했다. 산출물 `app/build/outputs/apk/debug/app-debug.apk`는 Git에서 제외한다. Android Studio의 기본 JDK가 25인 환경에서는 호환되는 JDK를 별도로 지정한다.
 
 ```text
 app/src/main/java/<확정패키지>/

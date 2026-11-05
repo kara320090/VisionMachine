@@ -27,6 +27,7 @@ ml/weights/
 *.pth
 *.onnx
 *.tflite
+apps/android/app/src/androidTest/assets/private/
 *.ckpt
 *.safetensors
 *.db

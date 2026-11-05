@@ -1,5 +1,18 @@
 # 현재 구현 상태
 
+## 2026-11-05 Android 사진 점검 동반 화면
+
+사용자 요청으로 캡스톤 데스크톱 RGB 모델과 사진 분석·기록 UI를 Android 내부 테스트용 동반 경로에 연결했다. 기존 촬영·원본 저장·디버그 loopback 업로드·USB 패킷 계약은 보존했다. 센서·서버 통합 진단의 구현 상태는 이 작업으로 바뀌지 않는다.
+
+- 런처 `AnalysisActivity`: 최대 8장 JPEG/PNG 선택, 첫 사진 분석, 선택 사진 일괄 분석, 사진 변경 시 현재 결과 초기화, 누적 기록 200건, CSV 내보내기. 기존 `MainActivity` 촬영 화면으로 이동할 수 있다.
+- 실제 EfficientNet-B0 C_seed42 모델의 ONNX opset 17/softmax 2출력을 ONNX Runtime Android 1.31.1 CPU로 실행한다. 모델 카드와 SHA-256 검증을 제공하며 모델 가중치·실제 예시 사진·시험 정답·서명키·빌드 산출물은 공개 Git에서 제외한다.
+- EXIF 8방향, PIL BICUBIC/중앙 크롭/정규화를 재현했다. 실제 현장 정확도나 재배 문제의 원인·보정된 진단 확률은 주장하지 않는다. 자세한 범위·모델 준비는 [ANDROID_RGB](ANDROID_RGB.md).
+- Windows JDK 21.0.13(소스 타깃 17), SDK/target 36, Gradle 8.11.1/AGP 8.10.1에서 `assembleDebug`, `lintDebug` 통과(오류 0, 기존 스타일·의존성 안내 경고 14개).
+- `testDebugUnitTest`: 합성 사진 5개 크기의 전처리 픽셀 해시가 Pillow와 동일(3000×4000 포함). Android API 37.1/16KB x86_64 에뮬레이터 `connectedDebugAndroidTest` 18개 통과/skip 0: 기존 촬영·서버·센서 파서 14개와 새 실제 RGB 모델·EXIF·12MP·사진 선택/초기화/일괄/기록 시험 4개. 추가 화면 기동·PixelCopy 렌더 시험 1개 통과.
+- PC PyTorch→ONNX 변환은 보관 예시 8장에서 출력 최대 절대 차이 6.26e-7 미만, Android 실제 PNG 입력 출력은 PC 기준과 각 1e-5 이내로 일치했다. 이 비교는 변환·실행 동등성 시험이며 독립 성능 평가가 아니다. APK의 4 ABI 네이티브 라이브러리 12개 PT_LOAD가 모두 16KB 정렬이다.
+
+아래 초기 구현 설명과 날짜별 기록은 이전 이력이다. 서버 모델 연결·실휴대폰/실센서 통합시험 완료를 의미하지 않는다.
+
 ## 이 패키지에 구현한 것
 - 공통 계약 Python 모델과 생성 JSON Schema, 명시된 합성 예제.
 - 서버 GET /healthz, GET /v1/capabilities, POST /v1/dev/validate-inspection.
