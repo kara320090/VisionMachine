@@ -120,7 +120,9 @@ class SensorFeatureTest {
         }
         val originalId = UUID.randomUUID().toString()
         val photo = CaptureRecord(originalId,"=synthetic-plant","synthetic-batch","basil","content://synthetic/photo.jpg","2026-01-01T00:00:00Z")
-        val frame = parse(syntheticExtendedSensorPacket(id)) as SensorFrame.Measurement
+        val packet = syntheticExtendedSensorPacket(id)
+        packet.getJSONObject("readings").put("air_temp_c", -5.5)
+        val frame = parse(packet) as SensorFrame.Measurement
         val store = SensorStore(isolated)
         store.save(id,frame,photo,"2026-01-01T00:01:00Z")
         val saved = SensorStore(isolated).all().single()
@@ -135,5 +137,7 @@ class SensorFeatureTest {
         assertTrue(csv.contains(originalId))
         assertTrue(csv.contains("mock"))
         assertTrue(csv.contains("\"'=synthetic-plant\""))
+        assertTrue(csv.contains("\"-5.5\""))
+        assertFalse(csv.contains("\"'-5.5\""))
     }
 }

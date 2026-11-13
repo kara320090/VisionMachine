@@ -58,9 +58,9 @@ class SensorStore(context: Context) {
             val header = listOf("inspection_id", "sensor_received_at", "source_capture_id", "captured_at", "subject_id", "batch_id",
                 "crop_code", "photo_uri", "mode", "soil_raw", "soil_index", "air_temp_c", "air_rh_pct", "optical_raw_counts",
                 "object_temp_c", "mlx_ambient_temp_c", "errors", "sensor_packet_json")
-            fun quote(value: String): String {
+            fun quote(value: String, userText: Boolean): String {
                 // Preserve user-entered identifiers as text in spreadsheet applications.
-                val safe = if (value.trimStart().firstOrNull() in listOf('=', '+', '-', '@')) "'$value" else value
+                val safe = if (userText && value.trimStart().firstOrNull() in listOf('=', '+', '-', '@')) "'$value" else value
                 return "\"" + safe.replace("\"", "\"\"") + "\""
             }
             val rows = records.map { row ->
@@ -74,7 +74,9 @@ class SensorStore(context: Context) {
                     extensions?.optJSONObject("surface_temperature")?.csvValue("object_temp_c").orEmpty(),
                     extensions?.optJSONObject("surface_temperature")?.csvValue("ambient_temp_c").orEmpty(), packet.getJSONArray("errors").toString(), row.packetJson)
             }
-            return (listOf(header) + rows).joinToString("\r\n", postfix = "\r\n") { it.joinToString(",", transform = ::quote) }
+            return (listOf(header) + rows).joinToString("\r\n", postfix = "\r\n") { row ->
+                row.mapIndexed { index, value -> quote(value, index in 4..7) }.joinToString(",")
+            }
         }
     }
 }
