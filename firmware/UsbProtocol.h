@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include "SensorReader.h"
 #include "Calibration.h"
+#include "MeasureRequest.h"
 
 class UsbProtocol {
 public:
@@ -25,9 +26,7 @@ public:
       const char* errorCode);
 
 private:
-  static constexpr size_t kMaxLineLen = 256;
-  char rxBuffer_[kMaxLineLen];
-  size_t rxIndex_;
+  MeasureRequestDecoder requestDecoder_;
 
   uint8_t adcBits_;
   uint32_t sequence_;
@@ -35,7 +34,6 @@ private:
   char bootId_[24];
 
   void initHardwareIdentifiers();
-  bool extractJsonStringValue(const String& json, const char* key, String& outVal) const;
   bool isValidUuidFormat(const String& uuid) const;
   void printJsonString(Stream& stream, const char* str) const;
 };

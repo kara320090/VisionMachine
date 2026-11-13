@@ -70,10 +70,12 @@ RawMeasurement SensorReader::readFresh() {
     out.sht_valid = false;
     out.addError("sht31_disconnected");
   } else {
-    float t = sht31_.readTemperature();
-    float h = sht31_.readHumidity();
+    // One conversion and one CRC-checked frame for this temperature/humidity pair.
+    float t = NAN;
+    float h = NAN;
+    const bool readOk = sht31_.readBoth(&t, &h);
 
-    if (!isnan(t) && !isnan(h) && t >= -40.0f && t <= 125.0f && h >= 0.0f && h <= 100.0f) {
+    if (readOk && !isnan(t) && !isnan(h) && t >= -40.0f && t <= 125.0f && h >= 0.0f && h <= 100.0f) {
       out.air_temp_c = t;
       out.air_rh_pct = h;
       out.sht_valid = true;

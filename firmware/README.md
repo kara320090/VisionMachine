@@ -9,6 +9,7 @@ firmware/
   SensorReader.h/.cpp     SEN0308 A0·SEN0334 I2C 실측
   Calibration.h/.cpp      원시→보정, calibration_id
   UsbProtocol.h/.cpp      JSONL·request ID·sequence·error
+  MeasureRequest.h/.cpp   상한이 있는 측정 요청 검사·분할 수신 처리
 calibration/              교정 절차/허용된 예제 코드
 ```
 
@@ -37,6 +38,14 @@ Windows에서 `DFU-RT Port`가 드라이버 오류로 표시되거나 `LIBUSB_ER
 ```
 
 위 UUID는 요청 형식 예시다. 응답은 `mode: real`이며, SHT31 연결·읽기 실패 시 온습도는 `null`과 오류 코드로 반환한다. 토양 ADC 숫자만으로 프로브 연결·보정의 타당성을 판정하지 않는다. AS7341 광학·MLX90614 표면온도 읽기는 이 기본 펌웨어에 포함되지 않는다. 현재 Android의 패킷 파서는 직렬 포트를 여는 기능과 별개이며 앱의 실제 USB 연결도 별도로 구현해야 한다.
+
+펌웨어 `uno-r4-0.1.1`은 위 세 필드와 값만 받는다. 필드 순서·바깥 공백·CRLF는 허용하고 누락·중복·추가 필드, 다른 버전·종류, 잘못된 JSON 구문과 UUID는 거부한다. Android가 생성하는 소문자 36자 UUID와 이스케이프 없는 ASCII 문자열을 사용한다. 범용 JSON 파서가 아니므로 `\u` 같은 문자열 이스케이프도 허용하지 않는다. LF 전 최대 255바이트(선택적 CR 포함)를 넘으면 오류를 한 번 반환하고 다음 LF까지 버린다. USB 수신이 여러 번으로 나뉘어도 버린 줄의 뒷부분을 새 요청으로 읽지 않는다. 유효한 요청 ID가 없을 때 오류 응답에는 예시의 대체 UUID가 들어간다.
+
+온도와 습도는 `Adafruit_SHT31::readBoth()`로 한 번 변환한 동일 프레임에서 얻는다. 두 함수를 따로 호출해 서로 다른 변환 결과를 묶지 않는다. 읽기/CRC 실패 시 수치를 만들어내지 않고 기존 `null`·오류 규칙을 유지한다. 라이브러리 동작 근거: [Adafruit SHT31 2.2.2 소스](https://github.com/adafruit/Adafruit_SHT31/blob/2.2.2/Adafruit_SHT31.cpp).
+
+## 보드 없이 요청 처리 회귀시험
+
+GCC/Clang이 있는 환경 또는 MSVC Developer Command Prompt에서 저장소 최상위의 `python scripts/check_firmware.py`를 실행한다. 실제 펌웨어의 `MeasureRequest.cpp`를 호스트용으로 빌드하고 실행하며 보드에 업로드하지 않는다. 필드 순서, 모든 두 조각 수신 경계, 잘못된 요청, 길이 상한과 USB 조각 사이의 초과 줄 폐기·복구를 검사한다. 센서·배선·Android USB 동작 시험은 별개다. Linux Python CI에서도 이 검사를 실행한다.
 
 디바이스에서 epoch 시각을 만들어내지 않는다. uptime·boot·sequence를 보내고 앱이 실제 수신시각을 기록한다. soil_adc_bits는 analogReadResolution 설정과 같게 한다. soil_index는 근거 교정 전 null, 실측 실패는 null+error.
 
