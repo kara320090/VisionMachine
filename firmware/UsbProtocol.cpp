@@ -4,7 +4,7 @@
 namespace {
 constexpr const char* kSchemaVersion = "0.1.0";
 constexpr const char* kMessageType = "measurement";
-constexpr const char* kFirmwareVersion = "uno-r4-0.1.1";
+constexpr const char* kFirmwareVersion = "uno-r4-0.1.2";
 constexpr const char* kMode = "real";
 constexpr const char* kFallbackUuid = "00000000-0000-4000-8000-000000000000";
 } // namespace

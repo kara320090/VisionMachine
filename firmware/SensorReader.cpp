@@ -19,7 +19,11 @@ void SensorReader::begin() {
 
 bool SensorReader::isI2cDevicePresent(uint8_t address) {
   Wire.beginTransmission(address);
-  return (Wire.endTransmission() == 0);
+  const uint8_t status = Wire.endTransmission();
+  // Leave a bus-free interval before probing another address or reinitializing
+  // the driver. Back-to-back probes failed on the tested R4/shared-hub setup.
+  delay(1);
+  return status == 0;
 }
 
 bool SensorReader::tryInitSht31() {
