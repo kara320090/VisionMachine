@@ -13,6 +13,7 @@ import org.visionmachine.agriclinic.usb.UsbSensorState
 import java.time.Instant
 import java.util.UUID
 import java.util.concurrent.Executors
+import org.json.JSONObject
 
 class SensorViewModel(application: Application) : AndroidViewModel(application) {
     private val store = SensorStore(application)
@@ -28,6 +29,8 @@ class SensorViewModel(application: Application) : AndroidViewModel(application) 
     var records by mutableStateOf<List<SensorRecord>>(emptyList()); private set
     var photos by mutableStateOf<List<CaptureRecord>>(emptyList()); private set
     var selectedPhoto by mutableStateOf<CaptureRecord?>(null); private set
+    var selectedCrop by mutableStateOf("tomato"); private set
+    var profile by mutableStateOf(SensorProfileStore(application).get(selectedCrop)); private set
     private val client = UsbSensorClient(application) { next ->
         usb = next
         if (!next.connected) current = null
@@ -40,18 +43,28 @@ class SensorViewModel(application: Application) : AndroidViewModel(application) 
         io.execute {
             try {
                 val saved = store.all()
-                val captures = CaptureStore(getApplication()).all()
+                val captures = (PhotoReferenceStore(getApplication()).all().asReversed() + CaptureStore(getApplication()).all()).distinctBy { it.inspectionId }
                 main.post { if (!closed) { records = saved; photos = captures } }
             } catch (_: Exception) { main.post { if (!closed) message = "저장된 기록을 읽지 못했습니다. 기존 기록은 보존됩니다." } }
         }
     }
 
-    fun select(photo: CaptureRecord?) { if (!busy) { selectedPhoto = photo; current = null } }
+    fun select(photo: CaptureRecord?) { if (!busy) { selectedPhoto = photo; current = null; if (photo != null) chooseCrop(photo.cropCode) } }
+    fun chooseCrop(crop: String) {
+        if (busy || CropChoices.none { it.first == crop }) return
+        selectedCrop = crop
+        profile = SensorProfileStore(getApplication()).get(crop)
+    }
+    fun saveProfile(next: SensorProfile): Boolean = runCatching {
+        profile = SensorProfileStore(getApplication()).save(next)
+        message = "기준을 저장했습니다. 다음 측정부터 새 기준으로 점수를 계산합니다."
+        true
+    }.getOrDefault(false)
     fun selectId(id: String?) {
         if (id == null) return
         io.execute {
-            val selected = runCatching { CaptureStore(getApplication()).all().find { it.inspectionId == id } }.getOrNull()
-            main.post { if (!closed && !busy) selectedPhoto = selected }
+            val selected = runCatching { (PhotoReferenceStore(getApplication()).all() + CaptureStore(getApplication()).all()).find { it.inspectionId == id } }.getOrNull()
+            main.post { if (!closed && !busy) select(selected) }
         }
     }
     fun connect() { if (!busy) client.connect() }
@@ -63,13 +76,17 @@ class SensorViewModel(application: Application) : AndroidViewModel(application) 
         activeId = id
         current = null
         val source = selectedPhoto
+        val selectedProfile = profile
+        val crop = selectedCrop
         client.measure(id) callback@{ frame, error ->
             if (error != null || frame == null) { message = sensorStatusText(error ?: "USB_IO_ERROR"); return@callback }
             val receivedAt = Instant.now().toString()
             saving = true
             io.execute {
                 try {
-                    val row = store.save(id, frame, source, receivedAt)
+                    val assessment = SensorScoring.assess(JSONObject(frame.json), selectedProfile).put("sensor_received_at",receivedAt).toString()
+                    val photoHash = source?.let {runCatching {PhotoReferenceStore.hash(getApplication(),Uri.parse(it.photoUri))}.getOrNull()}
+                    val row = store.save(id, frame, source, receivedAt, crop, assessment, photoHash)
                     val saved = store.all()
                     main.post {
                         if (!closed) {

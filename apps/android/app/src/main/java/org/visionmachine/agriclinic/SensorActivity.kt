@@ -56,11 +56,16 @@ class SensorActivity : ComponentActivity() {
 
 @Composable private fun SensorScreen(vm: SensorViewModel, export: () -> Unit, camera: () -> Unit, openPhoto: (SensorRecord) -> Unit) {
     var choosePhoto by remember { mutableStateOf(false) }
+    var editProfile by remember { mutableStateOf(false) }
     LazyColumn(Modifier.fillMaxSize().systemBarsPadding(), contentPadding = PaddingValues(18.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp)) {
         item {
             Text("센서 실측", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
             Text("토양 · 온습도 · 광학 · 표면온도", style = MaterialTheme.typography.bodyMedium)
+            CropChooser(vm.selectedCrop, enabled = !vm.busy && vm.selectedPhoto == null, choose = vm::chooseCrop)
+            Text("연결 사진이 있으면 해당 사진의 작물 기준을 사용합니다.", style = MaterialTheme.typography.bodySmall)
+            OutlinedButton({ editProfile = true }, enabled = !vm.busy) { Text("작물별 센서 기준 설정") }
+            Text(if (vm.profile.applied) "적용 기준: ${vm.profile.context}" else "기준 설정에서 재배 조건·출처를 확인하고 적용하면 센서 점수를 계산합니다.")
         }
         item {
             Card(Modifier.fillMaxWidth()) {
@@ -79,7 +84,7 @@ class SensorActivity : ComponentActivity() {
         }
         item {
             Text("연결할 사진", fontWeight = FontWeight.Bold)
-            Text(vm.selectedPhoto?.let { "${it.cropCode} · ${it.subjectId} · ${displaySensorTime(it.capturedAt)}" } ?: "사진 없이 측정")
+            Text(vm.selectedPhoto?.let { "${cropLabel(it.cropCode)} · ${it.subjectId} · ${if (it.capturedAt.isBlank()) "가져온 사진 · 촬영시각 미상" else displaySensorTime(it.capturedAt)}" } ?: "사진 없이 측정")
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton({ choosePhoto = true }, enabled = !vm.busy) { Text("촬영 사진 선택") }
                 TextButton(camera, enabled = !vm.busy) { Text("사진 촬영·기록") }
@@ -97,13 +102,14 @@ class SensorActivity : ComponentActivity() {
             if (record.photoUri != null) TextButton({ openPhoto(record) }) { Text("연결 사진 보기") }
         }
     }
+    if (editProfile) SensorProfileDialog(vm.profile, vm.current?.let { JSONObject(it.packetJson) }, { editProfile = false }, vm::saveProfile)
     if (choosePhoto) AlertDialog(onDismissRequest = { choosePhoto = false }, title = { Text("촬영 사진 선택") },
         text = {
             LazyColumn(Modifier.heightIn(max = 360.dp)) {
                 item { TextButton({ vm.select(null); choosePhoto = false }) { Text("사진 없이 측정") } }
                 items(vm.photos, key = { it.inspectionId }) { photo ->
                     TextButton({ vm.select(photo); choosePhoto = false }) {
-                        Text("${photo.cropCode} · ${photo.subjectId}\n${displaySensorTime(photo.capturedAt)}")
+                        Text("${cropLabel(photo.cropCode)} · ${photo.subjectId}\n${if (photo.capturedAt.isBlank()) "촬영시각 미상" else displaySensorTime(photo.capturedAt)}")
                     }
                 }
                 if (vm.photos.isEmpty()) item { Text("촬영·기록 화면에서 먼저 사진을 저장해 주세요.") }
@@ -138,6 +144,7 @@ class SensorActivity : ComponentActivity() {
                 (0 until errors.length()).forEach { index -> Text(sensorErrorText(errors.getString(index)), color = MaterialTheme.colorScheme.error) }
             }
             if (record.photoUri != null) Text("연결 사진: ${record.cropCode.orEmpty()} · ${record.subjectId.orEmpty()}", style = MaterialTheme.typography.bodySmall)
+            SensorAssessmentCard(record.assessmentJson, record.receivedAt)
         }
     }
 }

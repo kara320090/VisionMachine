@@ -1,5 +1,7 @@
 # Android 0.3.0 USB 센서 측정
 
+0.4.0에서는 이 USB 연결 규격을 유지하며 [사진별 연결·센서 기준/종합 지수](ANDROID_PHOTO_SENSOR_INDEX.md)를 추가했다. 아래 0.3.0 설명은 USB 연결의 최초 인계 기록이며 현재 점수·새 UI의 사용법은 링크 문서를 따른다.
+
 기존 `org.visionmachine.agriclinic` 앱에 UNO R4 Minima USB CDC 연결과 센서 기록 화면을 추가했다. 버전은 `0.3.0`, `versionCode=3`이다. 기존 촬영 사진과 RGB 모델·이력을 유지하며 센서 기록은 새 `sensor_records_v1` 저장소에 기록한다. 배포 상태는 [PLAY_INTERNAL_TEST](PLAY_INTERNAL_TEST.md)를 따른다.
 
 ## 사용하는 순서
