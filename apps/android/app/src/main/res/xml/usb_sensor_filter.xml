@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- UNO R4 Minima runtime CDC; excludes its DFU bootloader. -->
+    <usb-device vendor-id="9025" product-id="105" />
+</resources>

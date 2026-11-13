@@ -41,14 +41,15 @@ class AnalysisActivity:ComponentActivity() {
         setContent {
             MaterialTheme(colorScheme=lightColorScheme(primary=Forest,secondary=Terra,background=Cream,surface=Color.White)) {
                 Surface(Modifier.fillMaxSize(),color=Cream) {
-                    AnalysisScreen(vm,{photos.launch(arrayOf("image/jpeg","image/png"))},{export.launch("VisionMachine_results.csv")},{startActivity(Intent(this,MainActivity::class.java))})
+                    AnalysisScreen(vm,{photos.launch(arrayOf("image/jpeg","image/png"))},{export.launch("VisionMachine_results.csv")},
+                        {startActivity(Intent(this,MainActivity::class.java))},{startActivity(Intent(this,SensorActivity::class.java))})
                 }
             }
         }
     }
 }
 
-@Composable private fun AnalysisScreen(vm:RgbAnalysisViewModel,open:()->Unit,save:()->Unit,camera:()->Unit) {
+@Composable private fun AnalysisScreen(vm:RgbAnalysisViewModel,open:()->Unit,save:()->Unit,camera:()->Unit,sensors:()->Unit) {
     LazyColumn(Modifier.fillMaxSize().systemBarsPadding(),verticalArrangement=Arrangement.spacedBy(14.dp),contentPadding=PaddingValues(18.dp)) {
         item {
             Column(Modifier.fillMaxWidth().background(Forest,RoundedCornerShape(24.dp)).padding(22.dp)) {
@@ -61,6 +62,9 @@ class AnalysisActivity:ComponentActivity() {
             Text("사진 점검",color=Forest,fontSize=21.sp,fontWeight=FontWeight.Bold)
             Text("바질 · 청경채 · 오이 · 케일 · 상추 · 고추 · 로즈마리 · 토마토",fontSize=12.sp,color=Forest,modifier=Modifier.padding(top=6.dp))
             Text("사진 분석은 상태 점검을 돕는 시험 기능입니다. 재배 문제의 원인이나 현장 정확도를 보장하지 않습니다.",fontSize=12.sp,modifier=Modifier.padding(top=6.dp))
+        }
+        item {
+            OutlinedButton(sensors,modifier=Modifier.fillMaxWidth()) {Text("USB 센서 연결 · 측정")}
         }
         item {
             Button(open,enabled=!vm.busy,modifier=Modifier.fillMaxWidth()) {Text("1  사진 선택 · 최대 8장")}

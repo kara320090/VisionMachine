@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.usb.host" android:required="false" />
     <application
         android:allowBackup="false"
         android:fullBackupContent="@xml/backup_rules"
@@ -26,5 +27,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".SensorActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            </intent-filter>
+            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/usb_sensor_filter" />
+        </activity>
     </application>
 </manifest>

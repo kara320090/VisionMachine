@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
     private val uploadExecutor = Executors.newSingleThreadExecutor()
     private var records by mutableStateOf<List<CaptureRecord>>(emptyList())
     private var capturePending by mutableStateOf(false)
-    private var message by mutableStateOf("촬영 사진을 저장하고 로컬 개발 서버로 보낼 수 있습니다. 센서·AI 모델은 아직 없습니다.")
+    private var message by mutableStateOf("촬영 사진을 저장한 뒤 같은 사진에 센서 측정값을 연결할 수 있습니다.")
 
     private val camera = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         try {
@@ -76,6 +76,7 @@ class MainActivity : ComponentActivity() {
                     debugUpload = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0,
                     onCapture = ::startCapture, onOpen = ::openPhoto,
                     onRecover = ::recoverCapture, onUpload = ::uploadRecord,
+                    onSensor = { record -> startActivity(Intent(this, SensorActivity::class.java).putExtra("source_capture_id", record.inspectionId)) },
                 )
             }
         }
@@ -191,6 +192,7 @@ private fun CaptureScreen(
     onOpen: (CaptureRecord) -> Unit,
     onRecover: () -> Unit,
     onUpload: (CaptureRecord) -> Unit,
+    onSensor: (CaptureRecord) -> Unit,
 ) {
     var subjectId by rememberSaveable { mutableStateOf("") }
     var batchId by rememberSaveable { mutableStateOf("") }
@@ -245,6 +247,7 @@ private fun CaptureScreen(
                         Text(status, style = MaterialTheme.typography.bodySmall)
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Button(onClick = { onOpen(record) }) { Text("사진 보기") }
+                            Button(onClick = { onSensor(record) }) { Text("센서 측정") }
                             if (debugUpload && record.uploadState in setOf(UploadState.SAVED, UploadState.FAILED)) {
                                 Button(onClick = { onUpload(record) }) {
                                     Text(if (record.uploadState == UploadState.FAILED) "재시도" else "서버 전송")

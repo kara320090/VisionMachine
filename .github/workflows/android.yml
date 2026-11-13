@@ -16,4 +16,4 @@ jobs:
           java-version: '17'
       - name: Build and lint
         working-directory: apps/android
-        run: bash ./gradlew :app:assembleDebug :app:lintDebug --no-daemon
+        run: bash ./gradlew :app:assembleDebug :app:lintDebug :app:testDebugUnitTest --no-daemon

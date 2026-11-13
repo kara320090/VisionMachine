@@ -2,6 +2,7 @@ package org.visionmachine.agriclinic
 
 import org.json.JSONArray
 import org.json.JSONObject
+import org.json.JSONTokener
 import java.io.ByteArrayOutputStream
 import java.nio.ByteBuffer
 import java.nio.charset.CodingErrorAction
@@ -22,6 +23,7 @@ class SensorPacketFramer(private val expectedRequestId: UUID) {
             .put("schema_version", "0.1.0")
             .put("message_type", "measure")
             .put("request_id", expectedRequestId.toString())
+            .put("sensor_profile", "extended")
             .toString() + "\n"
         ).toByteArray(Charsets.UTF_8)
 
@@ -66,10 +68,16 @@ class SensorPacketFramer(private val expectedRequestId: UUID) {
         } catch (_: Exception) {
             return SensorFrame.Rejected("INVALID_UTF8")
         }
-        val packet = try { JSONObject(text) } catch (_: Exception) {
+        val packet = try {
+            val tokenizer = JSONTokener(text)
+            val parsed = tokenizer.nextValue() as? JSONObject ?: return SensorFrame.Rejected("INVALID_JSON")
+            if (tokenizer.nextClean() != '\u0000') return SensorFrame.Rejected("INVALID_JSON")
+            parsed
+        } catch (_: Exception) {
             return SensorFrame.Rejected("INVALID_JSON")
         }
-        if (!packet.hasExactly(TOP_FIELDS) || packet.optString("schema_version") != "0.1.0" ||
+        val fields = packet.keys().asSequence().toSet()
+        if ((fields != TOP_FIELDS && fields != TOP_FIELDS + "extensions") || packet.optString("schema_version") != "0.1.0" ||
             packet.optString("message_type") != "measurement"
         ) return SensorFrame.Rejected("INVALID_PACKET")
         val requestId = packet.optString("request_id")
@@ -113,6 +121,9 @@ class SensorPacketFramer(private val expectedRequestId: UUID) {
         if (!errors.validErrors() || (listOf(raw, temperature, humidity).any { it == JSONObject.NULL } && errors.length() == 0)) {
             return SensorFrame.Rejected("INVALID_PACKET")
         }
+        if (packet.has("extensions") && packet.opt("extensions") != JSONObject.NULL &&
+            !validSensorExtensions(packet.optJSONObject("extensions"), errors)
+        ) return SensorFrame.Rejected("INVALID_EXTENSIONS")
         return SensorFrame.Measurement(text, mode == "mock")
     }
 
