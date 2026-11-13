@@ -12,13 +12,14 @@ public:
 
   void begin(uint8_t adcBits);
 
-  bool pollRequest(Stream& stream, String& outRequestId, String& outParseError);
+  bool pollRequest(Stream& stream, String& outRequestId, String& outParseError, bool& outExtended);
 
   void sendMeasurementResponse(
       Stream& stream,
       const String& requestId,
       const RawMeasurement& raw,
-      const CalibratedMeasurement& cal);
+      const CalibratedMeasurement& cal,
+      bool extended = false);
 
   void sendProtocolError(
       Stream& stream,
@@ -36,6 +37,7 @@ private:
   void initHardwareIdentifiers();
   bool isValidUuidFormat(const String& uuid) const;
   void printJsonString(Stream& stream, const char* str) const;
+  void printExtensions(Stream& stream, const RawMeasurement& raw) const;
 };
 
 #endif // USB_PROTOCOL_H

@@ -1,5 +1,148 @@
 {
   "$defs": {
+    "OpticalReadings": {
+      "additionalProperties": false,
+      "properties": {
+        "astep": {
+          "maximum": 65535,
+          "minimum": 0,
+          "title": "Astep",
+          "type": "integer"
+        },
+        "atime": {
+          "maximum": 255,
+          "minimum": 0,
+          "title": "Atime",
+          "type": "integer"
+        },
+        "channel_order": {
+          "const": "F1,F2,F3,F4,CLEAR_1,NIR_1,F5,F6,F7,F8,CLEAR_2,NIR_2",
+          "title": "Channel Order",
+          "type": "string"
+        },
+        "finished_uptime_ms": {
+          "minimum": 0,
+          "title": "Finished Uptime Ms",
+          "type": "integer"
+        },
+        "gain_x": {
+          "exclusiveMinimum": 0,
+          "maximum": 512,
+          "title": "Gain X",
+          "type": "number"
+        },
+        "i2c_address": {
+          "const": 57,
+          "title": "I2C Address",
+          "type": "integer"
+        },
+        "illumination": {
+          "const": "ambient",
+          "title": "Illumination",
+          "type": "string"
+        },
+        "integration_time_ms": {
+          "exclusiveMinimum": 0,
+          "title": "Integration Time Ms",
+          "type": "number"
+        },
+        "led_enabled": {
+          "title": "Led Enabled",
+          "type": "boolean"
+        },
+        "raw_counts": {
+          "items": {
+            "maximum": 65535,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 12,
+          "minItems": 12,
+          "title": "Raw Counts",
+          "type": "array"
+        },
+        "saturated": {
+          "title": "Saturated",
+          "type": "boolean"
+        },
+        "sensor": {
+          "const": "AS7341",
+          "title": "Sensor",
+          "type": "string"
+        },
+        "started_uptime_ms": {
+          "minimum": 0,
+          "title": "Started Uptime Ms",
+          "type": "integer"
+        },
+        "status2": {
+          "items": {
+            "maximum": 255,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "title": "Status2",
+          "type": "array"
+        }
+      },
+      "required": [
+        "sensor",
+        "i2c_address",
+        "raw_counts",
+        "channel_order",
+        "gain_x",
+        "atime",
+        "astep",
+        "integration_time_ms",
+        "illumination",
+        "led_enabled",
+        "status2",
+        "saturated",
+        "started_uptime_ms",
+        "finished_uptime_ms"
+      ],
+      "title": "OpticalReadings",
+      "type": "object"
+    },
+    "SensorExtensions": {
+      "additionalProperties": false,
+      "properties": {
+        "optical": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/OpticalReadings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "schema_version": {
+          "const": "0.1.0",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "surface_temperature": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SurfaceTemperatureReadings"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema_version",
+        "optical",
+        "surface_temperature"
+      ],
+      "title": "SensorExtensions",
+      "type": "object"
+    },
     "SensorReadings": {
       "additionalProperties": false,
       "properties": {
@@ -72,6 +215,80 @@
       ],
       "title": "SensorReadings",
       "type": "object"
+    },
+    "SurfaceTemperatureReadings": {
+      "additionalProperties": false,
+      "properties": {
+        "ambient_raw": {
+          "exclusiveMaximum": 32768,
+          "exclusiveMinimum": 0,
+          "title": "Ambient Raw",
+          "type": "integer"
+        },
+        "ambient_temp_c": {
+          "maximum": 125,
+          "minimum": -40,
+          "title": "Ambient Temp C",
+          "type": "number"
+        },
+        "emissivity": {
+          "exclusiveMinimum": 0,
+          "maximum": 1,
+          "title": "Emissivity",
+          "type": "number"
+        },
+        "emissivity_raw": {
+          "exclusiveMinimum": 0,
+          "maximum": 65535,
+          "title": "Emissivity Raw",
+          "type": "integer"
+        },
+        "i2c_address": {
+          "const": 90,
+          "title": "I2C Address",
+          "type": "integer"
+        },
+        "object_raw": {
+          "exclusiveMaximum": 32768,
+          "exclusiveMinimum": 0,
+          "title": "Object Raw",
+          "type": "integer"
+        },
+        "object_temp_c": {
+          "maximum": 380,
+          "minimum": -70,
+          "title": "Object Temp C",
+          "type": "number"
+        },
+        "pec_checked": {
+          "title": "Pec Checked",
+          "type": "boolean"
+        },
+        "read_uptime_ms": {
+          "minimum": 0,
+          "title": "Read Uptime Ms",
+          "type": "integer"
+        },
+        "sensor": {
+          "const": "MLX90614",
+          "title": "Sensor",
+          "type": "string"
+        }
+      },
+      "required": [
+        "sensor",
+        "i2c_address",
+        "object_raw",
+        "ambient_raw",
+        "object_temp_c",
+        "ambient_temp_c",
+        "emissivity_raw",
+        "emissivity",
+        "pec_checked",
+        "read_uptime_ms"
+      ],
+      "title": "SurfaceTemperatureReadings",
+      "type": "object"
     }
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -113,6 +330,17 @@
       },
       "title": "Errors",
       "type": "array"
+    },
+    "extensions": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/SensorExtensions"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "firmware_version": {
       "maxLength": 40,

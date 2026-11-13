@@ -1,5 +1,7 @@
 # \[하드웨어/펌웨어 파트\] `uno_r4/visionmachine` 모듈 아키텍처 및 v0.1 규격 인계서
 
+> 기본 센서만 포함했던 v0.1 당시 기록이다. 2026-11-13 v0.2.0 실측 확장과 실제 폴더 위치·실행법은 [현재 README](README.md)와 [휴대폰 인계 규격](../docs/ARDUINO_PHONE_HANDOFF.md)이 우선한다.
+
 본 문서는 **Arduino UNO R4 Minima** 단일 제어 보드 기반의 `uno_r4/visionmachine/` 펌웨어 구조, **v0.1 데이터 계약(SensorPacket)** 준수 사항, 그리고 담당자별 향후 작업 방향을 공유하기 위해 작성되었습니다.
 
 ## 1. 개요 및 프로젝트 핵심 제약 조건

@@ -98,5 +98,14 @@ int main() {
   feed(decoder, "unfinished");
   decoder.reset();
   require(feed(decoder, kRequest + '\n')[0].error == nullptr, "reset discards partial state");
+  require(!feed(decoder, kRequest + '\n')[0].extended, "legacy request remains basic");
+  const std::string extended = kRequest.substr(0, kRequest.size() - 1) + ",\"sensor_profile\":\"extended\"}";
+  events = feed(decoder, extended + '\n');
+  require(events.size() == 1 && events[0].error == nullptr && events[0].extended,
+          "extended sensors require an explicit profile request");
+  events = feed(decoder, kRequest.substr(0, kRequest.size() - 1) + ",\"sensor_profile\":\"basic\"}\n");
+  require(events.size() == 1 && events[0].error == nullptr && !events[0].extended, "explicit basic profile");
+  reject(kRequest.substr(0, kRequest.size() - 1) + ",\"sensor_profile\":\"invented\"}");
+  reject(extended.substr(0, extended.size() - 1) + ",\"sensor_profile\":\"basic\"}");
   std::cout << "Measure request regression checks passed: " << checks << '\n';
 }

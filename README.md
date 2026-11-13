@@ -7,7 +7,7 @@
 **현재 상태: 개발 중. 기능별 구현·실물 검증 범위는 [STATUS](docs/STATUS.md)를 따른다.**
 
 - 실행 가능: 최소 FastAPI 서버의 상태·지원범위 조회와 검사 메타데이터 검증, 로컬 전용 실제 JPEG/PNG 업로드·SQLite 저장·단건 조회, Android 원본 사진 촬영·로컬 저장·디버그 loopback 전송과 수동 재시도·USB JSONL 패킷 파서, JSON Schema/OpenAPI 생성, CSV manifest 및 개체/과실/구매묶음/중복 누수 검사, 계약·누수 회귀시험.
-- 추가 구현: Android의 [RGB 사진 분석 동반 화면](docs/ANDROID_RGB.md)과 UNO R4의 [토양 원시값·온습도 USB 요청/응답](firmware/README.md). Android USB 장치 권한·직렬 연결, 광학·표면온도 읽기, 센서와 서버 AI의 통합은 아직 없다. 개별 기능 검증을 전체 진단 시스템 완성으로 보지 않는다.
+- 추가 구현: Android의 [RGB 사진 분석 동반 화면](docs/ANDROID_RGB.md)과 UNO R4의 [토양 원시값·온습도·광학·표면온도 USB 실측](firmware/README.md). 휴대폰용 [기본/확장 요청·응답 규격](docs/ARDUINO_PHONE_HANDOFF.md)을 제공한다. Android USB 장치 권한·직렬 연결·확장 응답 처리와 센서/서버 AI 통합은 앱 단계의 작업이다. 개별 기능 검증을 전체 진단 시스템 완성으로 보지 않는다.
 - 학습 모델이 없으면 `pending_model`을 반환한다. 임의 정상 판정·정확도·가상 성능을 만들지 않는다.
 
 먼저 [START_HERE.md](START_HERE.md), 이후 [구조](docs/ARCHITECTURE.md), [커밋 기준](docs/GIT_COMMITS.md)을 읽는다. 개발은 각자의 로컬 clone에서 `main`으로 진행한다. 검증한 단위마다 commit·push하며, 선행 push가 있으면 내 커밋과 원격 변경을 병합·재검증하여 `origin/main`에 올린다.

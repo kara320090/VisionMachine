@@ -6,9 +6,10 @@
 struct MeasureRequest {
   char request_id[37];
   const char* error;  // nullptr means a valid request; never a measured value.
+  bool extended;
 };
 
-// Bounded JSONL decoder for the three ASCII string fields sent by Android.
+// Bounded JSONL decoder: three required fields and optional sensor_profile.
 // Independent of Arduino so the exact firmware decoder can be tested on a PC.
 class MeasureRequestDecoder {
 public:

@@ -28,8 +28,9 @@ void setup() {
 void loop() {
   String requestId;
   String requestError;
+  bool extended = false;
 
-  if (usbProtocol.pollRequest(Serial, requestId, requestError)) {
+  if (usbProtocol.pollRequest(Serial, requestId, requestError, extended)) {
     // 요청 파싱 오류가 발생한 경우 계측값은 null, errors 배열에 사유 기록 후 반환
     if (requestError.length() > 0) {
       usbProtocol.sendProtocolError(Serial, requestId, requestError.c_str());
@@ -37,12 +38,12 @@ void loop() {
     }
 
     // 요청 시점마다 즉시 새로 계측 (오래된 측정 재사용 방지)
-    RawMeasurement raw = sensorReader.readFresh();
+    RawMeasurement raw = sensorReader.readFresh(extended);
 
     // 근거 교정 적용 (교정 전이면 calibration_id: null, soil_index: null)
     CalibratedMeasurement cal = calibrator.apply(raw);
 
     // SensorPacket 스키마에 맞춘 JSONL 응답 출력
-    usbProtocol.sendMeasurementResponse(Serial, requestId, raw, cal);
+    usbProtocol.sendMeasurementResponse(Serial, requestId, raw, cal, extended);
   }
 }

@@ -4,7 +4,7 @@
 namespace {
 constexpr const char* kSchemaVersion = "0.1.0";
 constexpr const char* kMessageType = "measurement";
-constexpr const char* kFirmwareVersion = "uno-r4-0.1.2";
+constexpr const char* kFirmwareVersion = "uno-r4-0.2.0";
 constexpr const char* kMode = "real";
 constexpr const char* kFallbackUuid = "00000000-0000-4000-8000-000000000000";
 } // namespace
@@ -49,7 +49,7 @@ bool UsbProtocol::isValidUuidFormat(const String& uuid) const {
   return MeasureRequestDecoder::isCanonicalUuid(uuid.c_str(), uuid.length());
 }
 
-bool UsbProtocol::pollRequest(Stream& stream, String& outRequestId, String& outParseError) {
+bool UsbProtocol::pollRequest(Stream& stream, String& outRequestId, String& outParseError, bool& outExtended) {
   while (stream.available() > 0) {
     const int byte = stream.read();
     if (byte < 0) break;
@@ -57,6 +57,7 @@ bool UsbProtocol::pollRequest(Stream& stream, String& outRequestId, String& outP
     if (requestDecoder_.feed(static_cast<char>(byte), request)) {
       outRequestId = request.request_id;
       outParseError = request.error != nullptr ? request.error : "";
+      outExtended = request.extended;
       return true;
     }
   }
@@ -79,7 +80,8 @@ void UsbProtocol::sendMeasurementResponse(
     Stream& stream,
     const String& requestId,
     const RawMeasurement& raw,
-    const CalibratedMeasurement& cal) {
+    const CalibratedMeasurement& cal,
+    bool extended) {
 
   stream.print("{\"schema_version\":");
   printJsonString(stream, kSchemaVersion);
@@ -148,6 +150,8 @@ void UsbProtocol::sendMeasurementResponse(
   }
   stream.print("}");
 
+  if (extended) printExtensions(stream, raw);
+
   // errors 배열 시작 (SensorPacket validator 준수: 기본 센서 누락 시 최소 1개 에러 보장)
   stream.print(",\"errors\":[");
   size_t count = raw.error_count;
@@ -160,6 +164,36 @@ void UsbProtocol::sendMeasurementResponse(
     }
   }
   stream.print("]}\n");
+}
+
+void UsbProtocol::printExtensions(Stream& stream, const RawMeasurement& raw) const {
+  stream.print(",\"extensions\":{\"schema_version\":\"0.1.0\",\"optical\":");
+  if (!raw.optical_valid) stream.print("null");
+  else {
+    stream.print("{\"sensor\":\"AS7341\",\"i2c_address\":57,\"raw_counts\":[");
+    for (uint8_t i = 0; i < 12; ++i) { if (i) stream.print(','); stream.print(raw.optical_counts[i]); }
+    stream.print("],\"channel_order\":\"F1,F2,F3,F4,CLEAR_1,NIR_1,F5,F6,F7,F8,CLEAR_2,NIR_2\"");
+    stream.print(",\"gain_x\":16,\"atime\":29,\"astep\":599,\"integration_time_ms\":50.04");
+    stream.print(",\"illumination\":\"ambient\",\"led_enabled\":false,\"status2\":[");
+    stream.print(raw.optical_status[0]); stream.print(','); stream.print(raw.optical_status[1]);
+    stream.print("],\"saturated\":"); stream.print(raw.optical_saturated ? "true" : "false");
+    stream.print(",\"started_uptime_ms\":"); stream.print(raw.optical_started_ms);
+    stream.print(",\"finished_uptime_ms\":"); stream.print(raw.optical_finished_ms);
+    stream.print('}');
+  }
+  stream.print(",\"surface_temperature\":");
+  if (!raw.surface_valid) stream.print("null");
+  else {
+    stream.print("{\"sensor\":\"MLX90614\",\"i2c_address\":90,\"object_raw\":"); stream.print(raw.surface_object_raw);
+    stream.print(",\"ambient_raw\":"); stream.print(raw.surface_ambient_raw);
+    stream.print(",\"object_temp_c\":"); stream.print(raw.surface_object_c, 2);
+    stream.print(",\"ambient_temp_c\":"); stream.print(raw.surface_ambient_c, 2);
+    stream.print(",\"emissivity_raw\":"); stream.print(raw.surface_emissivity_raw);
+    stream.print(",\"emissivity\":"); stream.print(static_cast<float>(raw.surface_emissivity_raw) / 65535.0f, 5);
+    stream.print(",\"pec_checked\":true,\"read_uptime_ms\":"); stream.print(raw.surface_read_ms);
+    stream.print('}');
+  }
+  stream.print('}');
 }
 
 void UsbProtocol::sendProtocolError(

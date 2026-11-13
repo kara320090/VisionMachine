@@ -7,20 +7,20 @@ crop_code: cherry_tomato, pepper, cucumber, lettuce, bok_choy, eggplant, basil, 
 
 `captured_at`와 `sensor_received_at`은 시간대 있는 ISO 8601, 서버 저장은 UTC로 정규화. UNO uptime을 날짜로 해석하지 않는다. 사진·센서 시간 간격의 허용 기준은 측정 절차에서 실험 후 정한다. 앱은 현재 요청과 다른 응답, 이전 boot/연결 세션, 오래된 값을 재사용하지 않는다.
 
-## USB 초안
-USB CDC serial, UTF-8 JSON 한 줄 + LF(JSONL). 115200은 초기 serial 설정 제안으로 실기기 확인 후 고정한다. 줄이 여러 USB read로 나뉘거나 한 read에 여러 줄이 와도 조립한다. 4096바이트 한 줄 상한은 초기 소프트웨어 보호 설정이며 광학 확장 전 재검토한다.
+## USB 규격
+USB CDC serial, 115200/8N1/DTR=true, UTF-8 JSON 한 줄 + LF(JSONL). 줄이 여러 USB read로 나뉘거나 한 read에 여러 줄이 와도 조립한다. 호스트 수신 한도 4096바이트, 보드 요청 한도 LF 전 255바이트다. v0.2.0 기본·광학/표면온도 확장은 [ARDUINO_PHONE_HANDOFF](ARDUINO_PHONE_HANDOFF.md)를 따른다.
 
 앱 측정 요청 예:
 ```json
 {"schema_version":"0.1.0","message_type":"measure","request_id":"11111111-1111-4111-8111-111111111111"}
 ```
-요청 ID는 현재 inspection_id와 동일하게 한다. 응답은 sensor-packet.schema.json 및 sensor.mock.json 형식. 장치·boot·sequence·uptime·firmware·mode·교정 ID·오류를 보존한다. 측정 실패는 null+오류코드이며 0이 아니다. protocol에 디버그 로그 문자열을 섞지 않는다. 요청 스키마/timeout·재전송·연결 세션 처리는 펌웨어·앱 첫 구현에서 명시적으로 확정한다.
+요청 ID는 현재 inspection_id와 동일하게 한다. 요청 원본은 `SensorMeasureRequest`, 응답은 `SensorPacket`이다. 생략 또는 `basic` 프로필은 기존 토양·온습도 응답, `sensor_profile=extended`는 버전이 있는 `extensions`를 추가한다. 장치·boot·sequence·uptime·firmware·mode·교정 ID·오류를 보존한다. 측정 실패는 null+오류코드이며 0이 아니다. 디버그 문자열을 섞지 않으며 한 번에 한 요청, 호스트 제한시간 12초를 사용한다. 실제 휴대폰 연결 세션·재시도 처리는 앱 단계에서 시험한다.
 
 ## 단위
 - soil_raw: 실제 ADC 정수. soil_adc_bits는 실제 사용한 해상도 10/12/14. 기본값을 실측처럼 추정하지 않는다.
 - soil_index: 0~1 교정 지수. calibration_id 없으면 null. 절대 체적수분함량 %가 아니다.
 - air_temp_c: 섭씨, air_rh_pct: 상대습도 %. 유효하지 않으면 null+오류.
-- v0.1은 기본 센서 계약. 광학·표면온도는 검증 후 명시된 추가 스키마로 확장하고 gain/integration/광원상태/원시채널/교정 정보를 포함한다. 임의 필드 추가는 현재 extra=forbid로 거부한다.
+- 광학·표면온도는 기본 `readings`를 유지하고 명시된 선택적 `extensions`로 확장한다. 게인·노출 설정·광원 상태·원시 채널·포화, 표면온도 원시 레지스터·실제 방사율·PEC 여부를 보존한다. 알 수 없는 필드는 계속 extra=forbid로 거부한다. 확장 없는 모델을 직렬화할 때는 `extensions` 키를 생략한다.
 
 ## 모의와 모델
 사진 capture_source=synthetic 또는 sensor mode=mock이면 is_mock 입력이다. 결과 warnings에 MOCK_DATA를 유지하고 앱 배지를 지우지 않는다. 테스트 데이터는 실제 학습/최종평가에서 제외한다.

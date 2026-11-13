@@ -7,6 +7,7 @@ constexpr const char* kFallbackUuid = "00000000-0000-4000-8000-000000000000";
 void initializeResult(MeasureRequest& out) {
   memcpy(out.request_id, kFallbackUuid, 37);
   out.error = nullptr;
+  out.extended = false;
 }
 
 struct Token {
@@ -119,6 +120,10 @@ bool MeasureRequestDecoder::parse(MeasureRequest& out) const {
         } else {
           fieldError = "invalid_request_id_uuid";
         }
+      } else if (key.equals("sensor_profile")) {
+        bit = 8;
+        if (value.equals("extended")) out.extended = true;
+        else if (!value.equals("basic")) fieldError = "invalid_sensor_profile";
       } else {
         fieldError = "unknown_request_field";
       }
@@ -131,7 +136,7 @@ bool MeasureRequestDecoder::parse(MeasureRequest& out) const {
   if (!cursor.atEnd()) return true;
   if (fieldError != nullptr) out.error = fieldError;
   else if ((fields & 4) == 0) out.error = "missing_request_id";
-  else if (fields != 7) out.error = "missing_request_field";
+  else if ((fields & 7) != 7) out.error = "missing_request_field";
   else out.error = nullptr;
   return true;
 }

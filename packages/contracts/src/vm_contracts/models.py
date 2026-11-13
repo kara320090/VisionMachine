@@ -12,6 +12,72 @@ Hash256 = Annotated[str, Field(pattern=r"^[0-9a-f]{64}$")]
 class Contract(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
 
+class SensorMeasureRequest(Contract):
+    schema_version: Literal["0.1.0"]
+    message_type: Literal["measure"]
+    request_id: UUID
+    sensor_profile: Literal["basic", "extended"] = "basic"
+
+RawWord = Annotated[int, Field(strict=True, ge=0, le=65535)]
+Uptime = Annotated[int, Field(strict=True, ge=0)]
+
+class OpticalReadings(Contract):
+    sensor: Literal["AS7341"]
+    i2c_address: Literal[57]
+    raw_counts: Annotated[list[RawWord], Field(min_length=12, max_length=12)]
+    channel_order: Literal["F1,F2,F3,F4,CLEAR_1,NIR_1,F5,F6,F7,F8,CLEAR_2,NIR_2"]
+    gain_x: Annotated[float, Field(strict=True, gt=0, le=512)]
+    atime: Annotated[int, Field(strict=True, ge=0, le=255)]
+    astep: RawWord
+    integration_time_ms: Annotated[float, Field(strict=True, gt=0)]
+    illumination: Literal["ambient"]
+    led_enabled: Annotated[bool, Field(strict=True)]
+    status2: Annotated[list[Annotated[int, Field(strict=True, ge=0, le=255)]], Field(min_length=2, max_length=2)]
+    saturated: Annotated[bool, Field(strict=True)]
+    started_uptime_ms: Uptime
+    finished_uptime_ms: Uptime
+
+    @model_validator(mode="after")
+    def consistent_optical(self) -> Self:
+        if self.led_enabled:
+            raise ValueError("ambient optical profile requires LED off")
+        cycles = (self.atime + 1) * (self.astep + 1)
+        if abs(self.integration_time_ms - cycles * 0.00278) > 0.005:
+            raise ValueError("optical integration time must match ATIME/ASTEP")
+        clipped = max(self.raw_counts) >= min(cycles, 65535) or any(v & 0x18 for v in self.status2)
+        if clipped and not self.saturated:
+            raise ValueError("optical saturation must be reported")
+        return self
+
+class SurfaceTemperatureReadings(Contract):
+    sensor: Literal["MLX90614"]
+    i2c_address: Literal[90]
+    object_raw: Annotated[int, Field(strict=True, gt=0, lt=32768)]
+    ambient_raw: Annotated[int, Field(strict=True, gt=0, lt=32768)]
+    object_temp_c: Annotated[float, Field(strict=True, ge=-70, le=380)]
+    ambient_temp_c: Annotated[float, Field(strict=True, ge=-40, le=125)]
+    emissivity_raw: Annotated[int, Field(strict=True, gt=0, le=65535)]
+    emissivity: Annotated[float, Field(strict=True, gt=0, le=1)]
+    pec_checked: Annotated[bool, Field(strict=True)]
+    read_uptime_ms: Uptime
+
+    @model_validator(mode="after")
+    def consistent_surface(self) -> Self:
+        if not self.pec_checked:
+            raise ValueError("surface reading requires PEC verification")
+        if any(abs(value - (raw * 0.02 - 273.15)) > 0.011 for raw, value in (
+            (self.object_raw, self.object_temp_c), (self.ambient_raw, self.ambient_temp_c)
+        )):
+            raise ValueError("surface temperature must match raw register units")
+        if abs(self.emissivity - self.emissivity_raw / 65535) > 0.000011:
+            raise ValueError("emissivity must match the read EEPROM value")
+        return self
+
+class SensorExtensions(Contract):
+    schema_version: Literal["0.1.0"]
+    optical: OpticalReadings | None
+    surface_temperature: SurfaceTemperatureReadings | None
+
 class SensorReadings(Contract):
     soil_adc_bits: Literal[10, 12, 14]
     soil_raw: Annotated[int, Field(strict=True, ge=0)] | None
@@ -38,6 +104,7 @@ class SensorPacket(Contract):
     calibration_id: Identifier | None
     readings: SensorReadings
     errors: list[Annotated[str, Field(min_length=1, max_length=80)]]
+    extensions: SensorExtensions | None = Field(default=None, exclude_if=lambda value: value is None)
 
     @model_validator(mode="after")
     def valid_measurement(self) -> Self:
@@ -46,6 +113,11 @@ class SensorPacket(Contract):
         raw = self.readings
         if any(v is None for v in (raw.soil_raw, raw.air_temp_c, raw.air_rh_pct)) and not self.errors:
             raise ValueError("missing primary readings require an error code")
+        if self.extensions is not None:
+            if (self.extensions.optical is None or self.extensions.surface_temperature is None) and not self.errors:
+                raise ValueError("missing extension readings require an error code")
+            if self.extensions.optical is not None and self.extensions.optical.saturated and "as7341_saturated" not in self.errors:
+                raise ValueError("saturated optical reading requires an explicit warning")
         return self
 
 class InspectionMetadata(Contract):

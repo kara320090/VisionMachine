@@ -2,6 +2,8 @@
 
 원본은 `packages/contracts/src/vm_contracts/models.py`다. `python scripts/export_contracts.py`로 schemas를 생성한다. Python 모델을 변경했으면 생성물도 함께 커밋한다. 앱·펌웨어는 같은 예제로 계약 시험을 만든다.
 
+2026-11-13: `SensorMeasureRequest`와 버전이 있는 선택적 `SensorPacket.extensions`를 추가했다. 기본 요청은 확장 키 없는 기존 응답을 유지한다. 광학·표면온도는 `sensor_profile=extended` 요청에서만 추가한다. 실측 단위·통신 조건은 [아두이노 휴대폰 인계](../docs/ARDUINO_PHONE_HANDOFF.md)를 따른다. 앱 코드는 이번 펌웨어 작업에서 수정하지 않는다.
+
 `openapi.json`은 `python scripts/export_openapi.py`로 실제 FastAPI app에서 생성한다. 현재 상태/지원범위/메타데이터 검증 API만 포함한다. 업로드·이력 등의 예정 API는 `docs/API.md`를 참고하되 이미 구현된 경로로 간주하지 않는다. 두 생성 스크립트의 `--check`와 CI가 변경 누락을 검사한다.
 
 `examples/`의 모든 값은 **합성**이며 실제 측정·사진·성능이 아니다. 해시 a×64는 실제 파일 해시가 아니다. 실제 업로드 시험은 별도 생성한 사진 바이트의 SHA-256을 사용해야 한다.
