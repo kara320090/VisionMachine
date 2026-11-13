@@ -1,5 +1,12 @@
 # 현재 구현 상태
 
+## 2026-11-13 UNO R4 Minima 첫 실물 업로드
+
+- 기존 `firmware/visionmachine.ino.cpp`를 Arduino가 빌드할 수 있도록 `firmware/firmware.ino` 시작 파일을 추가했다. 센서 측정·교정·패킷 코드는 변경하지 않았다.
+- Arduino CLI 1.6.0, Renesas UNO core 1.6.0, Adafruit SHT31 Library 2.2.2, Adafruit BusIO 1.17.4에서 스케치 빌드와 실제 UNO R4 Minima 업로드가 성공했다. 스케치 사용량 64,768 bytes, 전역 RAM 6,052 bytes이며 core 내부 경고가 있었다.
+- PC USB 직렬에서 서로 다른 요청 UUID에 대한 실물 응답을 확인했다. A0 원시값은 수신했으며 연결된 SHT31은 감지 실패 오류와 온습도 `null`을 반환했다. 이는 센서 배선·보정 검증 통과를 뜻하지 않는다. 실제 원시 로그와 장치 식별자는 공개 Git에서 제외한다.
+- 프로그램은 전원 인가 후 측정 요청을 기다리는 방식이다. AS7341·MLX90614 읽기와 Android 실제 USB 연결은 이 업로드로 추가되지 않았다. 빌드·업로드·요청 예시는 [펌웨어 안내](../firmware/README.md)에 있다.
+
 ## 2026-11-05 Android 사진 점검 동반 화면
 
 사용자 요청으로 캡스톤 데스크톱 RGB 모델과 사진 분석·기록 UI를 Android 내부 테스트용 동반 경로에 연결했다. 기존 촬영·원본 저장·디버그 loopback 업로드·USB 패킷 계약은 보존했다. 센서·서버 통합 진단의 구현 상태는 이 작업으로 바뀌지 않는다.
