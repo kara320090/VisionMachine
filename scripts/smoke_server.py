@@ -19,10 +19,12 @@ def main() -> None:
         port = probe.getsockname()[1]
     base = f"http://127.0.0.1:{port}"
     opener = build_opener(ProxyHandler({}))
-    with tempfile.TemporaryFile() as log:
+    with tempfile.TemporaryDirectory(prefix="vm-smoke-") as missing_model, tempfile.TemporaryFile() as log:
         process = subprocess.Popen(
             [sys.executable, "-m", "uvicorn", "vm_server.main:app", "--host", "127.0.0.1", "--port", str(port)],
             cwd=ROOT, stdout=log, stderr=log,
+            # This foundation check intentionally exercises the missing-model path.
+            env=dict(os.environ, VM_RGB_MODEL_PATH=str(Path(missing_model) / "absent.onnx")),
             creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
         )
         try:

@@ -1,5 +1,7 @@
 # 서버 파트 — 정회서·이봉헌
 
+2026-11-14 추가한 인증 RGB GPU API(`/api/v1/inspections`)·설치·센서 스냅샷 규격은 [SERVER_GPU](../docs/SERVER_GPU.md)를 따른다. 아래 내용은 보존한 기존 로컬 `/v1/inspections` 개발 API 설명이다. 새 RGB API는 승인된 ONNX가 없으면 503이며 임의 진단을 만들지 않는다.
+
 현재 main.py는 상태/지원범위/메타데이터 검증과 로컬 전용 사진 업로드·단건 조회를 제공한다. JPEG/PNG 바이트·해시·디코딩·크기·픽셀 수를 확인하고 SQLite 메타데이터와 비공개 파일을 저장한다. 실제 추론·인증·외부 접속은 없다.
 
 저장소 루트에서 `python -m vm_server init-db`를 실행한다. 기본 DB는 `storage/visionmachine.db`, 사진 폴더는 `storage/uploads/`다. `VM_STORAGE_DIR` 프로세스 환경변수를 읽고 `.env`는 자동 로딩하지 않는다. 기존 DB를 지우지 않으며 알 수 없는 버전/기존 무버전 테이블은 오류로 반환한다. SQL 원본은 `src/vm_server/migrations/` 한 곳이다.

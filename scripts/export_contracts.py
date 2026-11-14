@@ -1,7 +1,7 @@
 """Run from repository root. Exit nonzero when committed schemas drift."""
 from pathlib import Path
 import argparse, json
-from vm_contracts.models import SensorPacket, SensorMeasureRequest, InspectionMetadata, AnalysisResult
+from vm_contracts.models import SensorPacket, SensorMeasureRequest, InspectionMetadata, AnalysisResult, RgbInspectionRequest, RgbInspectionResult
 
 def main():
     parser = argparse.ArgumentParser()
@@ -9,7 +9,7 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     changed = []
-    for name, model in [("sensor-measure-request", SensorMeasureRequest), ("sensor-packet", SensorPacket), ("inspection", InspectionMetadata), ("analysis-result", AnalysisResult)]:
+    for name, model in [("sensor-measure-request", SensorMeasureRequest), ("sensor-packet", SensorPacket), ("inspection", InspectionMetadata), ("analysis-result", AnalysisResult), ("rgb-inspection", RgbInspectionRequest), ("rgb-inspection-result", RgbInspectionResult)]:
         schema = model.model_json_schema()
         schema["$schema"] = "https://json-schema.org/draft/2020-12/schema"
         body = json.dumps(schema, ensure_ascii=False, indent=2, sort_keys=True) + "\n"

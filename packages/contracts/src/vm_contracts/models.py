@@ -178,3 +178,92 @@ class AnalysisResult(Contract):
         if (self.origin == "mock" or self.is_mock_input) and "MOCK_DATA" not in self.warnings:
             raise ValueError("mock result/input must carry MOCK_DATA warning")
         return self
+
+# RGB screen contract: photo references and USB measurement IDs are separate.
+# The original capture/storage contract above is intentionally unchanged.
+RgbCropCode = Literal["tomato", "cherry_tomato", "pepper", "cucumber", "lettuce",
+                      "bok_choy", "kale", "eggplant", "basil", "rosemary"]
+
+class RgbSensorAttachment(Contract):
+    sensor_record_id: UUID
+    source_photo_id: UUID
+    crop_code: RgbCropCode
+    photo_sha256: Hash256
+    received_at: AwareDatetime
+    packet: SensorPacket
+    # Opaque app-computed snapshot. The server never recalculates sensor scores.
+    assessment_json: Annotated[str, Field(max_length=64000)] | None = None
+
+    @model_validator(mode="after")
+    def measurement_identity(self) -> Self:
+        if self.packet.request_id != self.sensor_record_id:
+            raise ValueError("sensor measurement ID mismatch")
+        if self.assessment_json is not None:
+            import json
+            assessment = json.loads(self.assessment_json)
+            profile = assessment.get("profile") if isinstance(assessment, dict) else None
+            if not isinstance(profile, dict) or profile.get("crop") != self.crop_code:
+                raise ValueError("sensor assessment crop mismatch")
+        return self
+
+class RgbPhotoMetadata(Contract):
+    source_photo_id: UUID
+    subject_id: Identifier = "unassigned"
+    batch_id: Identifier = "unassigned"
+    crop_code: RgbCropCode
+    image_sha256: Hash256
+    image_media_type: Literal["image/jpeg", "image/png"]
+    captured_at: AwareDatetime | None = None
+    sensor: RgbSensorAttachment | None = None
+
+    @model_validator(mode="after")
+    def photo_pairing(self) -> Self:
+        s = self.sensor
+        if s is not None and (s.source_photo_id != self.source_photo_id or
+                              s.crop_code != self.crop_code or s.photo_sha256 != self.image_sha256):
+            raise ValueError("sensor must match photo ID, crop and original file hash")
+        return self
+
+class RgbInspectionRequest(Contract):
+    schema_version: Literal["0.1.0"] = VERSION
+    client_inspection_id: UUID
+    photos: Annotated[list[RgbPhotoMetadata], Field(min_length=1, max_length=8)]
+
+    @model_validator(mode="after")
+    def unique_photos(self) -> Self:
+        if len({p.source_photo_id for p in self.photos}) != len(self.photos):
+            raise ValueError("duplicate photo reference")
+        return self
+
+class RgbPhotoResult(Contract):
+    index: Annotated[int, Field(ge=1, le=8)]
+    source_photo_id: UUID
+    crop_code: RgbCropCode
+    image_sha256: Hash256
+    sensor: RgbSensorAttachment | None
+    status: Literal["completed", "failed"]
+    error_code: str | None
+    normal: Annotated[float, Field(ge=0, le=1)] | None = None
+    abnormal: Annotated[float, Field(ge=0, le=1)] | None = None
+    elapsed_ms: Annotated[int, Field(ge=0)] | None = None
+    model_version: str | None = None
+    model_sha256: Hash256 | None = None
+
+    @model_validator(mode="after")
+    def valid_rgb_output(self) -> Self:
+        values = (self.normal, self.abnormal, self.elapsed_ms, self.model_version, self.model_sha256)
+        if self.status == "completed":
+            if any(v is None for v in values) or self.error_code is not None or abs(self.normal + self.abnormal - 1) >= 1e-4:
+                raise ValueError("completed RGB result needs verified model outputs")
+        elif self.error_code is None or any(v is not None for v in values):
+            raise ValueError("failed RGB result cannot contain model outputs")
+        return self
+
+class RgbInspectionResult(Contract):
+    schema_version: Literal["0.1.0"]
+    inspection_id: UUID
+    client_inspection_id: UUID
+    created_at: AwareDatetime
+    providers: list[str]
+    photos: Annotated[list[RgbPhotoResult], Field(min_length=1, max_length=8)]
+    sensor_scoring: Literal["app_snapshot_only"]

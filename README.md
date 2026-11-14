@@ -6,6 +6,8 @@
 
 **현재 상태: 개발 중. 기능별 구현·실물 검증 범위는 [STATUS](docs/STATUS.md)를 따른다.**
 
+4090 서버 연결 경로는 [SERVER_GPU](docs/SERVER_GPU.md)를 따른다. 기존 C_seed42 가중치에서 앱과 SHA-256이 같은 ONNX를 복원하고 CUDA 추론·Android 에뮬레이터의 8장 성공 결과를 확인했다. 사진별 센서 스냅샷 전송·인증·중복 방지·기존 결과 화면 연결을 제공하며 실휴대폰 접속 검증은 별도다.
+
 Android 0.4.0: [바로 촬영·최대 8장 일괄 분석·사진별 센서 연결·기준 이탈/종합 지수](docs/ANDROID_PHOTO_SENSOR_INDEX.md)를 추가했다. 종합 지수는 사용자 가중평균 참고값이며 학습된 융합 모델 결과와 구분한다. 작물별 기준은 출처와 측정 조건을 확인해 적용한다.
 
 - 실행 가능: 최소 FastAPI 서버의 상태·지원범위 조회와 검사 메타데이터 검증, 로컬 전용 실제 JPEG/PNG 업로드·SQLite 저장·단건 조회, Android 원본 사진 촬영·로컬 저장·디버그 loopback 전송과 수동 재시도·USB JSONL 패킷 파서, JSON Schema/OpenAPI 생성, CSV manifest 및 개체/과실/구매묶음/중복 누수 검사, 계약·누수 회귀시험.

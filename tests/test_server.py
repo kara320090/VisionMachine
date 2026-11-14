@@ -13,7 +13,8 @@ def test_health_and_capabilities_do_not_claim_a_trained_model():
     assert capabilities["validated_diagnostic_crops"] == []
     assert len(capabilities["crop_catalog"]) == 8
     assert "local_image_upload" in capabilities["implemented"]
-    assert "authentication" in capabilities["pending"]
+    assert "user_authentication" in capabilities["pending"]
+    assert "authenticated_rgb_upload" in capabilities["implemented"]
     assert "metadata_validation" in capabilities["implemented"]
 
 

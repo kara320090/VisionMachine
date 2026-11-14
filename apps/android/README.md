@@ -1,5 +1,7 @@
 # Android 앱 — 이봉헌·유재윤
 
+서버 연결 개발판은 사진 화면의 ‘4090 서버 연결 설정’에서 주소·키를 실행 중 입력한다. 사진별 센서 스냅샷·기존 점수/결과 화면·재시도·호스트별 네트워크 정책은 [SERVER_GPU](../../docs/SERVER_GPU.md)를 따른다. 기존 기기 내 모델 경로와 아래 0.4.0 동작은 유지하며 서버 실패 시 자동 전환하지 않는다.
+
 현재 소스는 `0.4.0(versionCode 4)`, 패키지는 기존 Play 앱과 같은 `org.visionmachine.agriclinic`이다. 첫 화면 바로 촬영·8장 추가/일괄 분석·사진별 센서 연결·센서/사용자 가중 종합 지수를 추가했다. 사용법·점수 정의·근거는 [ANDROID_PHOTO_SENSOR_INDEX](../../docs/ANDROID_PHOTO_SENSOR_INDEX.md), 실제 출시 상태는 [PLAY_INTERNAL_TEST](../../docs/PLAY_INTERNAL_TEST.md)를 따른다.
 
 - 런처 `AnalysisActivity`: 실제 ONNX RGB 모델의 개별/최대 8장 일괄 분석, 사진 변경 시 현재 결과 초기화, 200건 이력·CSV. 모델 자산 준비·제한·전처리 검사는 [ANDROID_RGB](../../docs/ANDROID_RGB.md).
