@@ -1,10 +1,13 @@
 # 현재 구현 상태
 
-## 2026-11-15 Android 0.6.0 자동 연결 업데이트 후보
+## 2026-11-15 Android 0.6.0 자동 연결 — Play 내부 테스트 배포 완료
 
-- 기존 패키지의 versionCode 6 / versionName 0.6.0 후보다. 기본 서버 주소 자동 조회, 설치별 인증 자동 발급·암호화 보관·만료 갱신과 분석 시 재연결을 추가한다. 사용자 주소·키 입력은 필요 없다. 사진/센서 점수식·모델 가중치·기존 이력은 유지한다.
-- VisionMachine 서버에 기기 등록 활성화 옵션, 30일 설치 키·100개 등록 한도·요청 제한·검사 소유자 격리를 추가했다. 기존 관리자 키와 0.5.0 전송 경로는 유지한다. 등록/권한과 기존 RGB 서버의 합성 프로토콜 검사 14건이 통과했다.
-- `scripts/check.py`의 Python 96건·계약/OpenAPI·manifest·로컬 HTTP 검사가 통과했다. Android debug/계측 APK 조립·debug lint·JVM 6건이 통과했다. 최종 signed release AAB/APK 빌드와 release lint도 통과했다. 서버 배포·실서버 자동 연결·Play 업로드는 아직 진행 중이다. [AUTOMATIC_SERVER](AUTOMATIC_SERVER.md)를 따른다. 원격 작업은 VisionMachine clone과 `vision-machine-api`로 한정하며 BlurFing 서버·서비스·가상환경·접속 경로를 수정하지 않는다.
+- 기존 패키지 `org.visionmachine.agriclinic`, versionCode 6 / versionName 0.6.0을 기존 Play 내부 테스트 트랙에 출시했다. 설치·업데이트 후 앱을 열면 주소와 키 입력 없이 서버 주소 조회·설치 인증 등록/갱신을 자동 수행한다. 기기 내 분석은 사용자가 명시적으로 선택할 수 있다.
+- TeamViewer로 4090의 VisionMachine clone을 업데이트하고 이 clone의 `.env`에 자동 등록을 활성화한 뒤 `vision-machine-api`만 재시작했다. 기존 키·모델 경로·사진/센서 점수식·이력을 보존했다. BlurFing 서버·서비스·가상환경·포트·접속 경로는 변경하지 않았다.
+- `scripts/check.py`의 Python 96건·계약/OpenAPI·manifest·로컬 HTTP 검사와 JVM 6건이 통과했다. signed release AAB/APK 및 debug/계측 APK 빌드·release lint 통과(오류 0, 경고 28). 업로드 인증서는 0.5.0과 같고 AAB의 원본 ONNX SHA-256도 일치한다.
+- 별도 데이터 공간의 Android 에뮬레이터에서 계측 38건 중 36건 통과/2건 조건부 건너뜀/실패 0을 확인했다. 주소나 API 키를 주입하지 않은 최초 자동 등록으로 실제 4090의 합성 사진 8장·같은 사진에 연결된 모의 센서 기록 1건 전송, CUDA 결과 8건·검사 ID 8개·이력 보관을 확인했다. 이전 수동 키 방식의 별도 실서버 시험과 실물 센서 브리지는 조건을 제공하지 않아 건너뛰었다. 물리 휴대폰이나 재배환경 정확도 검증은 아니다.
+- 2026-11-15 02:20(KST)에 Console의 최신 버전 0.6.0 및 ‘내부 테스터에게 제공됨/검토되지 않음’을 확인했다. 차단 오류 없이 가독화 파일·네이티브 디버그 기호 누락 경고 2건, 지원 기기 감소 0이었다. 실제 휴대폰 Play 업데이트 표시는 보통 1시간 이내지만 더 걸릴 수 있다.
+- 설치 키는 30일 유효·설치 최대 100개·시간당 API 120회이며 기존 개발 API는 관리자 키로 제한한다. 현재 VisionMachine HTTPS 터널은 임시 주소다. 운영자가 공개 주소 manifest를 갱신하면 앱이 새 주소를 조회하므로 휴대폰에서 주소를 입력하지 않는다. [AUTOMATIC_SERVER](AUTOMATIC_SERVER.md)를 따른다.
 
 ## 2026-11-15 Android 0.5.0 업데이트 — Play 내부 테스트 업데이트 배포 완료
 

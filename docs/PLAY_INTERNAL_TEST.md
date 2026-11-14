@@ -1,10 +1,16 @@
 # Google Play 내부 시험 빌드
 
-## 2026-11-15 Android 0.6.0 자동 연결 업데이트 후보 — 출시 전
+## 2026-11-15 Android 0.6.0 자동 연결 — 기존 내부 테스트 트랙 배포 완료
 
-기존 `org.visionmachine.agriclinic`의 versionCode 6 / versionName 0.6.0 후보다. 설치 후 주소·키 입력 없이 4090 서버에 연결하고 설치별 인증을 자동 등록·갱신한다. [AUTOMATIC_SERVER](AUTOMATIC_SERVER.md)의 실제 서버 적용과 기본 설치 흐름을 확인한 뒤 기존 내부 테스트 트랙에 업데이트한다. 아직 이 후보를 Play에 업로드하지 않았다.
+기존 `org.visionmachine.agriclinic`의 versionCode 6 / versionName 0.6.0을 2026-11-15 02:20(KST)에 출시했다. 최신 버전 0.6.0 및 ‘내부 테스터에게 제공됨/검토되지 않음’을 Console에서 확인했다. 기존 테스터 구성은 유지했다.
 
-출시 노트 초안:
+- 새 설치와 0.5.0 업데이트에서 주소·키 입력 없이 HTTPS 주소 조회와 설치별 인증 등록/갱신을 수행한다. [AUTOMATIC_SERVER](AUTOMATIC_SERVER.md)를 따른다.
+- signed release AAB/APK, debug/계측 APK, lint(오류 0/경고 28), JVM 6건, Python 96건과 계약/HTTP 검사가 통과했다. 업로드 인증서는 기존 0.5.0과 같고 모델 해시도 유지했다.
+- 에뮬레이터의 설정 없는 최초 연결로 실제 4090 CUDA 분석 8장과 매칭 모의 센서 기록 전송을 확인했다. Android 계측 36건 통과/조건부 skip 2건/실패 0이다. 실제 휴대폰 설치 및 재배환경 정확도 검증은 별도다.
+- Play 검토 경고 2건은 가독화 파일 및 네이티브 디버그 기호 누락이며 차단 오류나 지원 기기 감소는 없었다. 반영은 보통 1시간 이내지만 더 걸릴 수 있다.
+- AAB SHA-256: `b1a9b01abef7ca2e50192fe02cb963da9be9735aa6f44229b735f3066e1d3aa7`. 키와 모델 파일·AAB는 Git에 넣지 않는다.
+
+게시한 출시 노트:
 
 ```text
 별도 주소·인증키 설정 없이 4090 서버에 자동 연결합니다.

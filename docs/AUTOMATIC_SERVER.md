@@ -1,9 +1,9 @@
 # Android 0.6.0 자동 서버 연결
 
-0.6.0/versionCode 6 후보는 새 설치 및 0.5.0 업데이트 후 서버 분석을 기본으로 선택한다.
+0.6.0/versionCode 6은 새 설치 및 0.5.0 업데이트 후 서버 분석을 기본으로 선택한다.
 사용자는 주소·API 키·Tailscale 설정을 입력하지 않는다. 앱이 최초 실행과 분석 요청 때
 HTTPS 서버 준비 상태를 확인하고 이 설치에 한정된 인증을 자동으로 준비한다.
-현재 후보의 실제 배포·시험 상태는 [STATUS](STATUS.md), Play 상태는 [PLAY_INTERNAL_TEST](PLAY_INTERNAL_TEST.md)를 따른다.
+실제 배포·시험 상태는 [STATUS](STATUS.md), Play 상태는 [PLAY_INTERNAL_TEST](PLAY_INTERNAL_TEST.md)를 따른다.
 
 ## 연결과 보관
 
