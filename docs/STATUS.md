@@ -1,5 +1,11 @@
 # 현재 구현 상태
 
+## 2026-11-15 Android 0.6.0 자동 연결 업데이트 후보
+
+- 기존 패키지의 versionCode 6 / versionName 0.6.0 후보다. 기본 서버 주소 자동 조회, 설치별 인증 자동 발급·암호화 보관·만료 갱신과 분석 시 재연결을 추가한다. 사용자 주소·키 입력은 필요 없다. 사진/센서 점수식·모델 가중치·기존 이력은 유지한다.
+- VisionMachine 서버에 기기 등록 활성화 옵션, 30일 설치 키·100개 등록 한도·요청 제한·검사 소유자 격리를 추가했다. 기존 관리자 키와 0.5.0 전송 경로는 유지한다. 등록/권한과 기존 RGB 서버의 합성 프로토콜 검사 14건이 통과했다.
+- `scripts/check.py`의 Python 96건·계약/OpenAPI·manifest·로컬 HTTP 검사가 통과했다. Android debug/계측 APK 조립·debug lint·JVM 6건이 통과했다. 최종 signed release AAB/APK 빌드와 release lint도 통과했다. 서버 배포·실서버 자동 연결·Play 업로드는 아직 진행 중이다. [AUTOMATIC_SERVER](AUTOMATIC_SERVER.md)를 따른다. 원격 작업은 VisionMachine clone과 `vision-machine-api`로 한정하며 BlurFing 서버·서비스·가상환경·접속 경로를 수정하지 않는다.
+
 ## 2026-11-15 Android 0.5.0 업데이트 — Play 내부 테스트 업데이트 배포 완료
 
 - 기존 앱 ID `org.visionmachine.agriclinic`을 유지하고 `versionName 0.5.0` / `versionCode 5`로 빌드했다. Android-only patch는 2026-11-13 `main` 기준 commit `2464e6ffe058b49265c564dd35f168c6bf4ce9a1`에 적용했다. 서버 주소와 기기별 API 키는 앱 실행 중 입력하며 Android Keystore로 암호화해 보관한다.

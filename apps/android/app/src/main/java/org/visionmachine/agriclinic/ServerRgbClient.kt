@@ -69,9 +69,10 @@ class ServerRgbClient(private val context: Context, private val config: ServerCo
             }.orEmpty()
             if (status !in 200..299) {
                 val code = runCatching { JSONObject(body).getJSONObject("detail").getString("code") }.getOrDefault("HTTP_$status")
-                error(when (code) { "MODEL_NOT_READY" -> "서버 모델이 준비되지 않았습니다. ONNX 파일과 GPU 준비 상태를 확인해 주세요."
-                    "UNAUTHORIZED" -> "서버 인증키를 확인해 주세요."
+                throw ServerRequestException(code, when (code) { "MODEL_NOT_READY" -> "서버 모델이 준비되지 않았습니다. ONNX 파일과 GPU 준비 상태를 확인해 주세요."
+                    "UNAUTHORIZED" -> "서버 인증 연결을 갱신하지 못했습니다. 다시 연결해 주세요."
                     "ID_CONFLICT" -> "같은 검사 ID의 내용이 다릅니다. 서버 기록을 확인해 주세요."
+                    "RATE_LIMITED" -> "요청이 많습니다. 잠시 후 다시 분석해 주세요."
                     else -> "서버 요청 실패: $code" })
             }
             val card = JSONObject(context.assets.open("vision_rgb_model.json").bufferedReader().use { it.readText() })

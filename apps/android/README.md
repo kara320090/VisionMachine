@@ -1,5 +1,7 @@
 # Android 앱 — 이봉헌·유재윤
 
+0.6.0/versionCode 6 업데이트 후보는 [4090 자동 연결](../../docs/AUTOMATIC_SERVER.md)을 기본으로 사용한다. 새 설치와 기존 0.5.0 업데이트에서 주소·인증키를 입력하지 않으며, 설치별 자격 증명을 자동 등록·암호화 보관·갱신한다. 이 후보의 배포와 실서버 검증은 [STATUS](../../docs/STATUS.md)를 확인한다.
+
 Play 내부 테스트로 배포한 0.5.0/versionCode 5는 사진 화면의 ‘4090 서버 연결 설정’에서 서버 주소·기기별 인증키를 실행 중 입력할 수 있다. Android Keystore가 자격 증명을 기기별로 암호화해 보관한다. 기존 기기 내 RGB 모델은 기본 경로로 유지하며, 서버 모드를 설정했을 때 서버 실패를 로컬 결과로 숨기지 않는다.
 
 현재 내부 테스트 배포 버전은 `0.5.0(versionCode 5)`, 패키지는 기존 Play 앱과 같은 `org.visionmachine.agriclinic`이다. 첫 화면 바로 촬영·8장 추가/일괄 분석·사진별 센서 연결·센서/사용자 가중 종합 지수를 추가했다. 사용법·점수 정의·근거는 [ANDROID_PHOTO_SENSOR_INDEX](../../docs/ANDROID_PHOTO_SENSOR_INDEX.md), 실제 출시 상태는 [PLAY_INTERNAL_TEST](../../docs/PLAY_INTERNAL_TEST.md)를 따른다.

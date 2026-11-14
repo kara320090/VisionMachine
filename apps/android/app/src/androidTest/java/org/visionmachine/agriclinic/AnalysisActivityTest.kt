@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit
 class AnalysisActivityTest {
     @Test fun photoAnalysisScreenRendersAfterModelStartup() {
         val inst=InstrumentationRegistry.getInstrumentation()
+        val connection=AutomaticServerSettings(inst.targetContext);val previousMode=connection.mode();connection.setMode("local")
+        try {
         ActivityScenario.launch(AnalysisActivity::class.java).use {scenario ->
             inst.waitForIdleSync()
             Thread.sleep(700) // allow the first compositor frame, not a processing speed measurement
@@ -43,5 +45,6 @@ class AnalysisActivityTest {
                 File(inst.targetContext.filesDir,"analysis_ui_smoke.png").outputStream().use {bitmap.compress(Bitmap.CompressFormat.PNG,100,it)}
             } finally {bitmap.recycle()}
         }
+        } finally {connection.setMode(previousMode)}
     }
 }

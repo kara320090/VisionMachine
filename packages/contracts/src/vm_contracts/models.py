@@ -267,3 +267,18 @@ class RgbInspectionResult(Contract):
     providers: list[str]
     photos: Annotated[list[RgbPhotoResult], Field(min_length=1, max_length=8)]
     sensor_scoring: Literal["app_snapshot_only"]
+
+
+class DeviceRegistrationRequest(Contract):
+    schema_version: Literal["0.1.0"] = VERSION
+    installation_id: UUID
+    registration_secret: Annotated[str, Field(pattern=r"^[0-9a-f]{64}$", repr=False)]
+    app_version_code: Annotated[int, Field(strict=True, ge=6)]
+
+
+class DeviceRegistrationResult(Contract):
+    schema_version: Literal["0.1.0"]
+    server_id: Literal["visionmachine-4090"]
+    installation_id: UUID
+    api_key: Annotated[str, Field(min_length=32, max_length=128, repr=False)]
+    expires_at: AwareDatetime

@@ -18,6 +18,7 @@ class RgbViewModelTest {
         val inst=InstrumentationRegistry.getInstrumentation()
         val app=inst.targetContext.applicationContext as Application
         assumeTrue(runCatching {inst.context.assets.open("private/basil.png").close()}.isSuccess)
+        val connection=AutomaticServerSettings(app);val previousMode=connection.mode();connection.setMode("local")
         val files=listOf("basil.png","rosemary.png").map {n ->File(app.cacheDir,n).also {f->inst.context.assets.open("private/$n").use {input->f.outputStream().use {input.copyTo(it)}}}}
         val store=ViewModelStore()
         lateinit var vm:RgbAnalysisViewModel
@@ -35,6 +36,6 @@ class RgbViewModelTest {
             main {assertNull(vm.current);assertEquals(before+1,vm.records.size);vm.analyze(true)}
             await {!vm.busy&&vm.current!=null}
             main {assertEquals(before+3,vm.records.size);assertEquals(before+3,RgbHistory(app).read().size);assertEquals(before+4,RgbHistory.csv(vm.records).trim().lines().size);vm.saved(true);assertTrue(vm.message.contains("CSV 저장 완료"))}
-        } finally {main {store.clear()};files.forEach {it.delete()}}
+        } finally {main {store.clear()};files.forEach {it.delete()};connection.setMode(previousMode)}
     }
 }

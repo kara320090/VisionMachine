@@ -28,13 +28,16 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
     private val store=RgbHistory(app)
     private var engine:LocalRgbEngine?=null
     private val serverSettings=ServerSettings(app)
+    private val automaticSettings=AutomaticServerSettings(app)
+    private val automaticConnection=AutomaticServerConnection(app)
     private var serverConfig:ServerConfig?=null
-    var serverMode by mutableStateOf(false);private set
+    var serverMode by mutableStateOf(automaticSettings.mode()!="local");private set
+    var serverConnected by mutableStateOf(false);private set
     var serverAddress by mutableStateOf("");private set
     @Volatile private var cleared=false
     var ready by mutableStateOf(false);private set
-    var busy by mutableStateOf(false);private set
-    var message by mutableStateOf("사진 분석 모델을 준비하고 있습니다.");private set
+    var busy by mutableStateOf(true);private set
+    var message by mutableStateOf("4090 서버에 자동 연결하고 있습니다.");private set
     var items by mutableStateOf<List<AnalysisPhotoItem>>(emptyList());private set
     val selected get()=items.map {it.uri}
     var focusIndex by mutableStateOf(0);private set
@@ -52,21 +55,41 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
     private fun ui(block:()->Unit) {main.post {if(!cleared) block()}}
     init { worker.execute {
         try {val saved=store.read();val pending=CaptureStore(app).pending()!=null;ui {records=saved;cameraPending=pending}}
-        catch(_:Exception) {ui {message="이전 기록을 읽지 못했습니다. 기존 파일을 보존했습니다."};return@execute}
-        try {
-            serverConfig=serverSettings.load()
-            val config=serverConfig
-            if(config!=null) {ui {serverMode=true;serverAddress=config.baseUrl;ready=true;message="서버 전송 설정됨 · 사진을 분석하면 GPU 준비 상태를 확인합니다."};return@execute}
-        } catch(_:Exception) {ui {message="서버 인증 설정을 읽지 못했습니다. 서버 설정을 다시 저장해 주세요."};return@execute}
-        try {engine=LocalRgbEngine(app);ui {ready=true;message="기기 모델 준비 완료 · 촬영하거나 사진을 추가해 주세요."}}
-        catch(_:Exception) {ui {message="기기 모델이 없습니다. 4090 서버 연결 설정을 사용해 주세요."}}
+        catch(_:Exception) {ui {busy=false;message="이전 기록을 읽지 못했습니다. 기존 파일을 보존했습니다."};return@execute}
+        when(automaticSettings.mode()) {
+            "local" -> {
+                try {engine=LocalRgbEngine(app);ui {ready=true;busy=false;message="기기 모델 준비 완료 · 촬영하거나 사진을 추가해 주세요."}}
+                catch(_:Exception) {ui {busy=false;message="기기 모델이 없습니다. 4090 서버 자동 연결을 사용해 주세요."}}
+            }
+            "manual" -> {
+                serverConfig=runCatching {serverSettings.load()}.getOrNull()
+                if(serverConfig!=null) {ui {serverMode=true;serverAddress=serverConfig!!.baseUrl;ready=true;busy=false;message="서버 전송 준비 완료"}}
+                else {automaticSettings.setMode("auto");connectAutomatically()}
+            }
+            else -> connectAutomatically()
+        }
     }}
+    private fun connectAutomatically() {
+        try {
+            val config=automaticConnection.connect();serverConfig=config
+            ui {serverMode=true;serverConnected=true;serverAddress=config.baseUrl;ready=true;busy=false;message="4090 서버 연결 완료 · 촬영하거나 사진을 추가해 주세요."}
+        } catch(error:Exception) {
+            serverConfig=null
+            ui {serverMode=true;serverConnected=false;ready=true;busy=false
+                message=if(error is ServerRequestException) error.message.orEmpty() else "서버 연결 대기 · 사진 분석 시 자동으로 다시 연결합니다."}
+        }
+    }
+    fun useAutomaticServer() {
+        if(busy) return
+        busy=true;serverMode=true;serverConnected=false;message="4090 서버에 자동 연결하고 있습니다."
+        worker.execute {automaticSettings.setMode("auto");connectAutomatically()}
+    }
     fun saveServer(url:String,key:String) {
         if(busy) return
         busy=true
         worker.execute {
-            try {serverSettings.save(url,key);serverConfig=serverSettings.load()
-                ui {serverMode=true;serverAddress=serverConfig!!.baseUrl;ready=true;busy=false;message="서버 전송 설정 완료 · 다음 분석부터 사진과 연결 센서값을 보냅니다."}}
+            try {serverSettings.save(url,key);automaticSettings.setMode("manual");serverConfig=serverSettings.load()
+                ui {serverMode=true;serverConnected=false;serverAddress=serverConfig!!.baseUrl;ready=true;busy=false;message="서버 전송 준비 완료"}}
             catch(e:Exception) {ui {busy=false;message=e.message?.take(120)?:"서버 설정 저장 실패"}}
         }
     }
@@ -74,9 +97,9 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
         if(busy) return
         busy=true
         worker.execute {
-            try {serverSettings.clear();serverConfig=null;if(engine==null) engine=LocalRgbEngine(getApplication())
-                ui {serverMode=false;serverAddress="";ready=true;busy=false;message="기기 내 모델로 전환했습니다."}}
-            catch(_:Exception) {ui {serverMode=false;serverAddress="";ready=false;busy=false;message="기기 모델이 없습니다. 서버 설정을 사용해 주세요."}}
+            try {automaticSettings.setMode("local");serverConfig=null;if(engine==null) engine=LocalRgbEngine(getApplication())
+                ui {serverMode=false;serverConnected=false;serverAddress="";ready=true;busy=false;message="기기 내 모델로 전환했습니다."}}
+            catch(_:Exception) {ui {serverMode=false;serverConnected=false;serverAddress="";ready=false;busy=false;message="기기 모델이 없습니다. 서버 자동 연결을 사용해 주세요."}}
         }
     }
     private fun name(uri:Uri):String=runCatching {getApplication<Application>().contentResolver.query(uri,arrayOf(OpenableColumns.DISPLAY_NAME),null,null,null)?.use {c->if(c.moveToFirst()) c.getString(0) else null}?.take(180)}.getOrNull()?:"선택한 사진"
@@ -167,18 +190,32 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
         val inputs=if(all) items.indices.toList() else listOf(focusIndex)
         val snapshot=items.toList()
         val weight=sensorWeight
-        val remote=serverConfig
+        val remoteMode=serverMode
+        val automatic=automaticSettings.mode()=="auto"
+        val configured=serverConfig
         worker.execute {
+            var remote=configured
+            var connectionFailure:Exception?=null
+            if(remoteMode&&automatic) {
+                try {remote=automaticConnection.connect();serverConfig=remote;ui {serverConnected=true;serverAddress=remote!!.baseUrl}}
+                catch(error:Exception) {connectionFailure=error;ui {serverConnected=false}}
+            }
             var done=0;var failed=0
             for((position,index) in inputs.withIndex()) {
                 if(cleared) break
                 val input=snapshot[index]
-                ui {message="${if(remote!=null) "서버 업로드·GPU 분석" else "기기에서 사진 분석"} 중 · ${position+1}/${inputs.size}";items=items.mapIndexed {i,item -> if(i==index) item.copy(status="분석 중",result=null,error=null) else item}}
+                ui {message="${if(remoteMode) "서버 업로드·GPU 분석" else "기기에서 사진 분석"} 중 · ${position+1}/${inputs.size}";items=items.mapIndexed {i,item -> if(i==index) item.copy(status="분석 중",result=null,error=null) else item}}
                 try {
                     require(input.reference.cropCode!="eggplant") {"가지는 현재 RGB 모델 적용 범위 밖입니다. 센서 기록만 가능합니다."}
                     val n=name(input.uri)
-                    val record=if(remote!=null) {
-                        val r=ServerRgbClient(getApplication(),remote).analyze(input.uri,input.reference)
+                    val record=if(remoteMode) {
+                        connectionFailure?.let {throw it}
+                        val r=try {ServerRgbClient(getApplication(),remote?:error("서버 연결을 다시 확인해 주세요.")).analyze(input.uri,input.reference)}
+                        catch(error:ServerRequestException) {
+                            if(!automatic||error.code!="UNAUTHORIZED") throw error
+                            remote=automaticConnection.connect(forceRegistration=true);serverConfig=remote
+                            ServerRgbClient(getApplication(),remote!!).analyze(input.uri,input.reference)
+                        }
                         val sensor=r.sensor
                         CompositeIndex.attach(RgbRecord(n,r.normal,r.abnormal,r.millis,r.sha256,Instant.now().toString(),r.model,
                             input.reference.cropCode,input.reference.inspectionId,sensor?.inspectionId,sensor?.assessmentJson,

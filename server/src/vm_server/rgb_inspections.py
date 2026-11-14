@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile, Request
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 from PIL import Image
@@ -52,6 +52,7 @@ def connect():
     folder.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(folder / "rgb_inspections.sqlite3", timeout=30)
     db.execute("CREATE TABLE IF NOT EXISTS rgb_inspections (id TEXT PRIMARY KEY, request_sha TEXT NOT NULL, result TEXT NOT NULL)")
+    db.execute("CREATE TABLE IF NOT EXISTS rgb_owners (inspection_id TEXT PRIMARY KEY, device_id TEXT NOT NULL)")
     return db
 
 
@@ -81,7 +82,7 @@ def validate_image(raw, media):
         raise failure(422, "INVALID_IMAGE") from None
 
 
-def process(payload, blobs):
+def process(payload, blobs, owner_id=None):
     # One worker and lock serialize GPU work and duplicate submission commits.
     canonical = payload.model_dump_json()
     request_sha = hashlib.sha256(canonical.encode()).hexdigest()
@@ -89,6 +90,9 @@ def process(payload, blobs):
     with lock, connect() as db:
         prior = db.execute("SELECT request_sha, result FROM rgb_inspections WHERE id=?", (identity,)).fetchone()
         if prior:
+            owner = db.execute("SELECT device_id FROM rgb_owners WHERE inspection_id=?", (identity,)).fetchone()
+            if owner_id is not None and (owner is None or owner[0] != owner_id):
+                raise failure(404, "NOT_FOUND")
             if prior[0] != request_sha:
                 raise failure(409, "ID_CONFLICT")
             return 200, json.loads(prior[1])
@@ -121,6 +125,8 @@ def process(payload, blobs):
                 (folder / f"{photo.source_photo_id}.bin").write_bytes(raw)
             (folder / "payload.json").write_text(canonical, encoding="utf-8")
             db.execute("INSERT INTO rgb_inspections VALUES (?,?,?)", (identity, request_sha, json.dumps(result, allow_nan=False)))
+            if owner_id is not None:
+                db.execute("INSERT INTO rgb_owners VALUES (?,?)", (identity, owner_id))
             db.commit()
         except BaseException:
             for item in folder.iterdir():
@@ -131,7 +137,7 @@ def process(payload, blobs):
 
 
 @router.post("/api/v1/inspections", response_model=RgbInspectionResult)
-async def upload(photos: list[UploadFile] = File(...), payload: str = Form(...)):
+async def upload(request: Request, photos: list[UploadFile] = File(...), payload: str = Form(...)):
     try:
         if len(payload.encode()) > 64 * 1024:
             raise failure(413, "METADATA_TOO_LARGE")
@@ -152,7 +158,7 @@ async def upload(photos: list[UploadFile] = File(...), payload: str = Form(...))
                 raise failure(422, "HASH_MISMATCH")
             await run_in_threadpool(validate_image, raw, photo.image_media_type)
             blobs.append(raw)
-        status, result = await run_in_threadpool(process, parsed, blobs)
+        status, result = await run_in_threadpool(process, parsed, blobs, request.state.rgb_owner)
         return JSONResponse(status_code=status, content=result)
     finally:
         for photo in photos:
@@ -160,9 +166,12 @@ async def upload(photos: list[UploadFile] = File(...), payload: str = Form(...))
 
 
 @router.get("/api/v1/inspections/{inspection_id}", response_model=RgbInspectionResult)
-def lookup(inspection_id: UUID):
+def lookup(inspection_id: UUID, request: Request):
     with connect() as db:
         row = db.execute("SELECT result FROM rgb_inspections WHERE id=?", (str(inspection_id),)).fetchone()
+        owner = db.execute("SELECT device_id FROM rgb_owners WHERE inspection_id=?", (str(inspection_id),)).fetchone()
+        if request.state.rgb_owner is not None and (owner is None or owner[0] != request.state.rgb_owner):
+            raise failure(404, "NOT_FOUND")
     if row is None:
         raise failure(404, "NOT_FOUND")
     return json.loads(row[0])

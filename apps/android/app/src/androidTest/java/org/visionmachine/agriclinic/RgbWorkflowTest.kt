@@ -12,6 +12,8 @@ import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Assume.assumeTrue
 import org.junit.Test
+import org.junit.Before
+import org.junit.After
 import org.junit.runner.RunWith
 import java.io.File
 import java.util.UUID
@@ -20,6 +22,11 @@ import java.util.UUID
 class RgbWorkflowTest {
     private val inst=InstrumentationRegistry.getInstrumentation()
     private val app=inst.targetContext.applicationContext as Application
+    private var previousMode="auto"
+    @Before fun selectLocalModelForLocalWorkflowTests() {
+        val settings=AutomaticServerSettings(app);previousMode=settings.mode();settings.setMode("local")
+    }
+    @After fun restoreConnectionMode() {AutomaticServerSettings(app).setMode(previousMode)}
     private fun main(block:()->Unit)=inst.runOnMainSync(block)
     private fun await(condition:()->Boolean) {
         val until=System.currentTimeMillis()+90000

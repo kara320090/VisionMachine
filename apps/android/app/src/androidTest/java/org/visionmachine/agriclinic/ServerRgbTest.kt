@@ -64,6 +64,7 @@ class ServerRgbTest {
         val inst=InstrumentationRegistry.getInstrumentation()
         val app=inst.targetContext.applicationContext as Application
         val config=ServerSettings(app);val previous=config.load()
+        val automatic=AutomaticServerSettings(app);val previousMode=automatic.mode()
         var scenario:ActivityScenario<AnalysisActivity>?=null
         lateinit var vm:RgbAnalysisViewModel
         fun main(block:()->Unit)=inst.runOnMainSync(block)
@@ -80,6 +81,7 @@ class ServerRgbTest {
         }}
         try {
             config.save(url!!,key!!)
+            automatic.setMode("manual")
             scenario=ActivityScenario.launch(AnalysisActivity::class.java)
             scenario.onActivity {activity ->vm=ViewModelProvider(activity)[RgbAnalysisViewModel::class.java]}
             await {vm.ready}
@@ -134,6 +136,7 @@ class ServerRgbTest {
             // Explicit interactive emulator setup keeps runtime credentials out of the APK.
             if(args.getString("vm_keep_server_config")!="true") {
                 if(previous!=null) config.save(previous.baseUrl,previous.apiKey) else config.clear()
+                automatic.setMode(previousMode)
             }
         }
     }
