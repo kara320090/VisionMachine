@@ -1,5 +1,14 @@
 # 현재 구현 상태
 
+## 2026-11-15 Android 0.5.0 업데이트 — Play 내부 테스트 업데이트 배포 완료
+
+- 기존 앱 ID `org.visionmachine.agriclinic`을 유지하고 `versionName 0.5.0` / `versionCode 5`로 빌드했다. Android-only patch는 2026-11-13 `main` 기준 commit `2464e6ffe058b49265c564dd35f168c6bf4ce9a1`에 적용했다. 서버 주소와 기기별 API 키는 앱 실행 중 입력하며 Android Keystore로 암호화해 보관한다.
+- 서버 모드는 사진 원본, SHA-256, 작물/검사 메타데이터와 같은 사진에 연결된 센서 기록을 전송한다. 응답의 검사·사진 ID, 이미지 해시, 모델 버전/해시와 CUDA provider를 검증해 기존 결과 화면에 표시한다. 기존 센서 종합 점수 계산은 앱에서 유지한다. 서버 오류를 로컬 결과로 대체하지 않는다.
+- Windows JDK 21.0.13에서 signed `bundleRelease`, `assembleRelease`, `lintRelease`, debug 및 Android-test APK 조립이 성공했다. release lint 오류 0, 경고 25. JVM 테스트 4건이 통과했고 `scripts/check.py`의 Python 82건·계약/OpenAPI·manifest·localhost HTTP 검사가 통과했다. 계측 테스트는 이번 Windows 환경에서 실행하지 않았다.
+- AAB 서명은 정상이며 기존 로컬 release AAB와 인증서 SHA-256 지문이 같다. APK에서 패키지 ID와 versionCode 5 / versionName 0.5.0을 확인했다. AAB 안 ONNX 모델 SHA-256도 저장소 원본 `ffa909c3453a9d1e2f4c601292748f6cb30cb3e4507921cd42578410f7d15629`과 일치한다.
+- `/health/ready`를 직접 조회해 서비스 `ready`, `CUDAExecutionProvider`와 CPU provider를 확인했다. 현재 HTTPS 주소는 임시 TryCloudflare 터널이라 만료·변경될 수 있다. 이 health 확인은 인증된 앱 사진 업로드나 휴대폰 결과 표시를 검증하지 않는다.
+- 2026-11-15 01:08(KST)에 기존 Play 내부 테스트 트랙에 versionCode 5를 출시했다. 업로드 전 활성 버전 0.4.0/code 4를 확인했고, 업로드 후 Console의 최신 버전 0.5.0 및 ‘내부 테스터에게 제공됨/검토되지 않음’을 확인했다. Play 검토에는 차단 오류 없이 가독화 파일·네이티브 디버그 기호 누락 경고 2건이 있었고 지원 기기 감소는 없었다. Play 반영은 보통 1시간 이내지만 더 걸릴 수 있다. 실제 휴대폰 설치·인증된 분석 왕복은 별도 확인이 필요하다. API 키는 AAB/Git/ZIP에 포함하지 않는다.
+
 ## 2026-11-13 Android 0.4.0 — 바로 촬영·8장·센서/종합 지수
 
 - 첫 화면에 외부 카메라 `TakePicture` 원본 저장·선택 목록 추가, 사진 선택기/다중 파일 선택기, 최대 8장 추가 선택·중복 제거·사진별 작물·진행/성공/실패·개별 결과를 구현했다. 한 장의 실패 후 나머지를 계속 처리한다. 카메라 취소·중단 복구와 기존 사진/이력을 유지한다.

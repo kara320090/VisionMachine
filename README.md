@@ -6,10 +6,10 @@
 
 **현재 상태: 개발 중. 기능별 구현·실물 검증 범위는 [STATUS](docs/STATUS.md)를 따른다.**
 
-Android 0.4.0: [바로 촬영·최대 8장 일괄 분석·사진별 센서 연결·기준 이탈/종합 지수](docs/ANDROID_PHOTO_SENSOR_INDEX.md)를 추가했다. 종합 지수는 사용자 가중평균 참고값이며 학습된 융합 모델 결과와 구분한다. 작물별 기준은 출처와 측정 조건을 확인해 적용한다.
+Android 0.5.0 내부 테스트 배포: [바로 촬영·최대 8장 분석·사진별 센서/종합 지수](docs/ANDROID_PHOTO_SENSOR_INDEX.md)에 4090 서버 RGB 분석 연결 설정을 추가했다. 배포된 앱은 새 버전이 설치되기 전까지 이 기능을 갖지 않는다. 종합 지수는 사용자 가중평균 참고값이며 학습된 융합 모델 결과와 구분한다.
 
 - 실행 가능: 최소 FastAPI 서버의 상태·지원범위 조회와 검사 메타데이터 검증, 로컬 전용 실제 JPEG/PNG 업로드·SQLite 저장·단건 조회, Android 원본 사진 촬영·로컬 저장·디버그 loopback 전송과 수동 재시도·USB JSONL 패킷 파서, JSON Schema/OpenAPI 생성, CSV manifest 및 개체/과실/구매묶음/중복 누수 검사, 계약·누수 회귀시험.
-- 추가 구현: Android의 [RGB 사진 분석 동반 화면](docs/ANDROID_RGB.md), [USB 연결·4종 센서 측정·사진 연결·이력/CSV](docs/ANDROID_USB.md), UNO R4의 [토양 원시값·온습도·광학·표면온도 USB 실측](firmware/README.md). 휴대폰용 [기본/확장 요청·응답 규격](docs/ARDUINO_PHONE_HANDOFF.md)을 제공한다. 앱은 저장된 실제 보드 응답 재생으로 검사했으며 실휴대폰 USB 전원·권한·통신 시험과 센서/서버 AI 통합은 별도다.
+- 추가 구현: Android의 [RGB 사진 분석 동반 화면](docs/ANDROID_RGB.md), [USB 연결·4종 센서 측정·사진 연결·이력/CSV](docs/ANDROID_USB.md), 4090 서버 RGB 연결 설정, UNO R4의 [센서 USB 실측](firmware/README.md). 서버 주소와 인증키는 앱에서 기기별로 입력한다. 0.5.0은 2026-11-15 기존 Play 내부 테스트 트랙에 출시됐다. 실제 휴대폰의 인증된 사진 분석 왕복은 아직 확인하지 않았다.
 - 학습 모델이 없으면 `pending_model`을 반환한다. 임의 정상 판정·정확도·가상 성능을 만들지 않는다.
 
 먼저 [START_HERE.md](START_HERE.md), 이후 [구조](docs/ARCHITECTURE.md), [커밋 기준](docs/GIT_COMMITS.md)을 읽는다. 개발은 각자의 로컬 clone에서 `main`으로 진행한다. 검증한 단위마다 commit·push하며, 선행 push가 있으면 내 커밋과 원격 변경을 병합·재검증하여 `origin/main`에 올린다.
@@ -42,7 +42,7 @@ python -m venv .venv
 
 `scripts/check.py`는 의존성·pytest·계약/OpenAPI 동기화·합성 manifest·실제 localhost HTTP 기동을 점검한다. HTTP 점검 프로세스는 스크립트가 종료한다. Android 빌드·lint는 `apps/android/gradlew`로 별도 확인하며 실기기/센서/AI 성능 시험은 포함하지 않는다.
 
-Google Play 내부 시험 빌드와 서명키 취급은 [PLAY_INTERNAL_TEST](docs/PLAY_INTERNAL_TEST.md)를 따른다. 마지막으로 확인한 내부 배포는 0.2.0이며 현재 소스는 0.4.0이다. Play 출시 상태와 로컬 빌드 완료를 구분한다. 운영 서버·학습된 영상/센서 융합 진단은 아직 연결하지 않았다.
+Google Play 내부 시험 빌드와 서명키 취급은 [PLAY_INTERNAL_TEST](docs/PLAY_INTERNAL_TEST.md)를 따른다. 서버 연결용 0.5.0 signed AAB를 2026-11-15 01:08(KST)에 기존 내부 테스트 트랙에 출시했다. Console의 ‘내부 테스터에게 제공됨’을 확인했으며 실제 휴대폰 왕복 시험은 별도다. 앱 연결과 서버 준비 상태는 [STATUS](docs/STATUS.md)를 따른다.
 
 ```powershell
 & ./.venv/Scripts/python.exe scripts/export_contracts.py --check

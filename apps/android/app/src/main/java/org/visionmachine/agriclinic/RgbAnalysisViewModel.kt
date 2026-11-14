@@ -27,6 +27,10 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
     private val main=Handler(Looper.getMainLooper())
     private val store=RgbHistory(app)
     private var engine:LocalRgbEngine?=null
+    private val serverSettings=ServerSettings(app)
+    private var serverConfig:ServerConfig?=null
+    var serverMode by mutableStateOf(false);private set
+    var serverAddress by mutableStateOf("");private set
     @Volatile private var cleared=false
     var ready by mutableStateOf(false);private set
     var busy by mutableStateOf(false);private set
@@ -49,9 +53,32 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
     init { worker.execute {
         try {val saved=store.read();val pending=CaptureStore(app).pending()!=null;ui {records=saved;cameraPending=pending}}
         catch(_:Exception) {ui {message="이전 기록을 읽지 못했습니다. 기존 파일을 보존했습니다."};return@execute}
-        try {engine=LocalRgbEngine(app);ui {ready=true;message="준비 완료 · 촬영하거나 사진을 추가해 주세요."}}
-        catch(_:Exception) {ui {message="모델을 불러오지 못했습니다. 앱을 다시 실행해 주세요."}}
+        try {
+            serverConfig=serverSettings.load()
+            val config=serverConfig
+            if(config!=null) {ui {serverMode=true;serverAddress=config.baseUrl;ready=true;message="서버 전송 설정됨 · 사진을 분석하면 GPU 준비 상태를 확인합니다."};return@execute}
+        } catch(_:Exception) {ui {message="서버 인증 설정을 읽지 못했습니다. 서버 설정을 다시 저장해 주세요."};return@execute}
+        try {engine=LocalRgbEngine(app);ui {ready=true;message="기기 모델 준비 완료 · 촬영하거나 사진을 추가해 주세요."}}
+        catch(_:Exception) {ui {message="기기 모델이 없습니다. 4090 서버 연결 설정을 사용해 주세요."}}
     }}
+    fun saveServer(url:String,key:String) {
+        if(busy) return
+        busy=true
+        worker.execute {
+            try {serverSettings.save(url,key);serverConfig=serverSettings.load()
+                ui {serverMode=true;serverAddress=serverConfig!!.baseUrl;ready=true;busy=false;message="서버 전송 설정 완료 · 다음 분석부터 사진과 연결 센서값을 보냅니다."}}
+            catch(e:Exception) {ui {busy=false;message=e.message?.take(120)?:"서버 설정 저장 실패"}}
+        }
+    }
+    fun useLocalModel() {
+        if(busy) return
+        busy=true
+        worker.execute {
+            try {serverSettings.clear();serverConfig=null;if(engine==null) engine=LocalRgbEngine(getApplication())
+                ui {serverMode=false;serverAddress="";ready=true;busy=false;message="기기 내 모델로 전환했습니다."}}
+            catch(_:Exception) {ui {serverMode=false;serverAddress="";ready=false;busy=false;message="기기 모델이 없습니다. 서버 설정을 사용해 주세요."}}
+        }
+    }
     private fun name(uri:Uri):String=runCatching {getApplication<Application>().contentResolver.query(uri,arrayOf(OpenableColumns.DISPLAY_NAME),null,null,null)?.use {c->if(c.moveToFirst()) c.getString(0) else null}?.take(180)}.getOrNull()?:"선택한 사진"
     fun chooseDefaultCrop(code:String) {if(!busy&&!cameraPending&&CropChoices.any {it.first==code}) defaultCrop=code}
     fun select(uris:List<Uri>)=setInputs(uris,false)
@@ -140,16 +167,26 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
         val inputs=if(all) items.indices.toList() else listOf(focusIndex)
         val snapshot=items.toList()
         val weight=sensorWeight
+        val remote=serverConfig
         worker.execute {
             var done=0;var failed=0
             for((position,index) in inputs.withIndex()) {
                 if(cleared) break
                 val input=snapshot[index]
-                ui {message="기기에서 사진 분석 중 · ${position+1}/${inputs.size}";items=items.mapIndexed {i,item -> if(i==index) item.copy(status="분석 중",result=null,error=null) else item}}
+                ui {message="${if(remote!=null) "서버 업로드·GPU 분석" else "기기에서 사진 분석"} 중 · ${position+1}/${inputs.size}";items=items.mapIndexed {i,item -> if(i==index) item.copy(status="분석 중",result=null,error=null) else item}}
                 try {
                     require(input.reference.cropCode!="eggplant") {"가지는 현재 RGB 모델 적용 범위 밖입니다. 센서 기록만 가능합니다."}
-                    val n=name(input.uri);val r=engine!!.analyze(input.uri)
-                    val record=attachSensor(RgbRecord(n,r.normal,r.abnormal,r.elapsedMs,r.sha256,Instant.now().toString(),engine!!.modelCard.getString("model_version"),input.reference.cropCode,input.reference.inspectionId),weight)
+                    val n=name(input.uri)
+                    val record=if(remote!=null) {
+                        val r=ServerRgbClient(getApplication(),remote).analyze(input.uri,input.reference)
+                        val sensor=r.sensor
+                        CompositeIndex.attach(RgbRecord(n,r.normal,r.abnormal,r.millis,r.sha256,Instant.now().toString(),r.model,
+                            input.reference.cropCode,input.reference.inspectionId,sensor?.inspectionId,sensor?.assessmentJson,
+                            executionProvider="CUDAExecutionProvider",serverInspectionId=r.inspectionId),weight)
+                    } else {
+                        val r=engine!!.analyze(input.uri)
+                        attachSensor(RgbRecord(n,r.normal,r.abnormal,r.elapsedMs,r.sha256,Instant.now().toString(),engine!!.modelCard.getString("model_version"),input.reference.cropCode,input.reference.inspectionId),weight)
+                    }
                     val updated=(store.read()+record).takeLast(200)
                     store.write(updated);done++
                     ui {records=updated;items=items.mapIndexed {i,item -> if(i==index) item.copy(status="완료",result=record,error=null) else item};if(index==focusIndex) current=record}

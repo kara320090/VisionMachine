@@ -76,7 +76,7 @@ class AnalysisActivity:ComponentActivity() {
             Column(Modifier.fillMaxWidth().background(Forest,RoundedCornerShape(24.dp)).padding(22.dp)) {
                 Text("비전머신",color=Color.White,fontSize=29.sp,fontWeight=FontWeight.Bold)
                 Text("작물 사진으로 상태를 한 번 더 살펴보세요",color=Mint,fontSize=15.sp,modifier=Modifier.padding(top=8.dp))
-                Text("사진은 이 기기에서 처리됩니다",color=Color.White,fontSize=12.sp,modifier=Modifier.padding(top=12.dp))
+                Text(if(vm.serverMode) "사진과 연결 센서값을 4090 서버로 전송합니다" else "사진은 이 기기에서 처리됩니다",color=Color.White,fontSize=12.sp,modifier=Modifier.padding(top=12.dp))
             }
         }
         item {
@@ -85,6 +85,7 @@ class AnalysisActivity:ComponentActivity() {
             Text("사진 분석은 상태 점검을 돕는 시험 기능입니다. 재배 문제의 원인이나 현장 정확도를 보장하지 않습니다.",fontSize=12.sp,modifier=Modifier.padding(top=6.dp))
         }
         item {
+            ServerSettingsCard(vm)
             OutlinedButton({sensors(null)},modifier=Modifier.fillMaxWidth()) {Text("USB 센서 연결 · 측정")}
         }
         item {
@@ -124,6 +125,7 @@ class AnalysisActivity:ComponentActivity() {
                     if(r!=null) {
                         Score("정상",r.normal,Forest);Score("이상",r.abnormal,Terra)
                         Text("모델 출력값이며 보정된 진단 확률이 아닙니다.\n${r.millis}ms · ${r.name}",fontSize=11.sp)
+                        Text(if(r.executionProvider=="CUDAExecutionProvider") "4090 서버 GPU 결과 · ${r.serverInspectionId}" else "기기 내 분석 결과",fontSize=11.sp)
                         SensorAssessmentCard(r.sensorAssessmentJson)
                         CompositeIndexCard(r.compositeJson)
                     } else Text("사진을 바꾸면 결과가 초기화됩니다. 분석을 실행해 주세요.",fontSize=12.sp)

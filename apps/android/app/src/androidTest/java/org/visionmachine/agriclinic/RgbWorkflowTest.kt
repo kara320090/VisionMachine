@@ -58,6 +58,8 @@ class RgbWorkflowTest {
         } finally {main {holder.clear()};files.forEach {it.delete()}}
     }
     @Test fun syntheticCameraReturnEntersAnalysisAndOnlyMatchingPhotoHashGetsASensorIndex() {
+        assumeTrue("This workflow requires the private local ONNX asset",
+            runCatching {app.assets.open("vision_rgb_cseed42.onnx").close()}.isSuccess)
         val holder=ViewModelStore();lateinit var vm:RgbAnalysisViewModel
         try {
             main {vm=ViewModelProvider(holder,ViewModelProvider.AndroidViewModelFactory(app))[RgbAnalysisViewModel::class.java]};await {vm.ready}

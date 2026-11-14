@@ -1,8 +1,28 @@
 # Google Play 내부 시험 빌드
 
-## 2026-11-13 현재 업데이트 — 0.4.0/versionCode 4, 업로드 전
+## 2026-11-15 Android 0.5.0 업데이트 — 기존 내부 테스트 트랙 배포 완료
 
-바로 촬영·8장 추가/일괄·사진별 센서 기준/종합 지수를 추가했다. 범위·계산식·사용자 기준 적용은 [ANDROID_PHOTO_SENSOR_INDEX](ANDROID_PHOTO_SENSOR_INDEX.md)를 따른다. 아래 0.3.0은 이전 준비 기록이며 현재 올릴 파일은 같은 패키지의 0.4.0 AAB다. 기존 업로드 인증서·모델 해시를 유지한다. 실제 Console 업로드/활성 확인은 아직 수행하지 않았다.
+기존 앱 ID `org.visionmachine.agriclinic`을 유지하고 `versionCode 5` / `versionName 0.5.0`으로 빌드했다. 사진 화면에 서버 주소·기기별 API 키 입력을 추가했다. 사용자가 설정하지 않으면 기기 내 RGB 분석을 유지한다.
+
+- JDK 21.0.13에서 `bundleRelease`, `assembleRelease`, `lintRelease`, `assembleDebug`, `assembleDebugAndroidTest` 성공. lint 오류 0 / 경고 25. JVM 테스트 4건과 `scripts/check.py`의 Python 82건·계약/OpenAPI·manifest·localhost HTTP 검사가 통과했다. Android 계측 테스트는 이번 Windows 환경에서 실행하지 않았다.
+- 새 release AAB의 서명 유효성과 기존 로컬 signed AAB와 같은 인증서 지문을 확인했다. APK의 패키지/versionCode/versionName을 확인했고 AAB의 ONNX 모델 해시는 원본과 일치한다. 업로드 전 Play Console의 최고 versionCode 4를 확인했고, 5(0.5.0) AAB가 서명·호환성 검사를 통과해 등록됐다.
+- 현재 4090 임시 HTTPS 주소의 `/health/ready`는 `ready`를 반환하고 CUDA/CPU provider를 표시했다. 임시 TryCloudflare 주소라 만료될 수 있다. health check만으로 실제 앱 업로드 왕복을 확인한 것은 아니다.
+- 2026-11-15 01:08(KST)에 기존 내부 테스트 트랙으로 출시했고 Console의 최신 출시 버전 0.5.0 및 ‘내부 테스터에게 제공됨/검토되지 않음’을 확인했다. 기존 테스터 구성은 변경하지 않았다. 휴대폰의 Play 업데이트 표시는 보통 1시간 이내에 반영되지만 더 걸릴 수 있다. 실제 휴대폰 설치·인증된 사진 분석·결과 화면 왕복은 아직 확인하지 않았다.
+- 출시 검토에서 가독화 파일 및 네이티브 디버그 기호 누락 경고 2건을 확인했다. 차단 오류나 지원 기기 감소는 없었다.
+- API 키는 앱 설정에서 직접 입력하며 APK/AAB에 넣지 않는다. 현재 주소는 임시이므로 안정적인 HTTPS 또는 사용자의 tailnet 주소로 교체한 뒤 연결한다.
+
+0.5.0에 게시한 출시 노트:
+
+```text
+사진 분석 화면에 4090 서버 연결 설정을 추가했습니다.
+서버 분석을 선택하면 사진과 같은 검사에 연결된 센서 기록을 전송하고 결과를 표시합니다.
+서버 주소와 기기별 인증키를 앱에서 설정할 수 있습니다.
+서버 연결 및 분석 오류를 사진별로 표시하고, 기기 내 분석 모드도 선택할 수 있습니다.
+```
+
+## 2026-11-13 이전 업데이트 — 0.4.0/versionCode 4
+
+0.4.0은 바로 촬영·8장 추가/일괄·사진별 센서 기준/종합 지수를 추가한 이전 업데이트 후보 기록이다. 범위·계산식은 [ANDROID_PHOTO_SENSOR_INDEX](ANDROID_PHOTO_SENSOR_INDEX.md)를 따른다. 아래 0.3.0 출시 준비와 함께 이 기록도 0.5.0 서버 연결 업데이트로 대체됐다.
 
 0.4.0 출시 노트:
 
