@@ -4,10 +4,18 @@
 
 - 기존 앱 ID `org.visionmachine.agriclinic`을 유지하고 `versionName 0.5.0` / `versionCode 5`로 빌드했다. Android-only patch는 2026-11-13 `main` 기준 commit `2464e6ffe058b49265c564dd35f168c6bf4ce9a1`에 적용했다. 서버 주소와 기기별 API 키는 앱 실행 중 입력하며 Android Keystore로 암호화해 보관한다.
 - 서버 모드는 사진 원본, SHA-256, 작물/검사 메타데이터와 같은 사진에 연결된 센서 기록을 전송한다. 응답의 검사·사진 ID, 이미지 해시, 모델 버전/해시와 CUDA provider를 검증해 기존 결과 화면에 표시한다. 기존 센서 종합 점수 계산은 앱에서 유지한다. 서버 오류를 로컬 결과로 대체하지 않는다.
-- Windows JDK 21.0.13에서 signed `bundleRelease`, `assembleRelease`, `lintRelease`, debug 및 Android-test APK 조립이 성공했다. release lint 오류 0, 경고 25. JVM 테스트 4건이 통과했고 `scripts/check.py`의 Python 82건·계약/OpenAPI·manifest·localhost HTTP 검사가 통과했다. 계측 테스트는 이번 Windows 환경에서 실행하지 않았다.
+- Windows JDK 21.0.13에서 signed `bundleRelease`, `assembleRelease`, `lintRelease`, debug 및 Android-test APK 조립이 성공했다. release lint 오류 0, 경고 25. JVM 테스트 4건이 통과했고 `scripts/check.py`의 Python 89건·계약/OpenAPI·manifest·localhost HTTP 검사가 통과했다. 계측 테스트는 이번 Windows 환경에서 실행하지 않았다.
 - AAB 서명은 정상이며 기존 로컬 release AAB와 인증서 SHA-256 지문이 같다. APK에서 패키지 ID와 versionCode 5 / versionName 0.5.0을 확인했다. AAB 안 ONNX 모델 SHA-256도 저장소 원본 `ffa909c3453a9d1e2f4c601292748f6cb30cb3e4507921cd42578410f7d15629`과 일치한다.
 - `/health/ready`를 직접 조회해 서비스 `ready`, `CUDAExecutionProvider`와 CPU provider를 확인했다. 현재 HTTPS 주소는 임시 TryCloudflare 터널이라 만료·변경될 수 있다. 이 health 확인은 인증된 앱 사진 업로드나 휴대폰 결과 표시를 검증하지 않는다.
 - 2026-11-15 01:08(KST)에 기존 Play 내부 테스트 트랙에 versionCode 5를 출시했다. 업로드 전 활성 버전 0.4.0/code 4를 확인했고, 업로드 후 Console의 최신 버전 0.5.0 및 ‘내부 테스터에게 제공됨/검토되지 않음’을 확인했다. Play 검토에는 차단 오류 없이 가독화 파일·네이티브 디버그 기호 누락 경고 2건이 있었고 지원 기기 감소는 없었다. Play 반영은 보통 1시간 이내지만 더 걸릴 수 있다. 실제 휴대폰 설치·인증된 분석 왕복은 별도 확인이 필요하다. API 키는 AAB/Git/ZIP에 포함하지 않는다.
+
+## 2026-11-14 Android–4090 서버 연결 개발
+
+- 기존 RGB 화면에 런타임 서버 주소·기기용 키 설정과 Keystore 암호화 저장을 추가했다. 원본 사진과 사진 ID·작물·해시가 일치하는 USB 패킷/센서 평가 스냅샷을 인증한 `/api/v1/inspections`로 전송하고 기존 결과/이력/CSV에 연결한다. 최대 8장 순차 처리와 개별 실패 후 계속 처리하며, 서버 API는 한 요청의 1~8장도 지원한다.
+- 서버는 모델 카드 해시·입출력을 검사하고 CUDA 공급자가 없으면 미준비로 처리한다. EXIF/RGB/BICUBIC 256/중앙 224/ImageNet/NCHW 전처리는 기존 Android의 5개 픽셀 골든과 일치했다. 원본 파일·센서값을 저장하고 같은 검사 재시도/충돌을 처리한다. `SensorScoring.kt`/`CompositeIndex.kt`의 점수식과 결측·포화·mock 보류 규칙은 수정하지 않았다.
+- Ubuntu의 ORT 1.23.2 / CUDA runtime 12.9 / cuDNN 9에서 기존 C_seed42 체크포인트를 변환해 **앱 모델 카드와 바이트 SHA-256이 동일한 ONNX**를 복원했다. 추가 학습·가중치·모델 카드 변경 없이 실제 CUDA 세션과 GPU 노드 실행을 확인했다. 합성 RGB 입력 8개에서 원본 PyTorch와 CUDA ONNX의 최대 출력 차이는 0.000003934였다.
+- Python 검사 89건, 계약/OpenAPI/기존 HTTP smoke 통과. Android debug APK/계측 APK·JVM 4건·lint 통과(오류 0/경고 25/힌트 2). API 36 에뮬레이터 계측 36건 중 30건 통과·6건은 비공개 사진/실보드 자료 부재로 skip했다. 실제 Ubuntu 서버에 8장과 합성임을 표시한 센서 스냅샷을 전송해 8장 완료·결과 이력·서버 GPU 표시를 확인했다. 실제 GPU의 8장 단일 multipart 요청 201·재시도 200·조회 200·내용 충돌 409도 확인했다. 합성 실행/연결 검사이며 재배환경 정확도를 새로 평가한 결과는 아니다.
+- 공개 배포용 사용자 로그인/기기별 키 폐기·HTTPS 서버·실휴대폰/Tailscale 검증은 남아 있다. 현재 내부 서버 키는 APK에 고정하지 않는다. 실행·계약·검증 구분은 [SERVER_GPU](SERVER_GPU.md)를 따른다.
 
 ## 2026-11-13 Android 0.4.0 — 바로 촬영·8장·센서/종합 지수
 

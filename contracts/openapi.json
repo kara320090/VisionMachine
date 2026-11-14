@@ -132,6 +132,28 @@
         "title": "AnalysisResult",
         "type": "object"
       },
+      "Body_upload_api_v1_inspections_post": {
+        "properties": {
+          "payload": {
+            "title": "Payload",
+            "type": "string"
+          },
+          "photos": {
+            "items": {
+              "contentMediaType": "application/octet-stream",
+              "type": "string"
+            },
+            "title": "Photos",
+            "type": "array"
+          }
+        },
+        "required": [
+          "photos",
+          "payload"
+        ],
+        "title": "Body_upload_api_v1_inspections_post",
+        "type": "object"
+      },
       "Body_upload_inspection_v1_inspections_post": {
         "properties": {
           "metadata": {
@@ -416,6 +438,267 @@
           "finished_uptime_ms"
         ],
         "title": "OpticalReadings",
+        "type": "object"
+      },
+      "RgbInspectionResult": {
+        "additionalProperties": false,
+        "properties": {
+          "client_inspection_id": {
+            "format": "uuid",
+            "title": "Client Inspection Id",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "inspection_id": {
+            "format": "uuid",
+            "title": "Inspection Id",
+            "type": "string"
+          },
+          "photos": {
+            "items": {
+              "$ref": "#/components/schemas/RgbPhotoResult"
+            },
+            "maxItems": 8,
+            "minItems": 1,
+            "title": "Photos",
+            "type": "array"
+          },
+          "providers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Providers",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": "0.1.0",
+            "title": "Schema Version",
+            "type": "string"
+          },
+          "sensor_scoring": {
+            "const": "app_snapshot_only",
+            "title": "Sensor Scoring",
+            "type": "string"
+          }
+        },
+        "required": [
+          "schema_version",
+          "inspection_id",
+          "client_inspection_id",
+          "created_at",
+          "providers",
+          "photos",
+          "sensor_scoring"
+        ],
+        "title": "RgbInspectionResult",
+        "type": "object"
+      },
+      "RgbPhotoResult": {
+        "additionalProperties": false,
+        "properties": {
+          "abnormal": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Abnormal"
+          },
+          "crop_code": {
+            "enum": [
+              "tomato",
+              "cherry_tomato",
+              "pepper",
+              "cucumber",
+              "lettuce",
+              "bok_choy",
+              "kale",
+              "eggplant",
+              "basil",
+              "rosemary"
+            ],
+            "title": "Crop Code",
+            "type": "string"
+          },
+          "elapsed_ms": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Elapsed Ms"
+          },
+          "error_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Code"
+          },
+          "image_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Image Sha256",
+            "type": "string"
+          },
+          "index": {
+            "maximum": 8.0,
+            "minimum": 1.0,
+            "title": "Index",
+            "type": "integer"
+          },
+          "model_sha256": {
+            "anyOf": [
+              {
+                "pattern": "^[0-9a-f]{64}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Sha256"
+          },
+          "model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Version"
+          },
+          "normal": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Normal"
+          },
+          "sensor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RgbSensorAttachment"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source_photo_id": {
+            "format": "uuid",
+            "title": "Source Photo Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "completed",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "index",
+          "source_photo_id",
+          "crop_code",
+          "image_sha256",
+          "sensor",
+          "status",
+          "error_code"
+        ],
+        "title": "RgbPhotoResult",
+        "type": "object"
+      },
+      "RgbSensorAttachment": {
+        "additionalProperties": false,
+        "properties": {
+          "assessment_json": {
+            "anyOf": [
+              {
+                "maxLength": 64000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assessment Json"
+          },
+          "crop_code": {
+            "enum": [
+              "tomato",
+              "cherry_tomato",
+              "pepper",
+              "cucumber",
+              "lettuce",
+              "bok_choy",
+              "kale",
+              "eggplant",
+              "basil",
+              "rosemary"
+            ],
+            "title": "Crop Code",
+            "type": "string"
+          },
+          "packet": {
+            "$ref": "#/components/schemas/SensorPacket"
+          },
+          "photo_sha256": {
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Photo Sha256",
+            "type": "string"
+          },
+          "received_at": {
+            "format": "date-time",
+            "title": "Received At",
+            "type": "string"
+          },
+          "sensor_record_id": {
+            "format": "uuid",
+            "title": "Sensor Record Id",
+            "type": "string"
+          },
+          "source_photo_id": {
+            "format": "uuid",
+            "title": "Source Photo Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sensor_record_id",
+          "source_photo_id",
+          "crop_code",
+          "photo_sha256",
+          "received_at",
+          "packet"
+        ],
+        "title": "RgbSensorAttachment",
         "type": "object"
       },
       "SensorExtensions": {
@@ -783,12 +1066,122 @@
     }
   },
   "info": {
-    "description": "Local development storage; no authentication or diagnostic model.",
+    "description": "Local storage and authenticated CUDA RGB inspections; sensor scoring remains in Android.",
     "title": "VisionMachine Foundation",
     "version": "0.1.0"
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/inspections": {
+      "post": {
+        "operationId": "upload_api_v1_inspections_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_api_v1_inspections_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RgbInspectionResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Upload"
+      }
+    },
+    "/api/v1/inspections/{inspection_id}": {
+      "get": {
+        "operationId": "lookup_api_v1_inspections__inspection_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "inspection_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Inspection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RgbInspectionResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Lookup"
+      }
+    },
+    "/health/live": {
+      "get": {
+        "operationId": "live_health_live_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Live"
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "operationId": "ready_health_ready_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Ready"
+      }
+    },
     "/healthz": {
       "get": {
         "operationId": "health_healthz_get",

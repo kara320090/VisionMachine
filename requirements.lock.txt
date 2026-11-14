@@ -16,6 +16,7 @@ iniconfig==2.3.0
 jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
 packaging==26.3
+numpy==2.5.4
 Pillow==12.3.0
 pluggy==1.6.0
 pydantic==2.13.5

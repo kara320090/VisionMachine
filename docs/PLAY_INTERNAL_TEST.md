@@ -4,7 +4,7 @@
 
 기존 앱 ID `org.visionmachine.agriclinic`을 유지하고 `versionCode 5` / `versionName 0.5.0`으로 빌드했다. 사진 화면에 서버 주소·기기별 API 키 입력을 추가했다. 사용자가 설정하지 않으면 기기 내 RGB 분석을 유지한다.
 
-- JDK 21.0.13에서 `bundleRelease`, `assembleRelease`, `lintRelease`, `assembleDebug`, `assembleDebugAndroidTest` 성공. lint 오류 0 / 경고 25. JVM 테스트 4건과 `scripts/check.py`의 Python 82건·계약/OpenAPI·manifest·localhost HTTP 검사가 통과했다. Android 계측 테스트는 이번 Windows 환경에서 실행하지 않았다.
+- JDK 21.0.13에서 `bundleRelease`, `assembleRelease`, `lintRelease`, `assembleDebug`, `assembleDebugAndroidTest` 성공. lint 오류 0 / 경고 25. JVM 테스트 4건과 `scripts/check.py`의 Python 89건·계약/OpenAPI·manifest·localhost HTTP 검사가 통과했다. Android 계측 테스트는 이번 Windows 환경에서 실행하지 않았다.
 - 새 release AAB의 서명 유효성과 기존 로컬 signed AAB와 같은 인증서 지문을 확인했다. APK의 패키지/versionCode/versionName을 확인했고 AAB의 ONNX 모델 해시는 원본과 일치한다. 업로드 전 Play Console의 최고 versionCode 4를 확인했고, 5(0.5.0) AAB가 서명·호환성 검사를 통과해 등록됐다.
 - 현재 4090 임시 HTTPS 주소의 `/health/ready`는 `ready`를 반환하고 CUDA/CPU provider를 표시했다. 임시 TryCloudflare 주소라 만료될 수 있다. health check만으로 실제 앱 업로드 왕복을 확인한 것은 아니다.
 - 2026-11-15 01:08(KST)에 기존 내부 테스트 트랙으로 출시했고 Console의 최신 출시 버전 0.5.0 및 ‘내부 테스터에게 제공됨/검토되지 않음’을 확인했다. 기존 테스터 구성은 변경하지 않았다. 휴대폰의 Play 업데이트 표시는 보통 1시간 이내에 반영되지만 더 걸릴 수 있다. 실제 휴대폰 설치·인증된 사진 분석·결과 화면 왕복은 아직 확인하지 않았다.

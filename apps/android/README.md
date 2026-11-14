@@ -4,6 +4,8 @@ Play 내부 테스트로 배포한 0.5.0/versionCode 5는 사진 화면의 ‘40
 
 현재 내부 테스트 배포 버전은 `0.5.0(versionCode 5)`, 패키지는 기존 Play 앱과 같은 `org.visionmachine.agriclinic`이다. 첫 화면 바로 촬영·8장 추가/일괄 분석·사진별 센서 연결·센서/사용자 가중 종합 지수를 추가했다. 사용법·점수 정의·근거는 [ANDROID_PHOTO_SENSOR_INDEX](../../docs/ANDROID_PHOTO_SENSOR_INDEX.md), 실제 출시 상태는 [PLAY_INTERNAL_TEST](../../docs/PLAY_INTERNAL_TEST.md)를 따른다.
 
+사진별 센서 스냅샷·기존 점수/결과 화면·재시도·호스트별 네트워크 정책은 [SERVER_GPU](../../docs/SERVER_GPU.md)를 따른다.
+
 - 런처 `AnalysisActivity`: 실제 ONNX RGB 모델의 개별/최대 8장 일괄 분석, 사진 변경 시 현재 결과 초기화, 200건 이력·CSV. 모델 자산 준비·제한·전처리 검사는 [ANDROID_RGB](../../docs/ANDROID_RGB.md).
 - `MainActivity`: 기존 카메라 앱으로 원본 JPEG 촬영, 검사·개체·묶음·작물 코드·사진 URI 저장, 취소 시 빈 파일 정리, 중단된 촬영 복구. 사진별 센서 측정으로 이동한다.
 - `SensorActivity`: UNO R4 Minima USB 권한·CDC 연결, 토양/온습도/광학/표면온도 확장 요청·응답, 촬영 사진 연결, 최근 20건 표시/200건 보관·CSV, 연결·계측 오류 처리. 사용법·시험 범위는 [ANDROID_USB](../../docs/ANDROID_USB.md), 펌웨어 규격은 [ARDUINO_PHONE_HANDOFF](../../docs/ARDUINO_PHONE_HANDOFF.md).
