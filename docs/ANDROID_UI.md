@@ -1,6 +1,6 @@
 # Android 0.6.1 화면 개선
 
-기존 앱의 촬영·분석·센서·기록을 같은 초록색/크림색 테마로 정리한 UI 업데이트다. 패키지는 `org.visionmachine.agriclinic`, versionCode 7 / versionName 0.6.1이다. Play에 제공 중인 0.6.0과 구분하며, 0.6.1의 Play 출시는 별도다.
+기존 앱의 촬영·분석·센서·기록을 같은 초록색/크림색 테마로 정리한 UI 업데이트다. 패키지는 `org.visionmachine.agriclinic`, versionCode 7 / versionName 0.6.1이다. 2026-11-15 18:05(KST)에 기존 Play 내부 테스트 트랙으로 출시했다. Console의 ‘내부 테스터에게 제공됨’을 확인했으며 배포 기록은 [PLAY_INTERNAL_TEST](PLAY_INTERNAL_TEST.md)를 따른다.
 
 ## 사용 흐름
 

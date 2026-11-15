@@ -6,7 +6,7 @@
 
 **현재 상태: 개발 중. 기능별 구현·실물 검증 범위는 [STATUS](docs/STATUS.md)를 따른다.**
 
-Android 소스에는 [0.6.1 화면 개선](docs/ANDROID_UI.md)을 적용했다. 촬영 중심 첫 화면, 하단 사진/센서/기록 이동, 고정 분석 버튼, 기록별 상세 조회를 제공한다. Play 제공 버전은 아래의 0.6.0이며 0.6.1 출시는 별도다.
+Android [0.6.1 화면 개선](docs/ANDROID_UI.md)을 2026-11-15 18:05(KST)에 기존 Play 내부 테스트 앱의 업데이트로 배포했다. 촬영 중심 첫 화면, 하단 사진/센서/기록 이동, 고정 분석 버튼, 기록별 상세 조회를 제공한다. Console의 ‘내부 테스터에게 제공됨’을 확인했으며 기존 테스터와 자동 서버 연결을 유지한다.
 
 Android 0.6.0은 2026-11-15 02:20(KST)에 기존 Play 내부 테스트 앱의 업데이트로 배포됐다. 앱을 열면 주소·키 입력 없이 [4090 자동 연결](docs/AUTOMATIC_SERVER.md)을 수행하며, 설치별 인증도 자동으로 발급·갱신한다. 에뮬레이터에서 실제 서버 CUDA 결과 8건을 확인했다.
 
@@ -48,7 +48,7 @@ python -m venv .venv
 
 `scripts/check.py`는 의존성·pytest·계약/OpenAPI 동기화·합성 manifest·실제 localhost HTTP 기동을 점검한다. HTTP 점검 프로세스는 스크립트가 종료한다. Android 빌드·lint는 `apps/android/gradlew`로 별도 확인하며 실기기/센서/AI 성능 시험은 포함하지 않는다.
 
-Google Play 내부 시험 빌드와 서명키 취급은 [PLAY_INTERNAL_TEST](docs/PLAY_INTERNAL_TEST.md)를 따른다. 자동 연결용 0.6.0 signed AAB를 2026-11-15 02:20(KST)에 기존 내부 테스트 트랙에 출시했다. Console의 ‘내부 테스터에게 제공됨’과 에뮬레이터의 실서버 자동 연결을 확인했으며 실제 휴대폰 왕복 시험은 별도다. 앱 연결과 서버 준비 상태는 [STATUS](docs/STATUS.md)를 따른다.
+Google Play 내부 시험 빌드와 서명키 취급은 [PLAY_INTERNAL_TEST](docs/PLAY_INTERNAL_TEST.md)를 따른다. UI 개선 0.6.1 signed AAB를 2026-11-15 18:05(KST)에 기존 내부 테스트 트랙에 출시했다. Console의 ‘내부 테스터에게 제공됨’을 확인했다. 이전 0.6.0의 에뮬레이터 실서버 자동 연결·CUDA 분석 검증과 실제 휴대폰 왕복 시험은 구분한다. 앱 연결과 서버 준비 상태는 [STATUS](docs/STATUS.md)를 따른다.
 
 ```powershell
 & ./.venv/Scripts/python.exe scripts/export_contracts.py --check
