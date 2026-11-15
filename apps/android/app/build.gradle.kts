@@ -20,8 +20,8 @@ android {
         applicationId = "org.visionmachine.agriclinic"
         minSdk = 26
         targetSdk = 36
-        versionCode = 6
-        versionName = "0.6.0"
+        versionCode = 7
+        versionName = "0.6.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -70,8 +70,12 @@ dependencies {
     implementation("androidx.exifinterface:exifinterface:1.4.1")
     implementation("com.microsoft.onnxruntime:onnxruntime-android:1.31.1")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test:runner:1.6.1")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
+    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.10.01"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    // The older transitive Espresso uses a removed InputManager API on recent Android images.
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 }
 
 tasks.matching { it.name == "preReleaseBuild" }.configureEach {

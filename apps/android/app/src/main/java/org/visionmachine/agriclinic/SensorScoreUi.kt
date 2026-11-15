@@ -4,16 +4,22 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.json.JSONObject
 import java.util.Locale
 
-@Composable internal fun CropChooser(code: String, enabled: Boolean = true, choose: (String) -> Unit) {
+@Composable internal fun CropChooser(code: String, enabled: Boolean = true, modifier: Modifier = Modifier, choose: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
-    Box {
-        OutlinedButton({ expanded = true }, enabled = enabled) { Text("작물: ${cropLabel(code)} ▾") }
+    Box(modifier) {
+        OutlinedButton({ expanded = true }, enabled = enabled, modifier = Modifier.fillMaxWidth().heightIn(min = 50.dp),
+            shape = MaterialTheme.shapes.small, contentPadding = PaddingValues(horizontal = 12.dp, vertical = 10.dp)) {
+            Icon(VisionIcons.Leaf, null, Modifier.size(18.dp))
+            Text(cropLabel(code), Modifier.weight(1f).padding(horizontal = 8.dp))
+            Icon(VisionIcons.Down, "작물 선택", Modifier.size(18.dp))
+        }
         DropdownMenu(expanded, { expanded = false }) {
             CropChoices.forEach { (key, label) -> DropdownMenuItem(text = { Text(label) }, onClick = { expanded = false; choose(key) }) }
         }
@@ -68,19 +74,22 @@ import java.util.Locale
 }
 
 @Composable internal fun SensorAssessmentCard(raw: String?, measuredAt: String? = null) {
-    if (raw == null) { Text("연결된 센서 점수 없음 · 사진별 USB 실측과 기준 적용 후 표시됩니다."); return }
+    if (raw == null) { Text("연결된 센서 점수 없음 · 사진별 USB 실측과 기준 적용 후 표시됩니다.", style = MaterialTheme.typography.bodySmall, color = VisionColors.Muted); return }
     val assessment = remember(raw) { runCatching { JSONObject(raw) }.getOrNull() }
     if (assessment == null) { Text("센서 평가 기록을 읽을 수 없습니다."); return }
     val profile = assessment.getJSONObject("profile")
-    Card(Modifier.fillMaxWidth()) {
+    var expanded by rememberSaveable(raw) { mutableStateOf(false) }
+    Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = VisionColors.Mint)) {
         Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Text("센서 기반 · 기준 이탈 점수", fontWeight = FontWeight.Bold)
+            Text("센서 기준 이탈 · 참고 점수", fontWeight = FontWeight.Bold)
             Text(if (assessment.isNull("deviation_score")) "전체 점수 산정 조건 부족"
                 else String.format(Locale.US, "%.1f / 100점 · 높을수록 기준에서 멀어짐", assessment.getDouble("deviation_score")))
             Text("${cropLabel(profile.getString("crop"))} · 점수 산정 ${assessment.getInt("scored_count")} / 설정 ${assessment.getInt("configured_count")} / 전체 5항목")
             Text(profile.getString("context"), style = MaterialTheme.typography.bodySmall)
             if (measuredAt != null) Text("측정 수신: $measuredAt", style = MaterialTheme.typography.bodySmall)
             else if (assessment.has("sensor_received_at")) Text("측정 수신: ${assessment.getString("sensor_received_at")}",style=MaterialTheme.typography.bodySmall)
+            TextButton({ expanded = !expanded }, contentPadding = PaddingValues(0.dp)) { Text(if (expanded) "기준·항목별 상세 접기" else "기준·항목별 상세 보기") }
+            if (expanded) {
             val details = assessment.getJSONArray("details")
             for (index in 0 until details.length()) {
                 val detail = details.getJSONObject(index); val key = detail.getString("metric")
@@ -100,14 +109,15 @@ import java.util.Locale
             }
             Text("설정된 기준까지의 거리를 계산한 참고 지표입니다. 학습된 센서 AI나 병해 확률이 아닙니다.", style = MaterialTheme.typography.bodySmall)
             Text("근거: ${profile.getString("source")}", style = MaterialTheme.typography.bodySmall)
+            }
         }
     }
 }
 
 @Composable internal fun CompositeIndexCard(raw: String?) {
-    if (raw == null) {Text("종합 지수 없음 · 동일 사진에 연결된 유효 센서 점수가 필요합니다.");return}
+    if (raw == null) {Text("종합 지수 없음 · 동일 사진에 연결된 유효 센서 점수가 필요합니다.", style = MaterialTheme.typography.bodySmall, color = VisionColors.Muted);return}
     val value=remember(raw) {JSONObject(raw)}
-    Card(Modifier.fillMaxWidth()) {
+    Card(Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = VisionColors.Cream)) {
         Column(Modifier.padding(14.dp),verticalArrangement=Arrangement.spacedBy(6.dp)) {
             Text("사진 AI + 센서 · 종합 점검 지수(참고)",fontWeight=FontWeight.Bold)
             Text(String.format(Locale.US,"%.1f / 100 · 높을수록 추가 점검 필요",value.getDouble("index")),style=MaterialTheme.typography.titleLarge)

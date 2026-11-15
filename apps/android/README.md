@@ -1,5 +1,7 @@
 # Android 앱 — 이봉헌·유재윤
 
+현재 소스는 [UI 개선 0.6.1(versionCode 7)](../../docs/ANDROID_UI.md)이다. 촬영·사진 추가, 사진별 결과, USB 센서, 분석 기록의 화면을 정리했다. 자동 서버 연결·기존 저장 데이터·모델과 점수 계산은 유지한다. Play 출시는 아래 0.6.0 기록과 구분한다.
+
 현재 내부 테스트 배포는 `0.6.0(versionCode 6)`, 패키지는 `org.visionmachine.agriclinic`이다. 2026-11-15 02:20(KST)에 기존 트랙의 업데이트로 출시했다. 설치·업데이트 후 앱을 열면 [4090 자동 연결](../../docs/AUTOMATIC_SERVER.md)을 수행하며 주소·API 키 입력이나 휴대폰 Tailscale 설치가 필요 없다.
 
 설치별 인증은 자동 등록·암호화 보관·갱신한다. 분석 버튼을 누르면 사진과 연결 센서 기록을 서버로 보내며, 서버 장애를 로컬 점수로 자동 대체하지 않는다. 사용자가 ‘기기에서 분석하기’를 선택하면 로컬 모델로 전환한다. 점수 정의는 [ANDROID_PHOTO_SENSOR_INDEX](../../docs/ANDROID_PHOTO_SENSOR_INDEX.md), 실제 출시 상태는 [PLAY_INTERNAL_TEST](../../docs/PLAY_INTERNAL_TEST.md)를 따른다.

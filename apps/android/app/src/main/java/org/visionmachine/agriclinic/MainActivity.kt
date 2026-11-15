@@ -70,7 +70,7 @@ class MainActivity : ComponentActivity() {
             message = "저장 기록 읽기 실패: ${error.javaClass.simpleName}"
         }
         setContent {
-            MaterialTheme {
+            VisionTheme {
                 CaptureScreen(
                     records = records, message = message, capturePending = capturePending,
                     debugUpload = (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0,
