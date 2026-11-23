@@ -28,6 +28,8 @@ ONNX opset 17, ONNX Runtime Android 1.31.1, 원본 체크포인트 및 변환 �
 
 ## 시험 구분
 
-`RgbPreprocessorTest`는 합성 패턴의 5개 크기(3000×4000 포함)를 Pillow로 계산한 픽셀 SHA-256와 비교한다. `LocalRgbEngineTest`와 `RgbViewModelTest`는 비공개 `androidTest/assets/private/`가 준비된 환경에서 실제 모델 8개 입력 비교, EXIF 8방향, 12MP 처리, 사진 변경 초기화, 일괄 처리, 기록·CSV를 시험한다. 비공개 사진은 시험 APK에만 포함하며 배포 APK에는 넣지 않는다. 공개 clone에 비공개 fixture가 없으면 해당 시험은 명시적으로 skip된다.
+`RgbPreprocessorTest`는 가로·세로, 홀수 크기, 확대·축소를 포함한 합성 패턴 8종의 픽셀 SHA-256을 Pillow 결과와 비교한다. 가로 필터는 원본 픽셀을 읽으면서 RGB 세 채널을 함께 누적한다. 세로 필터는 겹치는 중간 행을 재사용하며, 시험에서 각 원본 행을 최대 한 번만 읽는지 확인한다.
+
+`LocalRgbEngineTest`와 `RgbViewModelTest`는 비공개 `androidTest/assets/private/`가 준비된 환경에서 실제 모델 8개 입력 비교, EXIF 8방향, 12MP 처리, 사진 변경 초기화, 일괄 처리, 기록·CSV를 시험한다. 비공개 사진은 시험 APK에만 포함하며 배포 APK에는 넣지 않는다. 공개 clone에 비공개 fixture가 없으면 해당 시험은 명시적으로 skip된다.
 
 기존 보관 예시 사진의 변환·실행 일치 시험은 독립 성능 평가나 신규 재배환경 정확도가 아니다. 실제 Android 휴대전화의 촬영·권한·성능 시험은 에뮬레이터 시험과 별도로 확인해야 한다.

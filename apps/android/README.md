@@ -21,6 +21,17 @@ SDK/target 36, Gradle Wrapper 8.11.1, AGP 8.10.1, Kotlin/Compose 2.0.21, 소스 
 ./gradlew.bat :app:connectedDebugAndroidTest
 ```
 
+Windows에서 로직 변경은 에뮬레이터를 띄우지 않고 `.\gradlew.bat :app:testDebugUnitTest`로 확인한다. PC 빌드의 동시 작업 수를 줄이려면 해당 명령에 `--max-workers=2`를 붙인다(프로젝트 기본값 4). 화면·Android API를 검사할 때는 이 폴더에서 GPU 가속 가상 기기를 한 번 열고 같은 기기에 검사를 모아서 실행할 수 있다.
+
+```powershell
+$serial = .\tools\Start-TestEmulator.ps1
+adb -s $serial shell getconf PAGE_SIZE
+```
+
+기본 AVD는 `VisionMachine_Release_UI_Test`이며 `-AvdName`으로 선택할 수 있다. 자동 검사용 새 세션은 창·오디오 없이 `-gpu host`로 시작한다. 화면을 직접 조작할 때는 `.\tools\Start-TestEmulator.ps1 -ShowWindow`로 연다. 창 없이 실행 중인 세션에 화면을 붙이려면 재시작이 필요하므로, 이 경우 도구는 현재 세션을 알려주고 종료한다.
+
+같은 AVD·데이터 경로·읽기 모드의 세션이 있으면 부팅과 렌더러를 확인한 뒤 해당 serial을 돌려준다. `-Port`를 지정하면 그 포트만 사용한다. 기존 시험 데이터 폴더로 일회성 검사를 할 때는 `.\tools\Start-TestEmulator.ps1 -DataDirectory $testData -ReadOnly -Port 5580`으로 실행한다. 읽기 전용 모드는 스냅샷을 끄며, 일반 실행은 AVD의 부팅 설정을 따른다. `-WhatIf`로 새로 실행할 옵션을 확인할 수 있다. 직접 시작한 세션을 종료할 때는 `adb -s $serial emu kill`을 사용한다.
+
 `usb-serial-for-android` 3.9.0을 사용한다. 0.6.1 signed release 빌드·lint(오류 0/경고 28)·JVM 6건과 Android 계측 38건 통과/3건 조건부 skip을 확인했다. 0.6.0에서 설정 없는 자동 등록으로 실제 서버 CUDA 8장 분석과 매칭 모의 센서 스냅샷을 확인했으며, UI 작업에서는 실서버 분석 opt-in 시험을 반복하지 않았다. 비공개 사진·실보드 자료는 공개 Git 밖에 보관하며 선택 시험의 조건이 없으면 skip한다. 실제 휴대폰 USB/사진 분석 왕복은 별도다.
 
 ## 저장과 서버 경로

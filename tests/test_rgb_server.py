@@ -2,6 +2,7 @@
 import hashlib
 import io
 import json
+from itertools import count
 from uuid import uuid4
 
 import numpy as np
@@ -58,8 +59,10 @@ def test_persistent_idempotency_conflict_and_sensor_snapshot(tmp_path, monkeypat
         def infer(self, raw):
             self.calls += 1
             return {"normal": .25, "abnormal": .75, "model_version": "synthetic-protocol-stub",
-                    "model_sha256": "0" * 64, "elapsed_ms": 0}
+                    "model_sha256": "0" * 64, "elapsed_ms": 7}
     stub = TransportStub()
+    clock = count(step=1_250_000)
+    monkeypatch.setattr(service, "perf_counter_ns", clock.__next__)
     monkeypatch.setattr(service, "engine", stub)
     monkeypatch.setenv("VM_STORAGE_DIR", str(tmp_path))
     monkeypatch.setenv("VM_API_KEY", "synthetic-test-key-only")
@@ -77,7 +80,11 @@ def test_persistent_idempotency_conflict_and_sensor_snapshot(tmp_path, monkeypat
     assert first.status_code == 201, first.text
     assert len(first.json()["photos"]) == 8
     assert first.json()["photos"][0]["sensor"]["assessment_json"] == assessment
-    assert send().json() == first.json()
+    assert first.headers["Server-Timing"] == "vm_queue;dur=1.250, vm_infer;dur=56"
+    repeated = send()
+    assert repeated.status_code == 200
+    assert repeated.json() == first.json()
+    assert repeated.headers["Server-Timing"] == "vm_queue;dur=1.250"
     assert stub.calls == 8
     monkeypatch.setattr(service, "engine", None)
     assert send().status_code == 200  # persisted response survives unavailable model

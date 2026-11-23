@@ -89,8 +89,9 @@ class ServerRgbTest {
                             .put("providers", JSONArray().put("CUDAExecutionProvider")).put("photos", JSONArray().put(result))
                             .toString().toByteArray(Charsets.UTF_8)
                         socket.getOutputStream().apply {
-                            write("HTTP/1.1 201 Created\r\nContent-Length: ${response.size}\r\nConnection: close\r\n\r\n"
-                                .toByteArray(Charsets.US_ASCII))
+                            val headersOut = "HTTP/1.1 201 Created\r\nContent-Length: ${response.size}\r\n" +
+                                "Server-Timing: vm_queue;dur=1.250, vm_infer;dur=1\r\nConnection: close\r\n\r\n"
+                            write(headersOut.toByteArray(Charsets.US_ASCII))
                             write(response)
                             flush()
                         }

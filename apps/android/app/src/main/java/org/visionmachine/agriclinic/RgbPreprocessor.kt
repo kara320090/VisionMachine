@@ -8,6 +8,11 @@ import kotlin.math.max
  * matching Pillow's separable fixed-point filter rather than Android's bilinear scaler.
  */
 object RgbPreprocessor {
+    private const val CROP_SIZE = 224
+    private const val ROW_CHANNELS = CROP_SIZE * 3
+    private const val FRACTION_BITS = 22
+    private const val ROUNDING_OFFSET = 1L shl (FRACTION_BITS - 1)
+
     private data class Filter(val first: Int, val weights: IntArray)
     private fun cubic(x0: Double): Double {
         val x = abs(x0)
@@ -24,7 +29,7 @@ object RgbPreprocessor {
         val values = DoubleArray(last - first) { cubic((it + first - center + .5) / fs) }
         val sum = values.sum()
         return Filter(first, IntArray(values.size) { i ->
-            val w = values[i] / sum * (1 shl 22)
+            val w = values[i] / sum * (1 shl FRACTION_BITS)
             (w + if (w < 0) -.5 else .5).toInt()
         })
     }
@@ -33,40 +38,62 @@ object RgbPreprocessor {
         val rw = if (width <= height) 256 else (256L * width / height).toInt()
         val rh = if (height <= width) 256 else (256L * height / width).toInt()
         // Python round() uses ties to even.
-        val left = Math.rint((rw - 224) / 2.0).toInt()
-        val top = Math.rint((rh - 224) / 2.0).toInt()
-        val xf = Array(224) { filter(width, rw, it + left) }
-        val yf = Array(224) { filter(height, rh, it + top) }
-        val rows = arrayOfNulls<ByteArray>(height)
+        val left = Math.rint((rw - CROP_SIZE) / 2.0).toInt()
+        val top = Math.rint((rh - CROP_SIZE) / 2.0).toInt()
+        val horizontal = Array(CROP_SIZE) { filter(width, rw, it + left) }
+        val vertical = Array(CROP_SIZE) { filter(height, rh, it + top) }
+        // Each vertical filter needs a contiguous span. Spans advance as output rows advance,
+        // so a cache as wide as the largest span retains their overlapping source rows.
+        val rows = Array(vertical.maxOf { it.weights.size }) { ByteArray(ROW_CHANNELS) }
+        val sourceRows = IntArray(rows.size) { -1 }
         val input = IntArray(width)
-        val needed = yf.flatMap { f -> f.weights.indices.map { it + f.first } }.toSet()
-        for (y in needed) {
-            readRow(y, input)
-            val out = ByteArray(224 * 3)
-            for (x in 0 until 224) {
-                val f = xf[x]
-                for (c in 0..2) {
-                    var acc = 1L shl 21
-                    for (i in f.weights.indices) {
-                        val value = (input[f.first + i] ushr (16 - 8 * c)) and 255
-                        acc += value.toLong() * f.weights[i]
-                    }
-                    out[x * 3 + c] = (acc shr 22).coerceIn(0,255).toByte()
+        val sums = LongArray(ROW_CHANNELS)
+        val result = ByteArray(CROP_SIZE * ROW_CHANNELS)
+        for (y in vertical.indices) {
+            val filter = vertical[y]
+            sums.fill(ROUNDING_OFFSET)
+            for (tap in filter.weights.indices) {
+                val sourceY = filter.first + tap
+                val slot = sourceY % rows.size
+                val row = rows[slot]
+                if (sourceRows[slot] != sourceY) {
+                    readRow(sourceY, input)
+                    filterRow(input, horizontal, row)
+                    sourceRows[slot] = sourceY
+                }
+                val weight = filter.weights[tap].toLong()
+                for (channel in row.indices) {
+                    sums[channel] += (row[channel].toInt() and 255) * weight
                 }
             }
-            rows[y] = out
-        }
-        val result = ByteArray(224 * 224 * 3)
-        for (y in 0 until 224) {
-            val f = yf[y]
-            for (i in 0 until 224 * 3) {
-                var acc = 1L shl 21
-                for (k in f.weights.indices) acc += (rows[f.first + k]!![i].toInt() and 255).toLong() * f.weights[k]
-                result[y * 224 * 3 + i] = (acc shr 22).coerceIn(0,255).toByte()
+            for (channel in sums.indices) {
+                result[y * ROW_CHANNELS + channel] = quantize(sums[channel])
             }
         }
         return result
     }
+
+    private fun filterRow(input: IntArray, filters: Array<Filter>, output: ByteArray) {
+        for (x in filters.indices) {
+            val filter = filters[x]
+            var red = ROUNDING_OFFSET
+            var green = ROUNDING_OFFSET
+            var blue = ROUNDING_OFFSET
+            for (tap in filter.weights.indices) {
+                val rgb = input[filter.first + tap]
+                val weight = filter.weights[tap].toLong()
+                red += ((rgb ushr 16) and 255) * weight
+                green += ((rgb ushr 8) and 255) * weight
+                blue += (rgb and 255) * weight
+            }
+            val offset = x * 3
+            output[offset] = quantize(red)
+            output[offset + 1] = quantize(green)
+            output[offset + 2] = quantize(blue)
+        }
+    }
+
+    private fun quantize(value: Long): Byte = (value shr FRACTION_BITS).coerceIn(0, 255).toByte()
     fun normalize(rgb: ByteArray): FloatArray {
         require(rgb.size == 224 * 224 * 3)
         val mean = floatArrayOf(.485f,.456f,.406f)

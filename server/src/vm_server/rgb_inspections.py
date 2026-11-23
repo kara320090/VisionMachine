@@ -7,8 +7,10 @@ import os
 import sqlite3
 import threading
 import warnings
+from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
+from time import perf_counter_ns
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile, Request
@@ -82,12 +84,19 @@ def validate_image(raw, media):
         raise failure(422, "INVALID_IMAGE") from None
 
 
+@contextmanager
+def processing_lock_wait_ms():
+    queued_at = perf_counter_ns()
+    with lock:
+        yield (perf_counter_ns() - queued_at) / 1_000_000
+
+
 def process(payload, blobs, owner_id=None):
     # One worker and lock serialize GPU work and duplicate submission commits.
     canonical = payload.model_dump_json()
     request_sha = hashlib.sha256(canonical.encode()).hexdigest()
     identity = str(payload.client_inspection_id)
-    with lock, connect() as db:
+    with processing_lock_wait_ms() as queue_ms, connect() as db:
         prior = db.execute("SELECT request_sha, result FROM rgb_inspections WHERE id=?", (identity,)).fetchone()
         if prior:
             owner = db.execute("SELECT device_id FROM rgb_owners WHERE inspection_id=?", (identity,)).fetchone()
@@ -95,7 +104,7 @@ def process(payload, blobs, owner_id=None):
                 raise failure(404, "NOT_FOUND")
             if prior[0] != request_sha:
                 raise failure(409, "ID_CONFLICT")
-            return 200, json.loads(prior[1])
+            return 200, json.loads(prior[1]), queue_ms
         if engine is None:
             raise failure(503, "MODEL_NOT_READY")
         results = []
@@ -133,7 +142,7 @@ def process(payload, blobs, owner_id=None):
                 item.unlink()
             folder.rmdir()
             raise
-        return 201, result
+        return 201, result, queue_ms
 
 
 @router.post("/api/v1/inspections", response_model=RgbInspectionResult)
@@ -158,8 +167,13 @@ async def upload(request: Request, photos: list[UploadFile] = File(...), payload
                 raise failure(422, "HASH_MISMATCH")
             await run_in_threadpool(validate_image, raw, photo.image_media_type)
             blobs.append(raw)
-        status, result = await run_in_threadpool(process, parsed, blobs, request.state.rgb_owner)
-        return JSONResponse(status_code=status, content=result)
+        status, result, queue_ms = await run_in_threadpool(process, parsed, blobs, request.state.rgb_owner)
+        timing = f"vm_queue;dur={queue_ms:.3f}"
+        if status == 201:
+            inference_times = [row["elapsed_ms"] for row in result["photos"] if row["status"] == "completed"]
+            if inference_times:
+                timing += f", vm_infer;dur={sum(inference_times)}"
+        return JSONResponse(status_code=status, content=result, headers={"Server-Timing": timing})
     finally:
         for photo in photos:
             await photo.close()

@@ -3,6 +3,8 @@ package org.visionmachine.agriclinic
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.SystemClock
+import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
@@ -18,6 +20,7 @@ data class ServerRgbResult(val normal: Float, val abnormal: Float, val millis: L
 
 class ServerRgbClient(private val context: Context, private val config: ServerConfig) {
     fun analyze(uri: Uri, reference: CaptureRecord): ServerRgbResult {
+        val stagingStartedAt = SystemClock.elapsedRealtime()
         val photo = File.createTempFile("rgb-upload-", ".tmp", context.cacheDir)
         try {
             // Hash the same bytes that will be uploaded, even if the source URI changes later.
@@ -41,13 +44,20 @@ class ServerRgbClient(private val context: Context, private val config: ServerCo
             val mediaType = bounds.outMimeType
             require(mediaType == "image/jpeg" || mediaType == "image/png") { "JPEG/PNG 사진을 선택해 주세요." }
             val sha = digest.digest().joinToString("") { "%02x".format(it) }
-            return upload(photo, reference, sha, mediaType)
+            return upload(photo, reference, sha, mediaType, stagingStartedAt)
         } finally {
             photo.delete()
         }
     }
 
-    private fun upload(photo: File, reference: CaptureRecord, sha: String, mediaType: String): ServerRgbResult {
+    private fun upload(
+        photo: File,
+        reference: CaptureRecord,
+        sha: String,
+        mediaType: String,
+        stagingStartedAt: Long,
+    ): ServerRgbResult {
+        val stagedAt = SystemClock.elapsedRealtime()
         val sensor = SensorStore(context).all().firstOrNull {
             it.sourceCaptureId == reference.inspectionId && it.cropCode == reference.cropCode && it.photoSha256 == sha
         }?.let { stored ->
@@ -77,12 +87,17 @@ class ServerRgbClient(private val context: Context, private val config: ServerCo
             connection.doOutput = true; connection.setFixedLengthStreamingMode(start.size.toLong() + photo.length() + end.size)
             connection.setRequestProperty("X-API-Key", config.apiKey)
             connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
-            connection.outputStream.use { output ->
+            val requestOpenStartedAt = SystemClock.elapsedRealtime()
+            val requestBody = connection.outputStream
+            val requestOpenedAt = SystemClock.elapsedRealtime()
+            requestBody.use { output ->
                 output.write(start)
                 photo.inputStream().use { input -> input.copyTo(output, 64 * 1024) }
                 output.write(end)
             }
+            val requestWrittenAt = SystemClock.elapsedRealtime()
             val status = connection.responseCode
+            val responseHeadersAt = SystemClock.elapsedRealtime()
             val stream = if (status in 200..299) connection.inputStream else connection.errorStream
             val body = stream?.use { input ->
                 val output = ByteArrayOutputStream(); val buffer = ByteArray(8192)
@@ -90,6 +105,7 @@ class ServerRgbClient(private val context: Context, private val config: ServerCo
                     require(output.size() + n <= 1024 * 1024) { "서버 응답이 너무 큽니다." }; output.write(buffer, 0, n) }
                 output.toString("UTF-8")
             }.orEmpty()
+            val responseReadAt = SystemClock.elapsedRealtime()
             if (status !in 200..299) {
                 val code = runCatching { JSONObject(body).getJSONObject("detail").getString("code") }.getOrDefault("HTTP_$status")
                 throw ServerRequestException(code, when (code) { "MODEL_NOT_READY" -> "서버 모델이 준비되지 않았습니다. ONNX 파일과 GPU 준비 상태를 확인해 주세요."
@@ -100,9 +116,31 @@ class ServerRgbClient(private val context: Context, private val config: ServerCo
             }
             val card = JSONObject(context.assets.open("vision_rgb_model.json").bufferedReader().use { it.readText() })
             val result = parseServerRgbResponse(body, id, reference.inspectionId, reference.cropCode, sha, card)
+            val serverQueueMs = connection.headerFields.entries
+                .firstOrNull { it.key?.equals("Server-Timing", ignoreCase = true) == true }
+                ?.value?.firstNotNullOfOrNull(::parseServerQueueMillis)
+            val serverInferenceMs = result.millis.takeIf { status == HttpURLConnection.HTTP_CREATED }
+            Log.i("VisionRgbTiming",
+                "status=$status client_total_ms=${SystemClock.elapsedRealtime() - stagingStartedAt} " +
+                    "staging_ms=${stagedAt - stagingStartedAt} " +
+                    "request_prepare_ms=${requestOpenStartedAt - stagedAt} " +
+                    "request_open_ms=${requestOpenedAt - requestOpenStartedAt} " +
+                    "request_write_ms=${requestWrittenAt - requestOpenedAt} " +
+                    "response_headers_wait_ms=${responseHeadersAt - requestWrittenAt} " +
+                    "response_body_ms=${responseReadAt - responseHeadersAt} " +
+                    "server_queue_ms=${serverQueueMs ?: "unavailable"} " +
+                    "server_inference_ms=${serverInferenceMs ?: "unavailable"}")
             return result.copy(sensor = sensor)
         } finally { connection.disconnect() }
     }
+}
+
+internal fun parseServerQueueMillis(header: String): Double? = header.split(',').firstNotNullOfOrNull { value ->
+    val metric = value.split(';')
+    if (metric.first().trim() != "vm_queue") return@firstNotNullOfOrNull null
+    metric.drop(1).firstOrNull { it.substringBefore('=').trim() == "dur" }
+        ?.substringAfter('=', "")?.trim()?.removeSurrounding("\"")?.toDoubleOrNull()
+        ?.takeIf { it.isFinite() && it >= 0 }
 }
 
 internal fun parseServerRgbResponse(body: String, id: String, photoId: String, crop: String, sha: String, card: JSONObject): ServerRgbResult {
