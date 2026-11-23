@@ -21,12 +21,98 @@ import org.junit.Assume.assumeTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
+import java.io.RandomAccessFile
+import java.net.InetAddress
+import java.net.ServerSocket
 import java.util.UUID
 import java.util.concurrent.CountDownLatch
+import java.util.concurrent.FutureTask
 import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class ServerRgbTest {
+    @Test fun streamsOriginalPhotoWithMatchingDigestAndCleansUpCache() {
+        val base = InstrumentationRegistry.getInstrumentation().targetContext
+        val cache = File(base.cacheDir, "synthetic-rgb-upload-${UUID.randomUUID()}").apply { check(mkdir()) }
+        val context = object : ContextWrapper(base) {
+            override fun getCacheDir() = cache
+        }
+        val photo = File.createTempFile("synthetic-rgb-source-", ".png", base.cacheDir)
+        try {
+            val bitmap = Bitmap.createBitmap(3, 4, Bitmap.Config.ARGB_8888)
+            try {
+                bitmap.eraseColor(0xff387755.toInt())
+                photo.outputStream().use { check(bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)) }
+            } finally {
+                bitmap.recycle()
+            }
+            val original = photo.readBytes()
+            val sha = LocalRgbEngine.sha(original)
+            val uri = Uri.fromFile(photo)
+            val reference = CaptureRecord(UUID.randomUUID().toString(), "synthetic", "test", "basil", uri.toString(), "")
+            val card = JSONObject(base.assets.open("vision_rgb_model.json").bufferedReader().use { it.readText() })
+
+            ServerSocket(0, 1, InetAddress.getByName("127.0.0.1")).use { server ->
+                server.soTimeout = 10_000
+                val responder = FutureTask {
+                    server.accept().use { socket ->
+                        socket.soTimeout = 10_000
+                        val reader = socket.getInputStream().bufferedReader(Charsets.ISO_8859_1)
+                        assertTrue(reader.readLine().startsWith("POST /api/v1/inspections HTTP/1."))
+                        val headers = generateSequence { reader.readLine()?.takeIf { it.isNotEmpty() } }
+                            .associate { it.substringBefore(':').lowercase() to it.substringAfter(':').trim() }
+                        val boundary = headers.getValue("content-type").substringAfter("boundary=")
+                        assertFalse(headers.containsKey("transfer-encoding"))
+                        val body = CharArray(headers.getValue("content-length").toInt())
+                        var offset = 0
+                        while (offset < body.size) {
+                            val count = reader.read(body, offset, body.size - offset)
+                            check(count > 0) { "Multipart body ended before Content-Length" }
+                            offset += count
+                        }
+                        val parts = body.concatToString().split("--$boundary")
+                        assertEquals(4, parts.size)
+                        val payload = JSONObject(parts[1].substringAfter("\r\n\r\n"))
+                        val metadata = payload.getJSONArray("photos").getJSONObject(0)
+                        assertEquals(sha, metadata.getString("image_sha256"))
+                        assertEquals("image/png", metadata.getString("image_media_type"))
+                        assertArrayEquals(original, parts[2].substringAfter("\r\n\r\n").removeSuffix("\r\n")
+                            .toByteArray(Charsets.ISO_8859_1))
+
+                        val id = payload.getString("client_inspection_id")
+                        val result = JSONObject().put("source_photo_id", reference.inspectionId)
+                            .put("image_sha256", sha).put("crop_code", "basil").put("status", "completed")
+                            .put("normal", .2).put("abnormal", .8).put("elapsed_ms", 1)
+                            .put("model_version", card.getString("model_version"))
+                            .put("model_sha256", card.getString("model_sha256"))
+                        val response = JSONObject().put("inspection_id", id).put("client_inspection_id", id)
+                            .put("providers", JSONArray().put("CUDAExecutionProvider")).put("photos", JSONArray().put(result))
+                            .toString().toByteArray(Charsets.UTF_8)
+                        socket.getOutputStream().apply {
+                            write("HTTP/1.1 201 Created\r\nContent-Length: ${response.size}\r\nConnection: close\r\n\r\n"
+                                .toByteArray(Charsets.US_ASCII))
+                            write(response)
+                            flush()
+                        }
+                    }
+                }
+                Thread(responder).start()
+                val client = ServerRgbClient(context, ServerConfig("http://127.0.0.1:${server.localPort}", "synthetic-key"))
+                assertEquals(sha, client.analyze(uri, reference).sha256)
+                responder.get(10, TimeUnit.SECONDS)
+                assertTrue(cache.listFiles()!!.isEmpty())
+
+                RandomAccessFile(photo, "rw").use { it.setLength(24L * 1024 * 1024 + 1) }
+                val error = assertThrows(IllegalArgumentException::class.java) { client.analyze(uri, reference) }
+                assertTrue(error.message.orEmpty().contains("24MiB"))
+                assertTrue(cache.listFiles()!!.isEmpty())
+            }
+        } finally {
+            photo.delete()
+            cache.delete()
+        }
+    }
+
     @Test fun credentialsAreRuntimeEncryptedAndParserRejectsWrongPhotoOrModel() {
         val base=InstrumentationRegistry.getInstrumentation().targetContext
         val prefix="synthetic_server_${UUID.randomUUID()}_"

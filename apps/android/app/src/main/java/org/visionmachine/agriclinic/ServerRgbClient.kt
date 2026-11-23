@@ -6,8 +6,10 @@ import android.net.Uri
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
+import java.security.MessageDigest
 import java.time.Instant
 import java.util.UUID
 
@@ -16,19 +18,36 @@ data class ServerRgbResult(val normal: Float, val abnormal: Float, val millis: L
 
 class ServerRgbClient(private val context: Context, private val config: ServerConfig) {
     fun analyze(uri: Uri, reference: CaptureRecord): ServerRgbResult {
-        val bytes = context.contentResolver.openInputStream(uri)?.use { input ->
-            val output = ByteArrayOutputStream(); val buffer = ByteArray(65536)
-            while (true) {
-                val count = input.read(buffer); if (count < 0) break
-                require(output.size().toLong() + count <= 24L * 1024 * 1024) { "사진은 24MiB 이하여야 합니다." }
-                output.write(buffer, 0, count)
-            }
-            output.toByteArray()
-        } ?: error("사진을 읽지 못했습니다.")
-        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
-        require(bounds.outMimeType in setOf("image/jpeg", "image/png")) { "JPEG/PNG 사진을 선택해 주세요." }
-        val sha = LocalRgbEngine.sha(bytes)
+        val photo = File.createTempFile("rgb-upload-", ".tmp", context.cacheDir)
+        try {
+            // Hash the same bytes that will be uploaded, even if the source URI changes later.
+            val digest = MessageDigest.getInstance("SHA-256")
+            context.contentResolver.openInputStream(uri)?.use { input ->
+                photo.outputStream().use { output ->
+                    val buffer = ByteArray(64 * 1024)
+                    var size = 0L
+                    while (true) {
+                        val count = input.read(buffer)
+                        if (count < 0) break
+                        size += count
+                        require(size <= 24L * 1024 * 1024) { "사진은 24MiB 이하여야 합니다." }
+                        output.write(buffer, 0, count)
+                        digest.update(buffer, 0, count)
+                    }
+                }
+            } ?: error("사진을 읽지 못했습니다.")
+            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            BitmapFactory.decodeFile(photo.absolutePath, bounds)
+            val mediaType = bounds.outMimeType
+            require(mediaType == "image/jpeg" || mediaType == "image/png") { "JPEG/PNG 사진을 선택해 주세요." }
+            val sha = digest.digest().joinToString("") { "%02x".format(it) }
+            return upload(photo, reference, sha, mediaType)
+        } finally {
+            photo.delete()
+        }
+    }
+
+    private fun upload(photo: File, reference: CaptureRecord, sha: String, mediaType: String): ServerRgbResult {
         val sensor = SensorStore(context).all().firstOrNull {
             it.sourceCaptureId == reference.inspectionId && it.cropCode == reference.cropCode && it.photoSha256 == sha
         }?.let { stored ->
@@ -38,7 +57,7 @@ class ServerRgbClient(private val context: Context, private val config: ServerCo
         }
         val meta = JSONObject().put("source_photo_id", reference.inspectionId).put("crop_code", reference.cropCode)
             .put("subject_id", reference.subjectId).put("batch_id", reference.batchId)
-            .put("image_sha256", sha).put("image_media_type", bounds.outMimeType)
+            .put("image_sha256", sha).put("image_media_type", mediaType)
             .put("captured_at", reference.capturedAt.takeIf { it.isNotBlank() } ?: JSONObject.NULL)
             .put("sensor", sensor?.let { s -> JSONObject().put("sensor_record_id", s.inspectionId)
                 .put("source_photo_id", reference.inspectionId).put("crop_code", s.cropCode).put("photo_sha256", sha)
@@ -49,16 +68,20 @@ class ServerRgbClient(private val context: Context, private val config: ServerCo
         val payload = JSONObject().put("schema_version", "0.1.0").put("client_inspection_id", id).put("photos", JSONArray().put(meta))
         val boundary = "VisionMachine-${UUID.randomUUID()}"
         val start = ("--$boundary\r\nContent-Disposition: form-data; name=\"payload\"\r\n\r\n$payload\r\n" +
-            "--$boundary\r\nContent-Disposition: form-data; name=\"photos\"; filename=\"photo\"\r\nContent-Type: ${bounds.outMimeType}\r\n\r\n").toByteArray(Charsets.UTF_8)
+            "--$boundary\r\nContent-Disposition: form-data; name=\"photos\"; filename=\"photo\"\r\nContent-Type: $mediaType\r\n\r\n").toByteArray(Charsets.UTF_8)
         val end = "\r\n--$boundary--\r\n".toByteArray(Charsets.UTF_8)
         val connection = URL(checkedServerUrl(config.baseUrl) + "/api/v1/inspections").openConnection() as HttpURLConnection
         try {
             connection.instanceFollowRedirects = false
             connection.requestMethod = "POST"; connection.connectTimeout = 10_000; connection.readTimeout = 180_000
-            connection.doOutput = true; connection.setFixedLengthStreamingMode(start.size.toLong() + bytes.size + end.size)
+            connection.doOutput = true; connection.setFixedLengthStreamingMode(start.size.toLong() + photo.length() + end.size)
             connection.setRequestProperty("X-API-Key", config.apiKey)
             connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
-            connection.outputStream.use { it.write(start); it.write(bytes); it.write(end) }
+            connection.outputStream.use { output ->
+                output.write(start)
+                photo.inputStream().use { input -> input.copyTo(output, 64 * 1024) }
+                output.write(end)
+            }
             val status = connection.responseCode
             val stream = if (status in 200..299) connection.inputStream else connection.errorStream
             val body = stream?.use { input ->

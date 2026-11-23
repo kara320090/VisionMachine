@@ -1,6 +1,6 @@
 # Android 앱 — 이봉헌·유재윤
 
-현재 소스와 내부 테스트 배포는 [UI 개선 0.6.1(versionCode 7)](../../docs/ANDROID_UI.md)이다. 촬영·사진 추가, 사진별 결과, USB 센서, 분석 기록의 화면을 정리했다. 자동 서버 연결·기존 저장 데이터·모델과 점수 계산은 유지한다.
+현재 Play 내부 테스트 배포는 [UI 개선 0.6.1(versionCode 7)](../../docs/ANDROID_UI.md)이다. 촬영·사진 추가, 사진별 결과, USB 센서, 분석 기록의 화면을 정리했다. 자동 서버 연결·기존 저장 데이터·모델과 점수 계산은 유지한다.
 
 패키지는 `org.visionmachine.agriclinic`이다. 0.6.1을 2026-11-15 18:05(KST)에 기존 트랙의 업데이트로 출시했고 ‘내부 테스터에게 제공됨’을 확인했다. 설치·업데이트 후 앱을 열면 [4090 자동 연결](../../docs/AUTOMATIC_SERVER.md)을 수행하며 주소·API 키 입력이나 휴대폰 Tailscale 설치가 필요 없다.
 
@@ -28,6 +28,8 @@ SDK/target 36, Gradle Wrapper 8.11.1, AGP 8.10.1, Kotlin/Compose 2.0.21, 소스 
 원본 사진은 `files/photos`, 촬영 메타데이터는 기존 SharedPreferences JSON, RGB 이력은 기존 파일에 저장한다. 새 센서 기록은 별도 `sensor_records_v1`에 저장하며 원래 촬영 ID는 `sourceCaptureId`로 보존한다. 신규 측정은 새 UUID를 사용한다. Room·WorkManager 자동 재전송은 아직 구현하지 않았다.
 
 기본 자동 연결 모드에서 사진 바이트, SHA-256, 촬영/작물 메타데이터와 같은 사진에 연결된 센서 기록을 `POST /api/v1/inspections`로 전송한다. 서버 응답의 검사·사진 ID·해시·모델과 CUDA provider를 검증해 기존 결과/이력에 반영한다. 센서·종합 점수는 기존 앱 규칙을 유지한다.
+
+서버 전송은 사진을 앱 전용 캐시에 기록하면서 해시를 계산하고, 같은 원본 바이트를 64KiB 단위로 읽어 전송한다. 전송이 끝나거나 실패하면 임시 파일을 정리한다. 에뮬레이터의 호스트 CPU 사용률과 실제 휴대폰의 사진 처리·전송 비용은 별도로 측정한다.
 
 공개 `config/android-server.json`에서 HTTPS 주소를 자동 조회한다. 설치별 키는 자동으로 발급받아 Android Keystore로 암호화하며 APK에 공통 키를 넣지 않는다. 기존 VisionMachine의 임시 터널 주소가 변경되면 운영자가 manifest를 갱신한다. USB 이력은 앱에 보관하고 분석 때 동일 사진의 기록을 전송한다.
 

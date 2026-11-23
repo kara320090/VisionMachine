@@ -1,5 +1,6 @@
 package org.visionmachine.agriclinic
 
+import ai.onnxruntime.OrtException
 import android.app.Application
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -11,6 +12,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -82,13 +84,18 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
     fun useAutomaticServer() {
         if(busy) return
         busy=true;serverMode=true;serverConnected=false;message="4090 서버에 자동 연결하고 있습니다."
-        worker.execute {automaticSettings.setMode("auto");connectAutomatically()}
+        worker.execute {
+            automaticSettings.setMode("auto")
+            releaseLocalModel()
+            connectAutomatically()
+        }
     }
     fun saveServer(url:String,key:String) {
         if(busy) return
         busy=true
         worker.execute {
             try {serverSettings.save(url,key);automaticSettings.setMode("manual");serverConfig=serverSettings.load()
+                releaseLocalModel()
                 ui {serverMode=true;serverConnected=false;serverAddress=serverConfig!!.baseUrl;ready=true;busy=false;message="서버 전송 준비 완료"}}
             catch(e:Exception) {ui {busy=false;message=e.message?.take(120)?:"서버 설정 저장 실패"}}
         }
@@ -222,7 +229,7 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
                             executionProvider="CUDAExecutionProvider",serverInspectionId=r.inspectionId),weight)
                     } else {
                         val r=engine!!.analyze(input.uri)
-                        attachSensor(RgbRecord(n,r.normal,r.abnormal,r.elapsedMs,r.sha256,Instant.now().toString(),engine!!.modelCard.getString("model_version"),input.reference.cropCode,input.reference.inspectionId),weight)
+                        attachSensor(RgbRecord(n,r.normal,r.abnormal,r.elapsedMs,r.sha256,Instant.now().toString(),engine!!.modelCard.getString("model_version"),input.reference.cropCode,input.reference.inspectionId),weight,readSensorRecords())
                     }
                     val updated=(store.read()+record).takeLast(200)
                     store.write(updated);done++
@@ -233,8 +240,14 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
             ui {busy=false;message="분석 완료 · 성공 ${done}장 / 실패 ${failed}장 · 사진별 결과를 확인하세요."}
         }
     }
-    private fun attachSensor(record:RgbRecord,weight:Float):RgbRecord {
-        val sensor=runCatching {SensorStore(getApplication()).all().firstOrNull {it.sourceCaptureId==record.sourceCaptureId&&record.sourceCaptureId!=null&&it.cropCode==record.cropCode&&it.photoSha256==record.sha256}}.getOrNull()?:return record
+    private fun readSensorRecords(): List<SensorRecord> =
+        runCatching { SensorStore(getApplication()).all() }.getOrDefault(emptyList())
+
+    private fun attachSensor(record: RgbRecord, weight: Float, sensors: List<SensorRecord>): RgbRecord {
+        val captureId = record.sourceCaptureId ?: return record
+        val sensor = sensors.firstOrNull {
+            it.sourceCaptureId == captureId && it.cropCode == record.cropCode && it.photoSha256 == record.sha256
+        } ?: return record
         if(record.sensorRecordId==sensor.inspectionId&&record.sensorAssessmentJson!=null) return record
         val assessment=(sensor.assessmentJson?.let {JSONObject(it)}?:SensorScoring.assess(JSONObject(sensor.packetJson),SensorProfileStore(getApplication()).get(record.cropCode!!)))
             .put("sensor_received_at",sensor.receivedAt).toString()
@@ -245,8 +258,9 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
         worker.execute {
             try {
                 val saved=store.read();val seen=mutableSetOf<String>()
+                val sensors by lazy(LazyThreadSafetyMode.NONE) { readSensorRecords() }
                 val updated=saved.asReversed().map {record ->
-                    if(record.sourceCaptureId!=null&&seen.add(record.sourceCaptureId)) attachSensor(record,weight) else record
+                    if(record.sourceCaptureId!=null&&seen.add(record.sourceCaptureId)) attachSensor(record,weight,sensors) else record
                 }.asReversed()
                 if(updated!=saved) store.write(updated)
                 ui {
@@ -258,5 +272,15 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
         }
     }
     fun saved(success:Boolean) {message=if(success) "CSV 저장 완료 · ${records.size}건" else "CSV 저장에 실패했습니다. 다시 시도해 주세요."}
-    override fun onCleared() {cleared=true;worker.execute {engine?.close()};worker.shutdown();super.onCleared()}
+    private fun releaseLocalModel() {
+        val currentEngine = engine
+        engine = null
+        try {
+            currentEngine?.close()
+        } catch (error: OrtException) {
+            Log.w("VisionMachine", "Could not release the local model session", error)
+        }
+    }
+
+    override fun onCleared() {cleared=true;worker.execute {releaseLocalModel()};worker.shutdown();super.onCleared()}
 }

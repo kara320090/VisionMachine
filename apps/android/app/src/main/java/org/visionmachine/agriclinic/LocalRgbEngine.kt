@@ -15,10 +15,10 @@ import java.security.MessageDigest
 
 class LocalRgbEngine(private val context: Context) : AutoCloseable {
     private val env = OrtEnvironment.getEnvironment()
-    private val modelBytes = context.assets.open("vision_rgb_cseed42.onnx").use { it.readBytes() }
     val modelCard = JSONObject(context.assets.open("vision_rgb_model.json").bufferedReader().use { it.readText() })
     private val session: OrtSession
     init {
+        val modelBytes = context.assets.open("vision_rgb_cseed42.onnx").use { it.readBytes() }
         require(sha(modelBytes) == modelCard.getString("model_sha256")) { "모델 파일 검증 실패" }
         OrtSession.SessionOptions().use { options ->
             options.setIntraOpNumThreads(minOf(4, Runtime.getRuntime().availableProcessors()))
