@@ -1,9 +1,9 @@
 """Authenticated RGB upload, original sensor snapshots, persistent idempotent replies."""
 import hashlib
 import hmac
-import io
 import json
 import os
+import shutil
 import sqlite3
 import threading
 import warnings
@@ -71,17 +71,27 @@ def ready():
             "input": {"name": "image", "shape": [1, 3, 224, 224], "type": "tensor(float)"}}
 
 
-def validate_image(raw, media):
+def validate_upload(upload, photo):
+    source = upload.file
+    if source.seek(0, os.SEEK_END) > MAX_IMAGE_BYTES:
+        raise failure(413, "IMAGE_TOO_LARGE")
+    if upload.content_type != photo.image_media_type:
+        raise failure(422, "INVALID_IMAGE")
+    source.seek(0)
+    if hashlib.file_digest(source, "sha256").hexdigest() != photo.image_sha256:
+        raise failure(422, "HASH_MISMATCH")
+    source.seek(0)
     try:
         with warnings.catch_warnings():
             warnings.simplefilter("error", Image.DecompressionBombWarning)
-            with Image.open(io.BytesIO(raw)) as image:
+            with Image.open(source) as image:
                 w, h = image.size
-                if image.format != {"image/jpeg": "JPEG", "image/png": "PNG"}[media] or w * h > 24_000_000 or max(w, h) > 16384 or max(w, h) / min(w, h) > 40:
+                if image.format != {"image/jpeg": "JPEG", "image/png": "PNG"}[photo.image_media_type] or w * h > 24_000_000 or max(w, h) > 16384 or max(w, h) / min(w, h) > 40:
                     raise ValueError("image bounds or format")
                 image.verify()
     except (OSError, ValueError, Image.DecompressionBombWarning, Image.DecompressionBombError):
         raise failure(422, "INVALID_IMAGE") from None
+    source.seek(0)
 
 
 @contextmanager
@@ -91,7 +101,10 @@ def processing_lock_wait_ms():
         yield (perf_counter_ns() - queued_at) / 1_000_000
 
 
-def process(payload, blobs, owner_id=None):
+def process(payload, uploads, owner_id=None):
+    # The multipart parser owns each seekable spool until the response is ready.
+    for upload, photo in zip(uploads, payload.photos):
+        validate_upload(upload, photo)
     # One worker and lock serialize GPU work and duplicate submission commits.
     canonical = payload.model_dump_json()
     request_sha = hashlib.sha256(canonical.encode()).hexdigest()
@@ -108,7 +121,7 @@ def process(payload, blobs, owner_id=None):
         if engine is None:
             raise failure(503, "MODEL_NOT_READY")
         results = []
-        for index, (photo, raw) in enumerate(zip(payload.photos, blobs), 1):
+        for index, (photo, upload) in enumerate(zip(payload.photos, uploads), 1):
             row = {"index": index, "source_photo_id": str(photo.source_photo_id),
                    "crop_code": photo.crop_code, "image_sha256": photo.image_sha256,
                    "sensor": photo.sensor.model_dump(mode="json") if photo.sensor else None}
@@ -116,7 +129,7 @@ def process(payload, blobs, owner_id=None):
                 row.update(status="failed", error_code="CROP_OUT_OF_SCOPE")
             else:
                 try:
-                    row.update(engine.infer(raw), status="completed", error_code=None)
+                    row.update(engine.infer(upload.file), status="completed", error_code=None)
                 except Exception:
                     # Do not cache transient GPU failures as a permanent retry result.
                     raise failure(503, "INFERENCE_FAILED") from None
@@ -130,8 +143,10 @@ def process(payload, blobs, owner_id=None):
         folder = Settings.from_environment().storage_dir / "rgb_uploads" / (identity + "-" + uuid4().hex)
         folder.mkdir(parents=True, exist_ok=False)
         try:
-            for photo, raw in zip(payload.photos, blobs):
-                (folder / f"{photo.source_photo_id}.bin").write_bytes(raw)
+            for photo, upload in zip(payload.photos, uploads):
+                upload.file.seek(0)
+                with (folder / f"{photo.source_photo_id}.bin").open("wb") as target:
+                    shutil.copyfileobj(upload.file, target, length=256 * 1024)
             (folder / "payload.json").write_text(canonical, encoding="utf-8")
             db.execute("INSERT INTO rgb_inspections VALUES (?,?,?)", (identity, request_sha, json.dumps(result, allow_nan=False)))
             if owner_id is not None:
@@ -156,18 +171,7 @@ async def upload(request: Request, photos: list[UploadFile] = File(...), payload
             raise failure(422, "INVALID_METADATA") from None
         if not 1 <= len(photos) <= 8 or len(photos) != len(parsed.photos):
             raise failure(422, "PHOTO_COUNT_MISMATCH")
-        blobs = []
-        for upload_file, photo in zip(photos, parsed.photos):
-            raw = await upload_file.read(MAX_IMAGE_BYTES + 1)
-            if len(raw) > MAX_IMAGE_BYTES:
-                raise failure(413, "IMAGE_TOO_LARGE")
-            if upload_file.content_type != photo.image_media_type:
-                raise failure(422, "INVALID_IMAGE")
-            if hashlib.sha256(raw).hexdigest() != photo.image_sha256:
-                raise failure(422, "HASH_MISMATCH")
-            await run_in_threadpool(validate_image, raw, photo.image_media_type)
-            blobs.append(raw)
-        status, result, queue_ms = await run_in_threadpool(process, parsed, blobs, request.state.rgb_owner)
+        status, result, queue_ms = await run_in_threadpool(process, parsed, photos, request.state.rgb_owner)
         timing = f"vm_queue;dur={queue_ms:.3f}"
         if status == 201:
             inference_times = [row["elapsed_ms"] for row in result["photos"] if row["status"] == "completed"]

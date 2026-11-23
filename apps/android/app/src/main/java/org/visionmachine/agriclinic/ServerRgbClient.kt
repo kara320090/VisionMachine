@@ -1,63 +1,53 @@
 package org.visionmachine.agriclinic
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.SystemClock
 import android.util.Log
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.ByteArrayOutputStream
-import java.io.File
+import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
-import java.security.MessageDigest
-import java.time.Instant
 import java.util.UUID
 
 data class ServerRgbResult(val normal: Float, val abnormal: Float, val millis: Long, val sha256: String,
     val model: String, val inspectionId: String, val sensor: SensorRecord?)
 
-class ServerRgbClient(private val context: Context, private val config: ServerConfig) {
-    fun analyze(uri: Uri, reference: CaptureRecord): ServerRgbResult {
+internal class UnconfirmedRgbUpload(val inspectionId: String, cause: IOException) :
+    IOException("서버 응답을 받지 못했습니다. 다시 분석하면 저장된 결과부터 확인합니다.", cause)
+
+class ServerRgbClient(
+    private val context: Context,
+    private val config: ServerConfig,
+    private val knownServerIds: Set<String> = emptySet(),
+) {
+    fun analyze(uri: Uri, reference: CaptureRecord, refreshCredentials: (() -> ServerConfig)? = null): ServerRgbResult {
         val stagingStartedAt = SystemClock.elapsedRealtime()
-        val photo = File.createTempFile("rgb-upload-", ".tmp", context.cacheDir)
-        try {
-            // Hash the same bytes that will be uploaded, even if the source URI changes later.
-            val digest = MessageDigest.getInstance("SHA-256")
-            context.contentResolver.openInputStream(uri)?.use { input ->
-                photo.outputStream().use { output ->
-                    val buffer = ByteArray(64 * 1024)
-                    var size = 0L
-                    while (true) {
-                        val count = input.read(buffer)
-                        if (count < 0) break
-                        size += count
-                        require(size <= 24L * 1024 * 1024) { "사진은 24MiB 이하여야 합니다." }
-                        output.write(buffer, 0, count)
-                        digest.update(buffer, 0, count)
-                    }
-                }
-            } ?: error("사진을 읽지 못했습니다.")
-            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-            BitmapFactory.decodeFile(photo.absolutePath, bounds)
-            val mediaType = bounds.outMimeType
-            require(mediaType == "image/jpeg" || mediaType == "image/png") { "JPEG/PNG 사진을 선택해 주세요." }
-            val sha = digest.digest().joinToString("") { "%02x".format(it) }
-            return upload(photo, reference, sha, mediaType, stagingStartedAt)
-        } finally {
-            photo.delete()
+        var activeConfig = config
+        var refresh = refreshCredentials
+        return withRgbUploadPhoto(context, uri) { photo ->
+            val request = prepareRequest(photo, reference, stagingStartedAt)
+            try {
+                request(activeConfig)
+            } catch (error: ServerRequestException) {
+                if (error.code != "UNAUTHORIZED") throw error
+                val renew = refresh ?: throw error
+                refresh = null
+                activeConfig = renew()
+                request(activeConfig)
+            }
         }
     }
 
-    private fun upload(
-        photo: File,
+    private fun prepareRequest(
+        photo: RgbUploadPhoto,
         reference: CaptureRecord,
-        sha: String,
-        mediaType: String,
         stagingStartedAt: Long,
-    ): ServerRgbResult {
+    ): (ServerConfig) -> ServerRgbResult {
         val stagedAt = SystemClock.elapsedRealtime()
+        val sha = photo.sha256
+        val mediaType = photo.mediaType
         val sensor = SensorStore(context).all().firstOrNull {
             it.sourceCaptureId == reference.inspectionId && it.cropCode == reference.cropCode && it.photoSha256 == sha
         }?.let { stored ->
@@ -80,58 +70,68 @@ class ServerRgbClient(private val context: Context, private val config: ServerCo
         val start = ("--$boundary\r\nContent-Disposition: form-data; name=\"payload\"\r\n\r\n$payload\r\n" +
             "--$boundary\r\nContent-Disposition: form-data; name=\"photos\"; filename=\"photo\"\r\nContent-Type: $mediaType\r\n\r\n").toByteArray(Charsets.UTF_8)
         val end = "\r\n--$boundary--\r\n".toByteArray(Charsets.UTF_8)
-        val connection = URL(checkedServerUrl(config.baseUrl) + "/api/v1/inspections").openConnection() as HttpURLConnection
-        try {
-            connection.instanceFollowRedirects = false
-            connection.requestMethod = "POST"; connection.connectTimeout = 10_000; connection.readTimeout = 180_000
-            connection.doOutput = true; connection.setFixedLengthStreamingMode(start.size.toLong() + photo.length() + end.size)
-            connection.setRequestProperty("X-API-Key", config.apiKey)
-            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
-            val requestOpenStartedAt = SystemClock.elapsedRealtime()
-            val requestBody = connection.outputStream
-            val requestOpenedAt = SystemClock.elapsedRealtime()
-            requestBody.use { output ->
-                output.write(start)
-                photo.inputStream().use { input -> input.copyTo(output, 64 * 1024) }
-                output.write(end)
-            }
-            val requestWrittenAt = SystemClock.elapsedRealtime()
-            val status = connection.responseCode
-            val responseHeadersAt = SystemClock.elapsedRealtime()
-            val stream = if (status in 200..299) connection.inputStream else connection.errorStream
-            val body = stream?.use { input ->
-                val output = ByteArrayOutputStream(); val buffer = ByteArray(8192)
-                while (true) { val n = input.read(buffer); if (n < 0) break
-                    require(output.size() + n <= 1024 * 1024) { "서버 응답이 너무 큽니다." }; output.write(buffer, 0, n) }
-                output.toString("UTF-8")
-            }.orEmpty()
-            val responseReadAt = SystemClock.elapsedRealtime()
-            if (status !in 200..299) {
-                val code = runCatching { JSONObject(body).getJSONObject("detail").getString("code") }.getOrDefault("HTTP_$status")
-                throw ServerRequestException(code, when (code) { "MODEL_NOT_READY" -> "서버 모델이 준비되지 않았습니다. ONNX 파일과 GPU 준비 상태를 확인해 주세요."
-                    "UNAUTHORIZED" -> "서버 인증 연결을 갱신하지 못했습니다. 다시 연결해 주세요."
-                    "ID_CONFLICT" -> "같은 검사 ID의 내용이 다릅니다. 서버 기록을 확인해 주세요."
-                    "RATE_LIMITED" -> "요청이 많습니다. 잠시 후 다시 분석해 주세요."
-                    else -> "서버 요청 실패: $code" })
-            }
+        val preparedAt = SystemClock.elapsedRealtime()
+        fun checkedResult(body: String): ServerRgbResult {
             val card = JSONObject(context.assets.open("vision_rgb_model.json").bufferedReader().use { it.readText() })
-            val result = parseServerRgbResponse(body, id, reference.inspectionId, reference.cropCode, sha, card)
-            val serverQueueMs = connection.headerFields.entries
-                .firstOrNull { it.key?.equals("Server-Timing", ignoreCase = true) == true }
-                ?.value?.firstNotNullOfOrNull(::parseServerQueueMillis)
-            val serverInferenceMs = result.millis.takeIf { status == HttpURLConnection.HTTP_CREATED }
-            Log.i("VisionRgbTiming",
-                "status=$status client_total_ms=${SystemClock.elapsedRealtime() - stagingStartedAt} " +
-                    "staging_ms=${stagedAt - stagingStartedAt} " +
-                    "request_prepare_ms=${requestOpenStartedAt - stagedAt} " +
-                    "request_open_ms=${requestOpenedAt - requestOpenStartedAt} " +
-                    "request_write_ms=${requestWrittenAt - requestOpenedAt} " +
-                    "response_headers_wait_ms=${responseHeadersAt - requestWrittenAt} " +
-                    "response_body_ms=${responseReadAt - responseHeadersAt} " +
-                    "server_queue_ms=${serverQueueMs ?: "unavailable"} " +
-                    "server_inference_ms=${serverInferenceMs ?: "unavailable"}")
-            return result.copy(sensor = sensor)
-        } finally { connection.disconnect() }
+            return parseServerRgbResponse(body, id, reference.inspectionId, reference.cropCode, sha, card)
+                .copy(sensor = sensor)
+        }
+        fun request(activeConfig: ServerConfig): ServerRgbResult {
+            if (id in knownServerIds) {
+                val prior = lookupServerRgbResponse(activeConfig, id)
+                if (prior != null) {
+                    val result = checkedResult(prior)
+                    Log.i("VisionRgbTiming", "status=200 method=GET photo_bytes_sent=0 " +
+                        "client_total_ms=${SystemClock.elapsedRealtime() - stagingStartedAt} server_inference_ms=unavailable")
+                    return result
+                }
+            }
+            val connection = URL(checkedServerUrl(activeConfig.baseUrl) + "/api/v1/inspections").openConnection() as HttpURLConnection
+            var submitted = false
+            try {
+                connection.instanceFollowRedirects = false
+                connection.requestMethod = "POST"; connection.connectTimeout = 10_000; connection.readTimeout = 180_000
+                connection.doOutput = true; connection.setFixedLengthStreamingMode(start.size.toLong() + photo.size + end.size)
+                connection.setRequestProperty("X-API-Key", activeConfig.apiKey)
+                connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=$boundary")
+                val requestOpenStartedAt = SystemClock.elapsedRealtime()
+                val requestBody = connection.outputStream
+                val requestOpenedAt = SystemClock.elapsedRealtime()
+                requestBody.use { output ->
+                    output.write(start)
+                    photo.writeTo(output)
+                    output.write(end)
+                    submitted = true
+                }
+                val requestWrittenAt = SystemClock.elapsedRealtime()
+                val status = connection.responseCode
+                if (status < 0) throw IOException("Invalid HTTP response")
+                val responseHeadersAt = SystemClock.elapsedRealtime()
+                val body = connection.readRgbResponse(status)
+                val responseReadAt = SystemClock.elapsedRealtime()
+                if (status !in 200..299) throw rgbRequestError(status, body)
+                val result = checkedResult(body)
+                val serverQueueMs = connection.headerFields.entries
+                    .firstOrNull { it.key?.equals("Server-Timing", ignoreCase = true) == true }
+                    ?.value?.firstNotNullOfOrNull(::parseServerQueueMillis)
+                val serverInferenceMs = result.millis.takeIf { status == HttpURLConnection.HTTP_CREATED }
+                Log.i("VisionRgbTiming",
+                    "status=$status client_total_ms=${SystemClock.elapsedRealtime() - stagingStartedAt} " +
+                        "staging_ms=${stagedAt - stagingStartedAt} " +
+                        "request_prepare_ms=${preparedAt - stagedAt} " +
+                        "request_open_ms=${requestOpenedAt - requestOpenStartedAt} " +
+                        "request_write_ms=${requestWrittenAt - requestOpenedAt} " +
+                        "response_headers_wait_ms=${responseHeadersAt - requestWrittenAt} " +
+                        "response_body_ms=${responseReadAt - responseHeadersAt} " +
+                        "server_queue_ms=${serverQueueMs ?: "unavailable"} " +
+                        "server_inference_ms=${serverInferenceMs ?: "unavailable"}")
+                return result
+            } catch (error: IOException) {
+                if (submitted && error !is ServerRequestException) throw UnconfirmedRgbUpload(id, error)
+                throw error
+            } finally { connection.disconnect() }
+        }
+        return ::request
     }
 }
 

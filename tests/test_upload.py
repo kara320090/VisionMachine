@@ -3,6 +3,8 @@
 import hashlib
 import io
 import json
+import tempfile
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from fastapi.testclient import TestClient
@@ -64,6 +66,48 @@ def test_real_file_storage_retry_conflict_and_restart(tmp_path: Path, monkeypatc
     fetched = TestClient(app).get(f"/v1/inspections/{inspection['inspection_id']}")
     assert fetched.status_code == 200
     assert fetched.json() == body
+
+
+def test_concurrent_spooled_uploads_stage_original_once(tmp_path, monkeypatch, inspection):
+    monkeypatch.setenv("VM_STORAGE_DIR", str(tmp_path))
+    # A JPEG with synthetic trailing bytes exercises the disk-backed multipart spool.
+    contents = _jpeg() + bytes(2 * 1024 * 1024)
+    inspection.update(image_media_type="image/jpeg", image_sha256=hashlib.sha256(contents).hexdigest())
+    staged = []
+    sources = []
+    read = tempfile.SpooledTemporaryFile.read
+    open_path = Path.open
+
+    def bounded_read(source, size=-1):
+        assert 0 <= size <= 256 * 1024
+        if source not in sources:
+            sources.append(source)
+        return read(source, size)
+
+    def track_staging(path, mode="r", *args, **kwargs):
+        if mode == "xb" and path.parent == tmp_path / "uploads":
+            staged.append(path)
+        return open_path(path, mode, *args, **kwargs)
+
+    monkeypatch.setattr(tempfile.SpooledTemporaryFile, "read", bounded_read)
+    monkeypatch.setattr(Path, "open", track_staging)
+
+    def send():
+        client = TestClient(app)
+        try:
+            return _send(client, inspection, contents, "image/jpeg")
+        finally:
+            client.close()
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = [pool.submit(send) for _ in range(2)]
+        first, second = [result.result() for result in results]
+    assert sorted((first.status_code, second.status_code)) == [200, 201]
+    assert first.json() == second.json()
+    assert len(staged) == 1
+    assert len(sources) == 2 and all(source.closed for source in sources)
+    saved, = (tmp_path / "uploads").iterdir()
+    assert saved.read_bytes() == contents
 
 
 def test_upload_rejects_hash_invalid_image_and_mime_without_storing(tmp_path, monkeypatch, inspection):

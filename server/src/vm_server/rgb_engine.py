@@ -40,8 +40,9 @@ class RgbEngine:
         self.path = Path(os.environ.get("VM_RGB_MODEL_PATH", str(CARD_PATH.with_name("vision_rgb_cseed42.onnx"))))
         if not self.path.is_file():
             raise RuntimeError(f"MODEL_MISSING: {self.path}")
-        if hashlib.sha256(self.path.read_bytes()).hexdigest() != self.card["model_sha256"]:
-            raise RuntimeError("MODEL_HASH_MISMATCH")
+        with self.path.open("rb") as model_file:
+            if hashlib.file_digest(model_file, "sha256").hexdigest() != self.card["model_sha256"]:
+                raise RuntimeError("MODEL_HASH_MISMATCH")
         ort.preload_dlls(directory="")
         if "CUDAExecutionProvider" not in ort.get_available_providers():
             raise RuntimeError("CUDA_PROVIDER_UNAVAILABLE")
@@ -70,7 +71,8 @@ class RgbEngine:
         import numpy as np
         from PIL import Image
         started = time.monotonic()
-        with Image.open(io.BytesIO(raw)) as image:
+        source = raw if hasattr(raw, "read") else io.BytesIO(raw)
+        with Image.open(source) as image:
             # This image belongs to this request and can be transposed in place.
             x = preprocess(image, exif_in_place=True)
         p = np.asarray(self.session.run([self.output_name], {"image": x})[0])

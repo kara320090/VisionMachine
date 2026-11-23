@@ -23,16 +23,17 @@ SDK/target 36, Gradle Wrapper 8.11.1, AGP 8.10.1, Kotlin/Compose 2.0.21, 소스 
 
 Windows에서 로직 변경은 에뮬레이터를 띄우지 않고 `.\gradlew.bat :app:testDebugUnitTest`로 확인한다. PC 빌드의 동시 작업 수를 줄이려면 해당 명령에 `--max-workers=2`를 붙인다(프로젝트 기본값 4). 화면·Android API를 검사할 때는 이 폴더에서 GPU 가속 가상 기기를 한 번 열고 같은 기기에 검사를 모아서 실행할 수 있다.
 
+Android Studio SDK Manager에서 `system-images;android-36;default;x86_64`(API 36 AOSP x86_64)를 한 번 설치한다. 처음 실행하면 전용 `VisionMachine_Daily` AVD가 Android Studio에도 등록된다. 기본 설정은 2 vCPU, 720×1280, 하드웨어 GPU다. RAM은 2 GiB를 요청하며 이번 API 36 에뮬레이터가 실제 할당한 게스트 RAM은 2.5 GiB였다. Play Store 백그라운드 서비스가 없는 이미지를 쓰며, 정상 종료 시 저장한 Quick Boot 스냅샷을 다음 시작에 재사용한다.
+
 ```powershell
-$serial = .\tools\Start-TestEmulator.ps1
-adb -s $serial shell getconf PAGE_SIZE
+$serial = .\tools\Start-TestEmulator.ps1 -ShowWindow
+# 화면 작업을 마치고 종료
+adb -s $serial emu kill
 ```
 
-기본 AVD는 `VisionMachine_Release_UI_Test`이며 `-AvdName`으로 선택할 수 있다. 자동 검사용 새 세션은 창·오디오 없이 `-gpu host`로 시작한다. 화면을 직접 조작할 때는 `.\tools\Start-TestEmulator.ps1 -ShowWindow`로 연다. 창 없이 실행 중인 세션에 화면을 붙이려면 재시작이 필요하므로, 이 경우 도구는 현재 세션을 알려주고 종료한다.
+자동 검사에서는 `-ShowWindow`를 생략한다. 같은 AVD·데이터 경로·읽기 모드의 세션이 이미 있으면 렌더러와 부팅 상태를 확인하고 그 serial을 반환한다. 포트를 고정할 때는 `-Port`를 지정한다. 창 없이 실행 중인 세션에서 대화형 작업으로 바꿀 때는 먼저 그 세션을 종료한다.
 
-같은 AVD·데이터 경로·읽기 모드의 세션이 있으면 부팅과 렌더러를 확인한 뒤 해당 serial을 돌려준다. `-Port`를 지정하면 그 포트만 사용한다. 기존 시험 데이터 폴더로 일회성 검사를 할 때는 `.\tools\Start-TestEmulator.ps1 -DataDirectory $testData -ReadOnly -Port 5580`으로 실행한다. 읽기 전용 모드는 스냅샷을 끄며, 일반 실행은 AVD의 부팅 설정을 따른다. `-WhatIf`로 새로 실행할 옵션을 확인할 수 있다. 직접 시작한 세션을 종료할 때는 `adb -s $serial emu kill`을 사용한다.
-
-Play Store 시스템 이미지의 콜드 부팅 후에는 홈 화면에서도 Play Store와 앱 최적화가 CPU를 쓸 수 있다. 한 작업에서 여러 화면을 확인할 때는 켜 둔 기기를 재사용하고, 마지막 검사를 마치면 가상 기기를 종료한다. 기기 안에서 화면을 꺼도 Android 시스템은 계속 실행된다.
+Play Store나 16KB 페이지 호환성 검사는 `$serial = .\tools\Start-TestEmulator.ps1 -AvdName VisionMachine_Release_UI_Test`로 기존 출시 시험 기기를 선택하고 `adb -s $serial shell getconf PAGE_SIZE`로 확인한다. 기존 일회성 시험 명령 `.\tools\Start-TestEmulator.ps1 -DataDirectory $testData -ReadOnly -Port 5580`도 출시 시험 기기를 선택한다. `$testData`에는 기존 시험 데이터 폴더를 지정한다. 읽기 전용 실행에서는 스냅샷을 저장하지 않는다.
 
 `usb-serial-for-android` 3.9.0을 사용한다. 0.6.1 signed release 빌드·lint(오류 0/경고 28)·JVM 6건과 Android 계측 38건 통과/3건 조건부 skip을 확인했다. 0.6.0에서 설정 없는 자동 등록으로 실제 서버 CUDA 8장 분석과 매칭 모의 센서 스냅샷을 확인했으며, UI 작업에서는 실서버 분석 opt-in 시험을 반복하지 않았다. 비공개 사진·실보드 자료는 공개 Git 밖에 보관하며 선택 시험의 조건이 없으면 skip한다. 실제 휴대폰 USB/사진 분석 왕복은 별도다.
 
@@ -42,7 +43,7 @@ Play Store 시스템 이미지의 콜드 부팅 후에는 홈 화면에서도 Pl
 
 기본 자동 연결 모드에서 사진 바이트, SHA-256, 촬영/작물 메타데이터와 같은 사진에 연결된 센서 기록을 `POST /api/v1/inspections`로 전송한다. 서버 응답의 검사·사진 ID·해시·모델과 CUDA provider를 검증해 기존 결과/이력에 반영한다. 센서·종합 점수는 기존 앱 규칙을 유지한다.
 
-서버 전송은 사진을 앱 전용 캐시에 기록하면서 해시를 계산하고, 같은 원본 바이트를 64KiB 단위로 읽어 전송한다. 전송이 끝나거나 실패하면 임시 파일을 정리한다. 에뮬레이터의 호스트 CPU 사용률과 실제 휴대폰의 사진 처리·전송 비용은 별도로 측정한다.
+서버 전송은 되감을 수 있는 일반 사진 파일에서 해시를 구하고 열린 파일을 64 KiB 단위로 읽어 원본을 보낸다. 전송한 바이트의 길이와 해시를 확인한 뒤 요청을 완료한다. 한 번만 읽을 수 있는 스트림과 부분 파일은 앱 전용 임시 사본 하나를 쓰고 정리한다. 같은 사진·작물·센서 정보로 완료한 검사는 인증된 서버 조회로 결과를 다시 받아 원본 재전송을 줄인다.
 
 공개 `config/android-server.json`에서 HTTPS 주소를 자동 조회한다. 설치별 키는 자동으로 발급받아 Android Keystore로 암호화하며 APK에 공통 키를 넣지 않는다. 기존 VisionMachine의 임시 터널 주소가 변경되면 운영자가 manifest를 갱신한다. USB 이력은 앱에 보관하고 분석 때 동일 사진의 기록을 전송한다.
 

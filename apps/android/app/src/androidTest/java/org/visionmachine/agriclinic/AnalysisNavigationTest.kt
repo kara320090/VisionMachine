@@ -82,7 +82,8 @@ class AnalysisNavigationTest {
             awaitIdleModel()
             ui.onNodeWithText("선택 1장 모두 분석").assertIsDisplayed().performClick()
             awaitIdleModel()
-            ui.onNodeWithText("사진 AI 분석").assertIsDisplayed()
+            ui.onNodeWithContentDescription("선택한 작물 사진").assertIsDisplayed()
+            ui.onNodeWithText("사진 AI 분석").performScrollTo().assertIsDisplayed()
             InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot()?.let { screenshot ->
                 try { File(context.filesDir, "ui_result_synthetic.png").outputStream().use { screenshot.compress(Bitmap.CompressFormat.PNG, 100, it) } }
                 finally { screenshot.recycle() }
@@ -92,8 +93,8 @@ class AnalysisNavigationTest {
             ui.onNodeWithText("분석 기록").performClick()
             ui.onNode(hasText(record.name) and hasClickAction()).performClick()
             ui.onNodeWithText("저장된 분석 결과").assertIsDisplayed()
-            ui.onNodeWithText("%.6f".format(java.util.Locale.US, record.abnormal)).assertIsDisplayed()
-            ui.onNodeWithText("모델 출력값이며 보정된 진단 확률이 아닙니다.").assertIsDisplayed()
+            ui.onNodeWithText("%.6f".format(java.util.Locale.US, record.abnormal)).performScrollTo().assertIsDisplayed()
+            ui.onNodeWithText("모델 출력값이며 보정된 진단 확률이 아닙니다.").performScrollTo().assertIsDisplayed()
         } finally { bitmap.recycle(); file.delete() }
     }
 }

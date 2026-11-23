@@ -1,12 +1,13 @@
 """Local development photo storage. This is not an authenticated public API."""
 
 import hashlib
-import io
 import json
 import os
+import shutil
 import sqlite3
 import warnings
 from datetime import datetime, timezone
+from typing import BinaryIO
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, Response, UploadFile
@@ -51,18 +52,20 @@ def _settings() -> Settings:
         raise _error(503, "STORAGE_UNAVAILABLE") from None
 
 
-def _validate_image(contents: bytes, media_type: str) -> str:
+def _validate_image(source: BinaryIO, media_type: str) -> str:
     expected = {"image/jpeg": ("JPEG", ".jpg"), "image/png": ("PNG", ".png")}
-    if media_type not in expected or not contents:
+    if media_type not in expected:
         raise _error(422, "INVALID_IMAGE")
     try:
         with warnings.catch_warnings():
             warnings.simplefilter("error", Image.DecompressionBombWarning)
-            with Image.open(io.BytesIO(contents)) as image:
+            source.seek(0)
+            with Image.open(source) as image:
                 if image.format != expected[media_type][0] or image.width * image.height > MAX_IMAGE_PIXELS:
                     raise _error(422, "INVALID_IMAGE")
                 image.verify()
-            with Image.open(io.BytesIO(contents)) as image:
+            source.seek(0)
+            with Image.open(source) as image:
                 image.load()
     except (UnidentifiedImageError, OSError, ValueError, Image.DecompressionBombWarning, Image.DecompressionBombError):
         raise _error(422, "INVALID_IMAGE") from None
@@ -90,7 +93,7 @@ def _load(settings: Settings, inspection_id: UUID) -> StoredInspection | None:
     return _stored(row) if row is not None else None
 
 
-def _persist(settings: Settings, metadata: InspectionMetadata, contents: bytes, extension: str) -> tuple[int, StoredInspection]:
+def _persist(settings: Settings, metadata: InspectionMetadata, source: BinaryIO, extension: str) -> tuple[int, StoredInspection]:
     canonical = json.dumps(metadata.model_dump(mode="json"), sort_keys=True, ensure_ascii=False, separators=(",", ":"))
     request_sha = hashlib.sha256(canonical.encode("utf-8") + b"\0" + bytes.fromhex(metadata.image_sha256)).hexdigest()
     received_at = datetime.now(timezone.utc).isoformat()
@@ -101,10 +104,6 @@ def _persist(settings: Settings, metadata: InspectionMetadata, contents: bytes, 
     moved = False
     committed = False
     try:
-        with temporary.open("xb") as output:
-            output.write(contents)
-            output.flush()
-            os.fsync(output.fileno())
         with connect_database(settings.database_path) as connection:
             connection.execute("BEGIN IMMEDIATE")
             try:
@@ -120,6 +119,12 @@ def _persist(settings: Settings, metadata: InspectionMetadata, contents: bytes, 
                     if stored is None:
                         raise _error(503, "STORAGE_UNAVAILABLE")
                     return 200, stored
+                # Only the transaction creating this ID stages and syncs an original.
+                source.seek(0)
+                with temporary.open("xb") as output:
+                    shutil.copyfileobj(source, output, length=256 * 1024)
+                    output.flush()
+                    os.fsync(output.fileno())
                 os.replace(temporary, destination)
                 moved = True
                 connection.execute(
@@ -159,7 +164,7 @@ def _persist(settings: Settings, metadata: InspectionMetadata, contents: bytes, 
 
 
 @router.post("", response_model=StoredInspection, status_code=201)
-async def upload_inspection(
+def upload_inspection(
     request: Request, response: Response,
     photo: UploadFile = File(...), metadata: str = Form(...),
 ) -> StoredInspection:
@@ -170,17 +175,18 @@ async def upload_inspection(
         parsed = InspectionMetadata.model_validate_json(metadata)
     except ValidationError:
         raise _error(422, "INVALID_METADATA") from None
-    contents = await photo.read(MAX_IMAGE_BYTES + 1)
-    await photo.close()
-    if len(contents) > MAX_IMAGE_BYTES:
+    # FastAPI owns the multipart spool and closes it when the request ends.
+    source = photo.file
+    if source.seek(0, os.SEEK_END) > MAX_IMAGE_BYTES:
         raise _error(413, "IMAGE_TOO_LARGE")
-    image_sha = hashlib.sha256(contents).hexdigest()
+    source.seek(0)
+    image_sha = hashlib.file_digest(source, "sha256").hexdigest()
     if image_sha != parsed.image_sha256:
         raise _error(422, "HASH_MISMATCH")
-    extension = _validate_image(contents, parsed.image_media_type)
+    extension = _validate_image(source, parsed.image_media_type)
     if photo.content_type != parsed.image_media_type:
         raise _error(422, "INVALID_IMAGE")
-    status, stored = _persist(_settings(), parsed, contents, extension)
+    status, stored = _persist(_settings(), parsed, source, extension)
     response.status_code = status
     return stored
 

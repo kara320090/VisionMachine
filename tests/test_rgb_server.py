@@ -3,6 +3,7 @@ import hashlib
 import io
 import json
 from itertools import count
+from types import SimpleNamespace
 from uuid import uuid4
 
 import numpy as np
@@ -12,7 +13,7 @@ from PIL import Image, ImageOps
 
 from vm_server.main import app
 from vm_server import rgb_inspections as service
-from vm_server.rgb_engine import crop_rgb, preprocess
+from vm_server.rgb_engine import RgbEngine, crop_rgb, preprocess
 
 @pytest.fixture
 def sensor_packet(inspection):
@@ -55,9 +56,12 @@ def test_persistent_idempotency_conflict_and_sensor_snapshot(tmp_path, monkeypat
     class TransportStub:
         """Protocol-only test double, never installed as a server model."""
         providers = ["CUDAExecutionProvider"]
-        calls = 0
-        def infer(self, raw):
-            self.calls += 1
+        def __init__(self):
+            self.sources = []
+
+        def infer(self, source):
+            self.sources.append(source)
+            assert source.read(8) == b"\x89PNG\r\n\x1a\n"
             return {"normal": .25, "abnormal": .75, "model_version": "synthetic-protocol-stub",
                     "model_sha256": "0" * 64, "elapsed_ms": 7}
     stub = TransportStub()
@@ -81,16 +85,79 @@ def test_persistent_idempotency_conflict_and_sensor_snapshot(tmp_path, monkeypat
     assert len(first.json()["photos"]) == 8
     assert first.json()["photos"][0]["sensor"]["assessment_json"] == assessment
     assert first.headers["Server-Timing"] == "vm_queue;dur=1.250, vm_infer;dur=56"
+    folder, = (tmp_path / "rgb_uploads").iterdir()
+    for photo, (_, (_, original, _)) in zip(payload["photos"], files):
+        assert (folder / f"{photo['source_photo_id']}.bin").read_bytes() == original
+    assert all(source.closed for source in stub.sources)
     repeated = send()
     assert repeated.status_code == 200
     assert repeated.json() == first.json()
     assert repeated.headers["Server-Timing"] == "vm_queue;dur=1.250"
-    assert stub.calls == 8
+    assert len(stub.sources) == 8
+    original_part = files[-1]
+    files[-1] = ("photos", ("changed.png", b"changed", "image/png"))
+    assert send().json()["detail"]["code"] == "HASH_MISMATCH"
+    files[-1] = original_part
     monkeypatch.setattr(service, "engine", None)
     assert send().status_code == 200  # persisted response survives unavailable model
     p["crop_code"] = "pepper"
     p["sensor"] = None
     assert send().status_code == 409
+
+
+def test_rgb_engine_accepts_bytes_and_borrowed_file(tmp_path):
+    payload, files = request_data()
+    raw = files[0][1][1]
+    original = tmp_path / "synthetic.png"
+    original.write_bytes(raw)
+    with Image.open(original) as image:
+        expected = preprocess(image)
+
+    class Session:
+        def run(self, output_names, inputs):
+            np.testing.assert_array_equal(inputs["image"], expected)
+            return [np.array([[0.25, 0.75]], dtype=np.float32)]
+
+    engine = RgbEngine.__new__(RgbEngine)
+    engine.session = Session()
+    engine.output_name = "probabilities"
+    engine.card = {"model_version": "synthetic-protocol-stub", "model_sha256": "0" * 64}
+    assert engine.infer(raw)["abnormal"] == 0.75
+    with original.open("rb") as source:
+        assert engine.infer(source)["abnormal"] == 0.75
+        source.seek(0)
+        assert hashlib.file_digest(source, "sha256").hexdigest() == payload["photos"][0]["image_sha256"]
+
+
+def test_spooled_upload_failure_rolls_back_and_can_retry(tmp_path, monkeypatch):
+    monkeypatch.setenv("VM_API_KEY", "synthetic-test-key-only")
+    monkeypatch.setenv("VM_STORAGE_DIR", str(tmp_path))
+    monkeypatch.setattr(service, "engine", SimpleNamespace(providers=["CUDAExecutionProvider"]))
+    payload, files = request_data(2)
+    for photo in payload["photos"]:
+        photo["crop_code"] = "eggplant"  # records the out-of-scope result without GPU work
+    client = TestClient(app, raise_server_exceptions=False)
+
+    def send():
+        return client.post("/api/v1/inspections", data={"payload": json.dumps(payload)}, files=files,
+                           headers={"X-API-Key": "synthetic-test-key-only"})
+
+    copy = service.shutil.copyfileobj
+    sources = []
+
+    def fail_second_copy(source, target, length):
+        sources.append(source)
+        if len(sources) == 2:
+            target.write(source.read(5))
+            raise OSError("synthetic write failure")
+        copy(source, target, length)
+
+    with monkeypatch.context() as patch:
+        patch.setattr(service.shutil, "copyfileobj", fail_second_copy)
+        assert send().status_code == 500
+    assert len(sources) == 2 and all(source.closed for source in sources)
+    assert not list((tmp_path / "rgb_uploads").iterdir())
+    assert send().status_code == 201
 
 
 @pytest.mark.parametrize("w,h,expected", [

@@ -22,7 +22,7 @@ import java.util.concurrent.Executors
 import org.json.JSONObject
 
 data class AnalysisPhotoItem(val uri: Uri, val reference: CaptureRecord, val status: String = "대기",
-    val result: RgbRecord? = null, val error: String? = null)
+    val result: RgbRecord? = null, val error: String? = null, val unconfirmedServerId: String? = null)
 
 class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
     private val worker=Executors.newSingleThreadExecutor()
@@ -207,6 +207,10 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
         val snapshot=items.toList()
         val weight=sensorWeight
         val remoteMode=serverMode
+        val knownServerIds = if (remoteMode) buildSet {
+            records.mapNotNullTo(this) { it.serverInspectionId }
+            snapshot.mapNotNullTo(this) { it.unconfirmedServerId }
+        } else emptySet()
         val automatic=automaticSettings.mode()=="auto"
         val configured=serverConfig
         worker.execute {
@@ -226,12 +230,11 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
                     val n=name(input.uri)
                     val record=if(remoteMode) {
                         connectionFailure?.let {throw it}
-                        val r=try {ServerRgbClient(getApplication(),remote?:error("서버 연결을 다시 확인해 주세요.")).analyze(input.uri,input.reference)}
-                        catch(error:ServerRequestException) {
-                            if(!automatic||error.code!="UNAUTHORIZED") throw error
-                            remote=automaticConnection.connect(forceRegistration=true);serverConfig=remote
-                            ServerRgbClient(getApplication(),remote!!).analyze(input.uri,input.reference)
-                        }
+                        val refresh: (() -> ServerConfig)? = if (automatic) ({
+                            automaticConnection.connect(forceRegistration = true).also { remote = it; serverConfig = it }
+                        }) else null
+                        val r = ServerRgbClient(getApplication(), remote ?: error("서버 연결을 다시 확인해 주세요."), knownServerIds)
+                            .analyze(input.uri, input.reference, refresh)
                         val sensor=r.sensor
                         CompositeIndex.attach(RgbRecord(n,r.normal,r.abnormal,r.millis,r.sha256,Instant.now().toString(),r.model,
                             input.reference.cropCode,input.reference.inspectionId,sensor?.inspectionId,sensor?.assessmentJson,
@@ -242,8 +245,18 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
                     }
                     val updated=(store.read()+record).takeLast(200)
                     store.write(updated);done++
-                    ui {records=updated;items=items.mapIndexed {i,item -> if(i==index) item.copy(status="완료",result=record,error=null) else item};if(index==focusIndex) current=record}
-                } catch(error:Exception) {failed++;ui {items=items.mapIndexed {i,item -> if(i==index) item.copy(status="실패",result=null,error=error.message?.take(100)?:"사진을 읽지 못했습니다.") else item}}}
+                    ui {records=updated;items=items.mapIndexed {i,item -> if(i==index) item.copy(status="완료",result=record,error=null,unconfirmedServerId=null) else item};if(index==focusIndex) current=record}
+                } catch(error:Exception) {
+                    failed++
+                    ui {
+                        items=items.mapIndexed { i, item ->
+                            if (i == index) item.copy(status="실패", result=null,
+                                error=error.message?.take(100) ?: "사진을 읽지 못했습니다.",
+                                unconfirmedServerId=(error as? UnconfirmedRgbUpload)?.inspectionId ?: item.unconfirmedServerId)
+                            else item
+                        }
+                    }
+                }
                 catch(_:OutOfMemoryError) {failed++;ui {items=items.mapIndexed {i,item -> if(i==index) item.copy(status="실패",result=null,error="사진 메모리 부족 · 더 작은 사진을 선택해 주세요.") else item}}}
             }
             ui {busy=false;message="분석 완료 · 성공 ${done}장 / 실패 ${failed}장 · 사진별 결과를 확인하세요."}

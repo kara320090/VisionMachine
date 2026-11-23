@@ -1,6 +1,6 @@
 [CmdletBinding(SupportsShouldProcess)]
 param(
-    [ValidatePattern('^[\w][\w.-]*$')][string]$AvdName = 'VisionMachine_Release_UI_Test',
+    [ValidatePattern('^[\w][\w.-]*$')][string]$AvdName,
     [string]$DataDirectory,
     [switch]$ReadOnly,
     [switch]$ShowWindow,
@@ -9,6 +9,9 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+if (!$AvdName) {
+    $AvdName = if ($ReadOnly -or $DataDirectory) { 'VisionMachine_Release_UI_Test' } else { 'VisionMachine_Daily' }
+}
 if ($Port % 2) { throw 'The emulator console port must be even.' }
 $explicitPort = $PSBoundParameters.ContainsKey('Port')
 $sdk = @($env:ANDROID_HOME, $env:ANDROID_SDK_ROOT, (Join-Path $env:LOCALAPPDATA 'Android\Sdk')) |
@@ -115,7 +118,11 @@ try {
             $inUse = [Net.NetworkInformation.IPGlobalProperties]::GetIPGlobalProperties().GetActiveTcpListeners().Port
             if ($Port -in $inUse -or ($Port + 1) -in $inUse) { throw "Emulator ports $Port/$($Port + 1) are busy." }
             $available = @(& $emulator -list-avds)
-            if ($LASTEXITCODE -ne 0 -or $available -notcontains $AvdName) { throw "AVD '$AvdName' was not found in the local SDK." }
+            if ($LASTEXITCODE -ne 0) { throw 'Could not list local AVDs.' }
+            if ($available -notcontains $AvdName) {
+                if ($AvdName -ne 'VisionMachine_Daily') { throw "AVD '$AvdName' was not found in the local SDK." }
+                & (Join-Path $PSScriptRoot 'New-DailyAvd.ps1') -SdkRoot $sdk
+            }
             $arguments = @('-avd', $AvdName, '-port', $Port, '-gpu', 'host', '-no-audio')
             if (!$ShowWindow) { $arguments += '-no-window' }
             if ($directory) { $arguments += @('-datadir', ('"{0}\."' -f $directory)) }

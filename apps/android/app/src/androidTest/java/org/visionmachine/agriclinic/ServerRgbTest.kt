@@ -54,7 +54,8 @@ class ServerRgbTest {
 
             ServerSocket(0, 1, InetAddress.getByName("127.0.0.1")).use { server ->
                 server.soTimeout = 10_000
-                val responder = FutureTask {
+                var firstId: String? = null
+                fun answer(attempt: Int) {
                     server.accept().use { socket ->
                         socket.soTimeout = 10_000
                         val reader = socket.getInputStream().bufferedReader(Charsets.ISO_8859_1)
@@ -62,6 +63,8 @@ class ServerRgbTest {
                         val headers = generateSequence { reader.readLine()?.takeIf { it.isNotEmpty() } }
                             .associate { it.substringBefore(':').lowercase() to it.substringAfter(':').trim() }
                         val boundary = headers.getValue("content-type").substringAfter("boundary=")
+                        assertEquals(if (attempt == 0) "synthetic-key" else "renewed-key", headers["x-api-key"])
+                        assertTrue(cache.listFiles()!!.isEmpty())
                         assertFalse(headers.containsKey("transfer-encoding"))
                         val body = CharArray(headers.getValue("content-length").toInt())
                         var offset = 0
@@ -80,6 +83,15 @@ class ServerRgbTest {
                             .toByteArray(Charsets.ISO_8859_1))
 
                         val id = payload.getString("client_inspection_id")
+                        if (attempt == 0) {
+                            firstId = id
+                            val error = """{"detail":{"code":"UNAUTHORIZED"}}"""
+                            val headersOut = "HTTP/1.1 401 Unauthorized\r\nContent-Length: ${error.length}\r\n" +
+                                "Connection: close\r\n\r\n"
+                            socket.getOutputStream().write((headersOut + error).toByteArray(Charsets.US_ASCII))
+                            return
+                        }
+                        assertEquals(firstId, id)
                         val result = JSONObject().put("source_photo_id", reference.inspectionId)
                             .put("image_sha256", sha).put("crop_code", "basil").put("status", "completed")
                             .put("normal", .2).put("abnormal", .8).put("elapsed_ms", 1)
@@ -97,9 +109,19 @@ class ServerRgbTest {
                         }
                     }
                 }
+                val responder = FutureTask { answer(0); answer(1) }
                 Thread(responder).start()
-                val client = ServerRgbClient(context, ServerConfig("http://127.0.0.1:${server.localPort}", "synthetic-key"))
-                assertEquals(sha, client.analyze(uri, reference).sha256)
+                val config = ServerConfig("http://127.0.0.1:${server.localPort}", "synthetic-key")
+                val client = ServerRgbClient(context, config)
+                var renewals = 0
+                val result = client.analyze(uri, reference) {
+                    renewals++
+                    check(photo.delete())
+                    photo.writeBytes(byteArrayOf(10, 20, 30))
+                    config.copy(apiKey = "renewed-key")
+                }
+                assertEquals(1, renewals)
+                assertEquals(sha, result.sha256)
                 responder.get(10, TimeUnit.SECONDS)
                 assertTrue(cache.listFiles()!!.isEmpty())
 

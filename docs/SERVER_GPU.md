@@ -41,9 +41,12 @@ USB 측정 ID와 사진 ID는 서로 다른 ID로 보존한다. 결측은 null�
 JSON 원본은 `packages/contracts/src/vm_contracts/models.py`의 RgbInspectionRequest/Result,
 생성 규격은 `contracts/schemas/rgb-inspection*.schema.json`과 OpenAPI다.
 파일 순서와 payload.photos 순서가 일치해야 하며 각 원본 해시를 검증한다.
+서버는 multipart 파서가 관리하는 각 임시 파일을 되감아 SHA-256·파일 형식을 검증하고 Pillow에 전달한다.
+분석을 마치면 같은 파일에서 원본 저장소로 최대 256 KiB씩 복사한다. 이 방식은 요청에 포함된 사진 전체 크기에 비례하던 추가 Python 바이트 배열을 없앤다.
 
 Android는 기존 진행/개별 실패 표시를 보존하기 위해 최대 8장을 한 장씩 순차 요청한다.
 서버 API 자체도 한 요청의 1~8장을 지원한다. 파일/센서 스냅샷으로 만든 안정된 검사 ID로 수동 재시도한다.
+Android는 사진의 현재 해시와 메타데이터로 검사 ID를 계산한다. 최근 이력 200건에 같은 ID가 있거나 전송을 마친 뒤 응답이 끊긴 사진을 같은 선택에서 재시도하면, 현재 서버에 인증된 GET을 보낸다. 사진 ID·해시·작물·모델을 검증한 결과를 사용하며 결과가 없거나 조회 기능이 없는 서버에는 원본을 POST한다. 새 검사에서는 곧바로 원본을 전송한다.
 같은 ID·내용은 저장된 응답(200), 처음은 201, 같은 ID의 다른 내용은 409다.
 GPU의 일시적 추론 오류는 완료 결과로 캐시하지 않고 503을 반환한다. 서버 중복 GPU 실행은 한 worker의 lock으로 직렬화한다.
 연결 제한 10초·응답 제한 180초이며 redirect는 따라가지 않아 자격 증명을 다른 주소에 보내지 않는다.
@@ -56,14 +59,14 @@ GPU의 일시적 추론 오류는 완료 결과로 캐시하지 않고 503을 �
 측정한다. 요청 본문 수신, 이미지 검증, 스레드 풀 배정은 그 전에 수행한다. 이전 결과를 재사용한 HTTP 200 응답에는 새로 측정한 대기 시간만 보낸다.
 
 Android에서 성공한 서버 분석의 구간별 시간은 `adb logcat -s VisionRgbTiming:I`로 확인한다.
-`client_total_ms`는 사진 준비 시작부터 성공 응답 검증까지의 시간이다. `staging_ms`는 사진 복사·해시·형식 확인,
+`client_total_ms`는 사진 준비 시작부터 성공 응답 검증까지의 시간이다. `staging_ms`는 해시·형식 확인과 필요 시 임시 사본 생성,
 `request_prepare_ms`는 센서 기록 조회와 요청 구성, `request_open_ms`는 요청 출력 스트림 열기,
 `request_write_ms`는 로컬에서 요청 본문 쓰기 완료까지, `response_headers_wait_ms`는 본문 쓰기
 완료 후 응답 헤더가 도착할 때까지, `response_body_ms`는 응답 본문을 읽는 데 걸린 시간이다.
 본문 쓰기 시간에는 로컬 파일 읽기와 네트워크 흐름 제어가 함께 포함된다.
 서버 잠금 대기·추론 시간은 응답 헤더 대기 구간의 원인을 파악하는 데 사용한다.
 헤더가 없는 서버의 대기 시간과 이전 결과를 재사용한 요청의 새 추론 시간은 `unavailable`로 표시한다.
-로그에는 시간과 HTTP 상태 코드만 기록한다.
+결과 조회로 원본 전송을 생략하면 로그에 `method=GET photo_bytes_sent=0`이 표시된다.
 
 SQLite는 `storage/rgb_inspections.sqlite3`, 원본/메타데이터는 `storage/rgb_uploads/`에 저장한다.
 기존 개발 DB와 분리하며 기존 기록을 삭제하지 않는다. 강제 종료로 남은 orphan 파일 자동 정리는 후속이다.
