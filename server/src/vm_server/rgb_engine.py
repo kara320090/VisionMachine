@@ -10,9 +10,14 @@ ROOT = Path(__file__).resolve().parents[3]
 CARD_PATH = ROOT / "apps/android/app/src/main/assets/vision_rgb_model.json"
 
 
-def crop_rgb(image):
+def crop_rgb(image, *, exif_in_place=False):
     from PIL import Image, ImageOps
-    image = ImageOps.exif_transpose(image).convert("RGB")
+    if exif_in_place:
+        ImageOps.exif_transpose(image, in_place=True)
+    else:
+        image = ImageOps.exif_transpose(image)
+    if image.mode != "RGB":
+        image = image.convert("RGB")
     w, h = image.size
     rw, rh = (256, 256 * h // w) if w <= h else (256 * w // h, 256)
     image = image.resize((rw, rh), Image.Resampling.BICUBIC)
@@ -20,9 +25,9 @@ def crop_rgb(image):
     return image.crop((left, top, left + 224, top + 224))
 
 
-def preprocess(image):
+def preprocess(image, *, exif_in_place=False):
     import numpy as np
-    image = crop_rgb(image)
+    image = crop_rgb(image, exif_in_place=exif_in_place)
     x = np.asarray(image, dtype=np.float32) / np.float32(255)
     x = (x - np.array([.485, .456, .406], dtype=np.float32)) / np.array([.229, .224, .225], dtype=np.float32)
     return np.ascontiguousarray(x.transpose(2, 0, 1)[None])
@@ -66,7 +71,8 @@ class RgbEngine:
         from PIL import Image
         started = time.monotonic()
         with Image.open(io.BytesIO(raw)) as image:
-            x = preprocess(image)
+            # This image belongs to this request and can be transposed in place.
+            x = preprocess(image, exif_in_place=True)
         p = np.asarray(self.session.run([self.output_name], {"image": x})[0])
         if p.shape != (1, 2) or not np.isfinite(p).all() or (p < 0).any() or (p > 1).any() or abs(float(p.sum()) - 1) > 1e-4:
             raise RuntimeError("INVALID_MODEL_OUTPUT")

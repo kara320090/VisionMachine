@@ -55,7 +55,7 @@ import kotlin.math.roundToInt
                         Column(Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 12.dp)) {
                             Button({ vm.analyze(true) }, enabled = vm.ready && !vm.busy && !vm.cameraPending,
                                 modifier = Modifier.fillMaxWidth().heightIn(min = 54.dp), shape = RoundedCornerShape(18.dp)) {
-                                if (vm.busy) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                                if (vm.busy && !vm.serverMode) CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
                                 else Icon(VisionIcons.Spark, null, Modifier.size(20.dp))
                                 Spacer(Modifier.width(10.dp))
                                 Text(if (vm.busy) "사진 처리 중…" else "선택 ${vm.items.size}장 모두 분석", Modifier.weight(1f))
@@ -197,7 +197,7 @@ import kotlin.math.roundToInt
         }
         item {
             Column(Modifier.semantics { liveRegion = LiveRegionMode.Polite }, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                if (vm.busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+                if (vm.busy && !vm.serverMode) LinearProgressIndicator(Modifier.fillMaxWidth())
                 Text(vm.message, color = VisionColors.Muted, style = MaterialTheme.typography.bodySmall)
             }
         }

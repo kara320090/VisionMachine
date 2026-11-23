@@ -10,6 +10,9 @@ import java.security.MessageDigest
 /** Photo references only. An imported image's exposure time and plant identity are unknown. */
 class PhotoReferenceStore(context: Context) {
     private val prefs = context.getSharedPreferences("analysis_photo_references_v1", Context.MODE_PRIVATE)
+
+    internal data class Registration(val uri: Uri, val crop: String, val capture: CaptureRecord? = null)
+
     fun all(): List<CaptureRecord> = synchronized(lock) {
         val rows = JSONArray(prefs.getString("rows", "[]"))
         (0 until rows.length()).map { index ->
@@ -18,19 +21,34 @@ class PhotoReferenceStore(context: Context) {
                 row.getString("crop"), row.getString("uri"), row.getString("captured_at"))
         }
     }
-    fun put(uri: Uri, crop: String, capture: CaptureRecord? = null): CaptureRecord = synchronized(lock) {
-        require(CropChoices.any { it.first == crop })
-        val rows = all()
-        val previous = rows.find { it.photoUri == uri.toString() }
-        val source = capture ?: previous ?: CaptureRecord(UUID.randomUUID().toString(), "unassigned", "unassigned", crop, uri.toString(), "")
-        val updated = source.copy(cropCode = crop)
+    fun put(uri: Uri, crop: String, capture: CaptureRecord? = null): CaptureRecord =
+        putAll(listOf(Registration(uri, crop, capture))).single()
+
+    internal fun putAll(registrations: List<Registration>): List<CaptureRecord> = synchronized(lock) {
+        if (registrations.isEmpty()) return@synchronized emptyList()
+        require(registrations.all { registration -> CropChoices.any { it.first == registration.crop } })
+        val rows = all().toMutableList()
+        val added = registrations.map { (uri, crop, capture) ->
+            val uriString = uri.toString()
+            val previous = rows.find { it.photoUri == uriString }
+            val source = capture ?: previous ?:
+                CaptureRecord(UUID.randomUUID().toString(), "unassigned", "unassigned", crop, uriString, "")
+            val updated = source.copy(cropCode = crop)
+            rows.removeAll { it.inspectionId == updated.inspectionId }
+            val excess = rows.size - 499
+            if (excess > 0) rows.subList(0, excess).clear()
+            // Later registrations see the same fields that a separate read would restore.
+            rows.add(CaptureRecord(updated.inspectionId, updated.subjectId, updated.batchId,
+                updated.cropCode, updated.photoUri, updated.capturedAt))
+            updated
+        }
         val result = JSONArray()
-        (rows.filter { it.inspectionId != updated.inspectionId }.takeLast(499) + updated).forEach { row ->
+        rows.forEach { row ->
             result.put(JSONObject().put("id", row.inspectionId).put("subject", row.subjectId).put("batch", row.batchId)
                 .put("crop", row.cropCode).put("uri", row.photoUri).put("captured_at", row.capturedAt))
         }
         check(prefs.edit().putString("rows", result.toString()).commit())
-        updated
+        added
     }
     companion object {
         private val lock = Any()

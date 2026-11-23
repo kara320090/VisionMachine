@@ -124,7 +124,16 @@ class RgbAnalysisViewModel(app:Application):AndroidViewModel(app) {
         worker.execute {
             try {
                 val references=PhotoReferenceStore(getApplication())
-                val next=accepted.map {uri -> previous.find {it.uri==uri} ?: AnalysisPhotoItem(uri,references.put(uri,capture?.cropCode?:crop,capture?.takeIf {it.photoUri==uri.toString()}))}
+                val previousByUri = previous.associateBy { it.uri }
+                val newUris = accepted.filterNot(previousByUri::containsKey)
+                val registrations = newUris.map { uri ->
+                    PhotoReferenceStore.Registration(uri, capture?.cropCode ?: crop,
+                        capture?.takeIf { it.photoUri == uri.toString() })
+                }
+                val newReferences = newUris.zip(references.putAll(registrations)).toMap()
+                val next = accepted.map { uri ->
+                    previousByUri[uri] ?: AnalysisPhotoItem(uri, newReferences.getValue(uri))
+                }
                 val index=if(capture!=null) next.indexOfFirst {it.uri.toString()==capture.photoUri}.coerceAtLeast(0) else 0
                 val image=runCatching {preview(next[index].uri)}.getOrNull()
                 val n=name(next[index].uri)

@@ -110,3 +110,49 @@ def test_pillow_matches_existing_android_pixel_goldens(w, h, expected):
         oriented = image.copy()
         oriented.getexif()[274] = orientation
         assert np.array_equal(preprocess(oriented), preprocess(ImageOps.exif_transpose(oriented)))
+
+
+@pytest.mark.parametrize("orientation", range(1, 9))
+@pytest.mark.parametrize("mode,size,file_format", [
+    ("RGB", (31, 19), "JPEG"),
+    ("RGB", (1, 1), "PNG"),
+    ("RGB", (1, 9), "PNG"),
+    ("L", (11, 1), "PNG"),
+    ("LA", (3, 5), "PNG"),
+    ("RGBA", (5, 3), "PNG"),
+    ("P", (11, 9), "PNG"),
+    ("CMYK", (13, 7), "JPEG"),
+])
+def test_request_preprocess_matches_previous_tensor_without_mutating_shared_images(orientation, mode, size, file_format):
+    width, height = size
+    pixels = np.arange(width * height * 4, dtype=np.uint8).reshape((height, width, 4))
+    source = Image.fromarray(pixels).convert(mode)
+    source.getexif()[274] = orientation
+    encoded = io.BytesIO()
+    source.save(encoded, file_format, exif=source.getexif())
+    raw = encoded.getvalue()
+
+    with Image.open(io.BytesIO(raw)) as image:
+        rgb = ImageOps.exif_transpose(image).convert("RGB")
+        w, h = rgb.size
+        rw, rh = (256, 256 * h // w) if w <= h else (256 * w // h, 256)
+        resized = rgb.resize((rw, rh), Image.Resampling.BICUBIC)
+        left, top = round((rw - 224) / 2), round((rh - 224) / 2)
+        cropped = resized.crop((left, top, left + 224, top + 224))
+        x = np.asarray(cropped, dtype=np.float32) / np.float32(255)
+        x = (x - np.array([.485, .456, .406], dtype=np.float32)) / np.array([.229, .224, .225], dtype=np.float32)
+        expected = np.ascontiguousarray(x.transpose(2, 0, 1)[None])
+
+        pixels_before = image.tobytes()
+        shared = preprocess(image)
+        assert image.size == size
+        assert image.mode == mode
+        assert image.getexif()[274] == orientation
+        assert image.tobytes() == pixels_before
+
+    with Image.open(io.BytesIO(raw)) as image:
+        request_owned = preprocess(image, exif_in_place=True)
+
+    assert request_owned.shape == shared.shape == (1, 3, 224, 224)
+    assert request_owned.dtype == shared.dtype == np.float32
+    assert request_owned.tobytes() == shared.tobytes() == expected.tobytes()
