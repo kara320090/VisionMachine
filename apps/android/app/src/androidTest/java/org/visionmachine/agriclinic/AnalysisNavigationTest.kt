@@ -95,6 +95,12 @@ class AnalysisNavigationTest {
             ui.onNodeWithText("저장된 분석 결과").assertIsDisplayed()
             ui.onNodeWithText("%.6f".format(java.util.Locale.US, record.abnormal)).performScrollTo().assertIsDisplayed()
             ui.onNodeWithText("모델 출력값이며 보정된 진단 확률이 아닙니다.").performScrollTo().assertIsDisplayed()
+            ui.onNodeWithText("원인 분석과 대처").performScrollTo().assertIsDisplayed()
+            if (record.abnormal < .5f) ui.onNodeWithText("증상으로 원인 살펴보기").performScrollTo().performClick()
+            val check = fieldChecks("tomato").first()
+            ui.onNodeWithText(check.symptom).performScrollTo().performClick()
+            ui.onNodeWithText(check.verify).performScrollTo().assertIsDisplayed()
+            ui.onNodeWithText(check.action).performScrollTo().assertIsDisplayed()
         } finally { bitmap.recycle(); file.delete() }
     }
 }

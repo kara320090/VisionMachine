@@ -347,6 +347,7 @@ import kotlin.math.roundToInt
         ScoreBar("정상 출력", record.normal, VisionColors.Forest)
         ScoreBar("이상 출력", record.abnormal, VisionColors.Terra)
         Text("모델 출력값이며 보정된 진단 확률이 아닙니다.", style = MaterialTheme.typography.bodySmall, color = VisionColors.Muted)
+        CropGuidanceCard(record)
         SensorAssessmentCard(record.sensorAssessmentJson)
         CompositeIndexCard(record.compositeJson)
         TextButton({ technical = !technical }, contentPadding = PaddingValues(0.dp)) { Text(if (technical) "분석 정보 접기" else "분석 정보 자세히") }
